@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Personal information:"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_color"
                 android:textSize="24sp"
                 android:layout_marginBottom="20dp"
                 />
@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Schedule:"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_color"
                 android:textSize="24sp"
                 android:layout_marginBottom="20dp"
                 />
@@ -84,6 +84,7 @@
                     android:id="@+id/input_monday"
                     android:layout_weight="0.5"
                     android:layout_marginRight="25dp"
+                    android:inputType="datetime"
                     />
 
 
@@ -112,6 +113,7 @@
                     android:id="@+id/input_tuesday"
                     android:layout_weight="0.5"
                     android:layout_marginRight="25dp"
+                    android:inputType="datetime"
                     />
 
 
@@ -137,7 +139,7 @@
 
                     android:hint="hours"
                     android:id="@+id/input_wednesday"
-
+                    android:inputType="datetime"
                     android:layout_weight="0.5"
                     android:layout_marginRight="25dp"
                     />
@@ -166,6 +168,7 @@
                     android:id="@+id/input_thursday"
                     android:layout_weight="0.5"
                     android:layout_marginRight="25dp"
+                    android:inputType="datetime"
                     />
 
 
@@ -192,6 +195,7 @@
                     android:id="@+id/input_friday"
                     android:layout_weight="0.5"
                     android:layout_marginRight="25dp"
+                    android:inputType="datetime"
                     />
 
 
@@ -218,6 +222,7 @@
                     android:id="@+id/input_saturday"
                     android:layout_weight="0.5"
                     android:layout_marginRight="25dp"
+                    android:inputType="datetime"
                     />
 
 
@@ -241,6 +246,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:hint="hours"
+                    android:inputType="datetime"
                     android:id="@+id/input_sunday"
                     android:layout_weight="0.5"
                     android:layout_marginRight="25dp"

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.bionic.td_android.R;
 
@@ -18,6 +19,7 @@ public class LoginFragment extends Fragment {
 
 
     private Button register,login;
+    private EditText log,pass;
     private View forgot_pass;
     private Toolbar toolbar;
     private LoginActivity activity;
@@ -34,6 +36,10 @@ public class LoginFragment extends Fragment {
 
         activity = (LoginActivity)getActivity();
         configureToolbar(view);
+        log = (EditText) view.findViewById(R.id.input_login);
+        pass = (EditText) view.findViewById(R.id.input_password);
+
+
         register = (Button) view.findViewById(R.id.button_register);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +60,7 @@ public class LoginFragment extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.login();
+                activity.login(log.getText().toString(),pass.getText().toString());
             }
         });
 

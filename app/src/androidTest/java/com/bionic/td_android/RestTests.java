@@ -1,6 +1,17 @@
 package com.bionic.td_android;
 
 import android.test.AndroidTestCase;
+import android.util.Base64;
+import android.util.Log;
+
+import com.bionic.td_android.Entity.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.loopj.android.http.SyncHttpClient;
+import com.loopj.android.http.TextHttpResponseHandler;
+
+import java.io.IOException;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by user on 19.03.2016.
@@ -91,4 +102,39 @@ public class RestTests extends AndroidTestCase {
         return users.get(0);
     }
     */
+
+    public void testLogin(){
+
+
+
+
+        Log.e("Bionic", "Start");
+        String url = "http://77.47.204.138:8080/rest/api/users/login";
+        String login = "test@test.com";
+        String pass = "12345";
+
+        String encoded = Base64.encodeToString((login + ":" + pass).getBytes(), 0);
+        Log.e("Bionic", encoded);
+        SyncHttpClient client = new SyncHttpClient();
+        client.addHeader("Authorization","Basic " + encoded);
+
+
+        client.get(mContext, url, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.e("Bionic", "Fail " + statusCode);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                User user = null;
+                try {
+                    user = new ObjectMapper().readValue(responseString,User.class);
+                    Log.e("Bionic",user.toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 }

@@ -9,7 +9,6 @@ import java.util.Date;
 public class WorkSchedule {
     private Integer id;
 
-    private User user;
     private Date creationTime;
 
     private String sunday;
@@ -32,13 +31,6 @@ public class WorkSchedule {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public Date getCreationTime() {
         return creationTime;
@@ -108,7 +100,6 @@ public class WorkSchedule {
     public String toString() {
         return "WorkSchedule{" +
                 "id=" + id +
-                ", user=" + user +
                 ", creationTime=" + creationTime +
                 ", sunday='" + sunday + '\'' +
                 ", monday='" + monday + '\'' +

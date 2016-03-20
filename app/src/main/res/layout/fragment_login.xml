@@ -34,12 +34,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Login"
+                android:id="@+id/input_login"
 
                 />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
+                android:id="@+id/input_password"
 
                 />
             <TextView

@@ -43,9 +43,6 @@ public class Second_step extends Fragment {
         return view;
     }
 
-
-
-
     private void configure(View view){
 
         activity = (RegisterActivity)getActivity();
@@ -84,6 +81,15 @@ public class Second_step extends Fragment {
 
     }
 
+    public boolean validateForm(){
+
+        boolean checkbox = (driver.isChecked() || operator.isChecked())
+                && ( (day_contract.isChecked() && !contract_days.getText().toString().isEmpty()) || zero_day_contract.isChecked())
+                && (mounthly_payments.isChecked() || four_week_payments.isChecked());
+
+        return checkbox;
+
+    }
 
     private User formSecondPart(){
         User user = new User();
@@ -111,7 +117,8 @@ public class Second_step extends Fragment {
         user.setWorkSchedule(schedule);
         if(day_contract.isChecked()){
             user.setZeroHours(false);
-            user.setContractHours(Integer.parseInt(contract_days.getText().toString()));
+            if(!contract_days.getText().toString().isEmpty())
+                user.setContractHours(Integer.parseInt(contract_days.getText().toString()));
         }
 
         if(zero_day_contract.isChecked()){
@@ -145,6 +152,23 @@ public class Second_step extends Fragment {
                     day_contract.setChecked(false);
                     contract_days.setEnabled(false);
                 }
+
+            }
+        });
+
+
+        four_week_payments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(mounthly_payments.isChecked())mounthly_payments.setChecked(false);
+            }
+        });
+
+        mounthly_payments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(four_week_payments.isChecked())four_week_payments.setChecked(false);
 
             }
         });
