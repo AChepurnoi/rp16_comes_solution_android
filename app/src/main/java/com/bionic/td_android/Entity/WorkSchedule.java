@@ -21,6 +21,7 @@ public class WorkSchedule {
     private String saturday;
 
     public WorkSchedule() {
+        id = 0;
     }
 
     public Integer getId() {

@@ -15,7 +15,9 @@ public class Employer {
     private Integer id;
     private String name;
 
-    public Employer(){ }
+    public Employer(){
+        id = 0;
+    }
 
 
     public Integer getId() {

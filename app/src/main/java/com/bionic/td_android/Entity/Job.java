@@ -22,6 +22,7 @@ public class Job {
     private List<User> users;
 
     public Job() {
+        id = 0;
     }
 
     public int getId() {

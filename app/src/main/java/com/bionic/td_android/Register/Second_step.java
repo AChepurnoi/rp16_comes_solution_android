@@ -8,10 +8,18 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.bionic.td_android.Entity.Job;
+import com.bionic.td_android.Entity.User;
+import com.bionic.td_android.Entity.WorkSchedule;
 import com.bionic.td_android.R;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by user on 18.03.2016.
@@ -64,8 +72,58 @@ public class Second_step extends Fragment {
         mounthly_payments = (CheckBox) view.findViewById(R.id.checkbox_mounth_payments);
         four_week_payments = (CheckBox) view.findViewById(R.id.checkbox_four_week_payments);
 
+        Button register = (Button)view.findViewById(R.id.button_register);
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.secondStedRegister(formSecondPart());
+
+            }
+        });
+
     }
 
+
+    private User formSecondPart(){
+        User user = new User();
+        List<Job> jobs = new ArrayList<>();
+        if(driver.isChecked()){
+            Job tmp = new Job();
+            tmp.setJobName("Driver");
+            jobs.add(tmp);
+        }
+        if(operator.isChecked()){
+            Job tmp = new Job();
+            tmp.setJobName("Operator");
+            jobs.add(tmp);
+        }
+        user.setJobs(jobs);
+        WorkSchedule schedule = new WorkSchedule();
+        schedule.setCreationTime(new Date());
+        schedule.setMonday(monday.getText().toString());
+        schedule.setTuesday(tuesday.getText().toString());
+        schedule.setWednesday(wednesday.getText().toString());
+        schedule.setThursday(thursday.getText().toString());
+        schedule.setFriday(friday.getText().toString());
+        schedule.setSaturday(saturday.getText().toString());
+        schedule.setSunday(sunday.getText().toString());
+        user.setWorkSchedule(schedule);
+        if(day_contract.isChecked()){
+            user.setZeroHours(false);
+            user.setContractHours(Integer.parseInt(contract_days.getText().toString()));
+        }
+
+        if(zero_day_contract.isChecked()){
+            user.setZeroHours(true);
+        }
+
+        if(four_week_payments.isChecked())user.setFourWeekPayOff(true);
+
+        return user;
+
+
+    }
 
     private void checkboxBehaviour(){
 

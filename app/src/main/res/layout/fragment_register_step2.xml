@@ -275,6 +275,7 @@
                     android:layout_height="wrap_content"
                     android:hint="days"
                     android:id="@+id/input_contract_days"
+                    android:inputType="number"
                     />
                 <CheckBox
                     android:layout_width="wrap_content"

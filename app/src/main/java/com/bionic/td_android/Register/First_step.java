@@ -12,7 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.R;
+
+import java.util.Date;
 
 /**
  * Created by user on 17.03.2016.
@@ -55,6 +58,19 @@ public class First_step extends Fragment {
 
     }
 
+    private User formUser(){
+        User user = new User();
+        user.setFirstName(name.getText().toString());
+        user.setLastName(surname.getText().toString());
+        user.setInsertion(second_name.getText().toString());
+        user.setSex(gender.getSelectedItem().toString());
+        user.setEmail(email.getText().toString());
+        user.setPassword(password.getText().toString());
+        user.setPasswordExpire(new Date(new Date().getTime() * 2));
+
+        return user;
+    }
+
     private void configureViews(View view){
 
         name = (EditText) view.findViewById(R.id.input_name);
@@ -71,7 +87,7 @@ public class First_step extends Fragment {
             @Override
             public void onClick(View v) {
                 RegisterActivity parent = (RegisterActivity) getActivity();
-                parent.nextStep();
+                parent.nextStep(formUser());
             }
         });
 

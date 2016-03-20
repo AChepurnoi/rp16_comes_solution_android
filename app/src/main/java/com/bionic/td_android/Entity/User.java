@@ -40,6 +40,15 @@ public class User {
 
 
     public User() {
+        id = 0;
+    }
+
+    public WorkSchedule getWorkSchedule() {
+        return workSchedule;
+    }
+
+    public void setWorkSchedule(WorkSchedule workSchedule) {
+        this.workSchedule = workSchedule;
     }
 
     public Integer getId() {
