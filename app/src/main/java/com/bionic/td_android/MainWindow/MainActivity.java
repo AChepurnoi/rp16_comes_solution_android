@@ -62,12 +62,12 @@ public class MainActivity extends AppCompatActivity {
 
         active = new Account_fragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        ((Account_fragment)active).setUser(user);
 
         transaction.replace(R.id.fragment_container, active);
         transaction.addToBackStack(null);
 
         transaction.commit();
-        ((Account_fragment)active).setUser(user);
 
 
 

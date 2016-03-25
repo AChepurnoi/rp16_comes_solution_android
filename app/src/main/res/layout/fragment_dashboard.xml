@@ -58,23 +58,24 @@
             >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             >
 
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="New trip"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/road"
+                android:layout_marginRight="2.5dp"
                 />
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Overview"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/overview"
+                android:layout_marginLeft="2.5dp"
                 />
 
 
@@ -85,26 +86,27 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             >
 
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="My account"
+                android:layout_height="wrap_content"
                 android:id="@+id/button_my_account"
                 android:layout_weight="1"
+                android:background="@drawable/myacc"
+                android:layout_marginRight="2.5dp"
                 />
 
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="CAO"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/cao"
+                android:layout_marginLeft="2.5dp"
                 />
 
 
