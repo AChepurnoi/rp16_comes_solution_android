@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Login"
                 android:id="@+id/input_login"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
 
                 />
             <EditText
