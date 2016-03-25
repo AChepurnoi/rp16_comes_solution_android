@@ -14,6 +14,7 @@ import android.widget.Spinner;
 
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.R;
+import com.bionic.td_android.Utility.EmailValidator;
 
 import java.util.Date;
 
@@ -28,6 +29,8 @@ public class First_step extends Fragment {
     private EditText name, surname, second_name, code_area, email, password, repeat_password;
     private Spinner gender;
     private Button next_step;
+    private EmailValidator validator = new EmailValidator();
+
 
     private Toolbar toolbar;
     @Nullable
@@ -44,8 +47,13 @@ public class First_step extends Fragment {
 
         boolean empty = (isEmpty(name) || isEmpty(surname) || isEmpty(email) || isEmpty(password) || isEmpty(repeat_password));
         if(empty)return false;
-        else return password.getText().toString().equals(repeat_password.getText().toString());
+        boolean passwords = password.getText().toString().equals(repeat_password.getText().toString());
+        if(!passwords) return false;
 
+        boolean validEmail = validator.validate(email.getText().toString());
+        if(!validEmail)return false;
+
+        return true;
     }
 
     private void configure(View view){

@@ -17,6 +17,7 @@ import com.bionic.td_android.MainWindow.MainActivity;
 import com.bionic.td_android.Networking.API;
 import com.bionic.td_android.R;
 import com.bionic.td_android.Register.RegisterActivity;
+import com.bionic.td_android.Utility.EmailValidator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -31,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private Fragment active;
     private View layout;
+    private EmailValidator validator = new EmailValidator();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +82,15 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login(String login,String pass){
 
+
+
+        boolean validEmail = validator.validate(login);
+        if(!validEmail){
+            Snackbar.make(layout,"Login should be a valid email",Snackbar.LENGTH_LONG).show();
+            return;
+        }
+
+
         Log.e("Bionic", "Start");
         String url = API.GET_USER();
         final AlertDialog dialog = new SpotsDialog(LoginActivity.this,"Loging in");
@@ -88,8 +100,6 @@ public class LoginActivity extends AppCompatActivity {
         Log.e("Bionic", encoded);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("Authorization","Basic " + encoded);
-
-
         client.get(this, url, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
