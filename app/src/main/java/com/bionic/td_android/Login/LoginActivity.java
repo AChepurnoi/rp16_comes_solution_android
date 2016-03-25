@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.MainWindow.MainActivity;
+import com.bionic.td_android.Networking.API;
 import com.bionic.td_android.R;
 import com.bionic.td_android.Register.RegisterActivity;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -79,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
     public void login(String login,String pass){
 
         Log.e("Bionic", "Start");
-        String url = "http://77.47.204.138:8080/rest/api/users/login";
+        String url = API.GET_USER();
         final AlertDialog dialog = new SpotsDialog(LoginActivity.this,"Loging in");
         dialog.show();
         Log.e("Bionic","Login: " + login + ". Pass: " + pass);

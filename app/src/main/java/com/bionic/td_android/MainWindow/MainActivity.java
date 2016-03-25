@@ -29,6 +29,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         active = new Dashboard_fragment();
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            if(bundle.getString(Intent.EXTRA_TEXT) != null) {
+                try {
+                    user = new ObjectMapper().readValue(bundle.getString(Intent.EXTRA_TEXT),User.class);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e("Bionic","Error parsing User in Main Activity");
+                }
+                getIntent().removeExtra(Intent.EXTRA_TEXT);
+
+            }
+        }
+
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container,active).commit();
 
@@ -39,21 +54,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Bundle bundle = getIntent().getExtras();
-        if(bundle != null){
-            if(bundle.getString(Intent.EXTRA_TEXT) != null) {
-                try {
-                    user = new ObjectMapper().readValue(bundle.getString(Intent.EXTRA_TEXT),User.class);
-                    view = (TextView) findViewById(R.id.user_name_textfield);
-                    view.setText(user.getFirstName() + " " + user.getLastName());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Log.e("Bionic","Error parsing User in Main Activity");
-                }
-                getIntent().removeExtra(Intent.EXTRA_TEXT);
 
-            }
-        }
+
     }
 
     public void my_account(){
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
+    public User getUser() {
+        return user;
+    }
 }

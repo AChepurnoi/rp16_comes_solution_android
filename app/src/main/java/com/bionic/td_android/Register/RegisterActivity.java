@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Login.LoginActivity;
+import com.bionic.td_android.Networking.API;
 import com.bionic.td_android.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loopj.android.http.AsyncHttpClient;
@@ -99,18 +100,16 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void registration() throws Exception{
         Log.e("Bionic", "Start");
-        String url = "http://77.47.204.138:8080/rest/api/auth";
+        String url = API.REGISTER();
 
         final AlertDialog dialog = new SpotsDialog(RegisterActivity.this,"Registration");
         dialog.show();
         AsyncHttpClient client = new AsyncHttpClient();
-        ObjectMapper mapper = new ObjectMapper();
 
-
-        String jsonInString = mapper.writeValueAsString(user);
+        String jsonInString = new ObjectMapper().writeValueAsString(user);
         Log.e("Bionic", jsonInString);
-        ByteArrayEntity be = new ByteArrayEntity(jsonInString.getBytes());
-        client.post(getApplicationContext(), url, be,"application/json", new TextHttpResponseHandler() {
+        client.post(getApplicationContext(), url, new ByteArrayEntity(jsonInString.getBytes()),
+                "application/json", new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.e("Bionic","Fail " + statusCode);

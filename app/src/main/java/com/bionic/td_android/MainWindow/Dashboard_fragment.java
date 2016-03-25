@@ -1,5 +1,6 @@
 package com.bionic.td_android.MainWindow;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,7 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.bionic.td_android.Entity.User;
+import com.bionic.td_android.Login.LoginActivity;
 import com.bionic.td_android.R;
 
 /**
@@ -19,6 +23,8 @@ public class Dashboard_fragment extends Fragment {
 
     private Toolbar toolbar;
     private MainActivity activity;
+    private User user;
+    private TextView greeting;
 
     @Nullable
     @Override
@@ -28,11 +34,22 @@ public class Dashboard_fragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
 
     private void configurePage(View view){
 
         activity = (MainActivity)getActivity();
+        user = activity.getUser();
         configureToolbar(view);
+        configureViews(view);
+
+        if(greeting == null)greeting = (TextView) view.findViewById(R.id.user_name_textfield);
+        if(user != null && greeting != null)greeting.setText(user.getFirstName() + " " + user.getLastName());
+
         Button my_account = (Button)view.findViewById(R.id.button_my_account);
         my_account.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +58,19 @@ public class Dashboard_fragment extends Fragment {
             }
         });
 
+    }
+
+    private void configureViews(View view){
+
+        TextView logout = (TextView) view.findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
     }
 
     private void configureToolbar(View view){
