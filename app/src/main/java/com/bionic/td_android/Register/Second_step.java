@@ -142,6 +142,7 @@ public class Second_step extends Fragment {
                 if(day_contract.isChecked())contract_days.setEnabled(true);
                     else contract_days.setEnabled(false);
                 zero_day_contract.setChecked(false);
+
                 scheduleBlock.setVisibility(View.VISIBLE);
 
             }
