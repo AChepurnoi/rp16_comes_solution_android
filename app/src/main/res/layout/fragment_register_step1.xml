@@ -44,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/input_name"
                 android:hint="Name"
+                android:inputType="textPersonName"
 
                 />
 
@@ -60,6 +61,7 @@
                     android:hint="Second name"
                     android:id="@+id/input_second_name"
                     android:layout_weight="1"
+                    android:inputType="textPersonName"
 
                     />
                 <EditText
@@ -68,6 +70,7 @@
                     android:hint="Surname"
                     android:id="@+id/input_surname"
                     android:layout_weight="1"
+                    android:inputType="textPersonName"
 
                     />
 
@@ -82,6 +85,7 @@
                 android:id="@+id/input_gender"
                 android:entries="@array/sex"
                 android:paddingBottom="15dp"
+                android:inputType="textPersonName"
 
                 />
 
@@ -91,6 +95,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Code Area"
                 android:id="@+id/input_code_area"
+                android:inputType="textPersonName"
 
                 />
 
@@ -104,6 +109,7 @@
                 android:id="@+id/input_email"
 
 
+
                 android:layout_marginTop="50dp"
 
                 />
@@ -114,6 +120,7 @@
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:id="@+id/input_password"
+
 
                 />
 

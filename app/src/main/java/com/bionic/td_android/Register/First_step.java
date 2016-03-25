@@ -4,13 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.R;
@@ -98,6 +101,19 @@ public class First_step extends Fragment {
                 parent.nextStep(formUser());
             }
         });
+
+        repeat_password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    RegisterActivity parent = (RegisterActivity) getActivity();
+                    parent.nextStep(formUser());
+                }
+                return false;
+            }
+        });
+
 
 
     }
