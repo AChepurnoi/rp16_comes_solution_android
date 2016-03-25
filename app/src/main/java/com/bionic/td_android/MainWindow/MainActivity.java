@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         active = new Dashboard_fragment();
+        active.setRetainInstance(true);
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
@@ -44,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container,active).commit();
+
+                .add(R.id.fragment_container,active).addToBackStack(null).commit();
 
     }
 

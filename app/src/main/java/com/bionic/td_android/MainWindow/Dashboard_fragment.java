@@ -47,7 +47,7 @@ public class Dashboard_fragment extends Fragment {
         configureToolbar(view);
         configureViews(view);
 
-        if(greeting == null)greeting = (TextView) view.findViewById(R.id.user_name_textfield);
+        greeting = (TextView) view.findViewById(R.id.user_name_textfield);
         if(user != null && greeting != null)greeting.setText(user.getFirstName() + " " + user.getLastName());
 
         Button my_account = (Button)view.findViewById(R.id.button_my_account);
