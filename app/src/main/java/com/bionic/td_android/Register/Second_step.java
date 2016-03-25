@@ -33,6 +33,7 @@ public class Second_step extends Fragment {
     private CheckBox day_contract, zero_day_contract;
     private EditText contract_days;
     private CheckBox mounthly_payments, four_week_payments;
+    private View scheduleBlock;
 
     @Nullable
     @Override
@@ -68,7 +69,7 @@ public class Second_step extends Fragment {
         contract_days = (EditText) view.findViewById(R.id.input_contract_days);
         mounthly_payments = (CheckBox) view.findViewById(R.id.checkbox_mounth_payments);
         four_week_payments = (CheckBox) view.findViewById(R.id.checkbox_four_week_payments);
-
+        scheduleBlock = view.findViewById(R.id.block_schedule);
         Button register = (Button)view.findViewById(R.id.button_register);
 
         register.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +142,7 @@ public class Second_step extends Fragment {
                 if(day_contract.isChecked())contract_days.setEnabled(true);
                     else contract_days.setEnabled(false);
                 zero_day_contract.setChecked(false);
+                scheduleBlock.setVisibility(View.VISIBLE);
 
             }
         });
@@ -153,6 +155,7 @@ public class Second_step extends Fragment {
                     contract_days.setEnabled(false);
                 }
 
+                scheduleBlock.setVisibility(View.GONE);
             }
         });
 
