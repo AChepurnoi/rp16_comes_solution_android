@@ -3,6 +3,7 @@ package com.bionic.td_android.Register;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -34,6 +35,7 @@ public class Second_step extends Fragment {
     private EditText contract_days;
     private CheckBox mounthly_payments, four_week_payments;
     private View scheduleBlock;
+    private View button_help;
 
     @Nullable
     @Override
@@ -71,6 +73,20 @@ public class Second_step extends Fragment {
         four_week_payments = (CheckBox) view.findViewById(R.id.checkbox_four_week_payments);
         scheduleBlock = view.findViewById(R.id.block_schedule);
         Button register = (Button)view.findViewById(R.id.button_register);
+        button_help = view.findViewById(R.id.button_help);
+
+        button_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder ab = new AlertDialog.Builder(v.getContext());
+                ab.setTitle("Schedule tip");
+                ab.setMessage("In this work schedule you fill in the number of hours you work each day");
+                ab.setCancelable(true);
+                ab.show();
+
+
+            }
+        });
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
