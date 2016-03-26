@@ -25,6 +25,7 @@ import com.loopj.android.http.TextHttpResponseHandler;
 import java.io.IOException;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.ByteArrayEntity;
 import dmax.dialog.SpotsDialog;
 
 public class LoginActivity extends AppCompatActivity {
@@ -78,6 +79,70 @@ public class LoginActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
 
         transaction.commit();
+    }
+
+    public void resetPassword(String email){
+
+         active = new LoginFragment();
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//
+//        transaction.replace(R.id.fragment_container, active);
+//        transaction.addToBackStack(null);
+//
+//        transaction.commit();
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.setTimeout(30000);
+        String url = API.RESET_PASSWORD();
+        final AlertDialog dialog = new SpotsDialog(LoginActivity.this,"Sending email");
+        dialog.show();
+        client.put(getApplicationContext(), url, new ByteArrayEntity(email.getBytes()),
+                "application/json", new TextHttpResponseHandler() {
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        dialog.dismiss();
+                        Snackbar.make(layout, responseString, Snackbar.LENGTH_LONG).show();
+                        Log.e("Bionic", "Fail " + responseString);
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                        dialog.dismiss();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                        transaction.replace(R.id.fragment_container, active);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                        Snackbar.make(layout, "mail successfully sent", Snackbar.LENGTH_LONG).show();
+                        Log.e("Bionic", responseString);
+
+                    }
+                });
+
+//        client.put(this, url, new TextHttpResponseHandler() {
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+//                dialog.dismiss();
+//                Log.e("Bionic", "Fail " + responseString);
+//                Snackbar.make(layout, responseString, Snackbar.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+//                dialog.dismiss();
+//                User user = null;
+//                try {
+//                    user = new ObjectMapper().readValue(responseString, User.class);
+//                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                    intent.putExtra(Intent.EXTRA_TEXT, responseString);
+//                    startActivity(intent);
+//                    Log.e("Bionic", user.toString());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                    Log.e("Bionic", "error parsing");
+//                }
+//            }
+//        });
     }
 
     public void login(String login,String pass){
