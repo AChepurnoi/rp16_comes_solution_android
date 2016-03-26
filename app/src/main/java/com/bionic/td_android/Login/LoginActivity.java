@@ -83,14 +83,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void resetPassword(String email){
 
-         active = new LoginFragment();
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//
-//        transaction.replace(R.id.fragment_container, active);
-//        transaction.addToBackStack(null);
-//
-//        transaction.commit();
-
+        final LoginActivity activity = this;
         AsyncHttpClient client = new AsyncHttpClient();
         client.setTimeout(30000);
         String url = API.RESET_PASSWORD();
@@ -108,41 +101,11 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, String responseString) {
                         dialog.dismiss();
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                        transaction.replace(R.id.fragment_container, active);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
                         Snackbar.make(layout, "mail successfully sent", Snackbar.LENGTH_LONG).show();
                         Log.e("Bionic", responseString);
-
+                        activity.onBackPressed();
                     }
                 });
-
-//        client.put(this, url, new TextHttpResponseHandler() {
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-//                dialog.dismiss();
-//                Log.e("Bionic", "Fail " + responseString);
-//                Snackbar.make(layout, responseString, Snackbar.LENGTH_LONG).show();
-//            }
-//
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-//                dialog.dismiss();
-//                User user = null;
-//                try {
-//                    user = new ObjectMapper().readValue(responseString, User.class);
-//                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                    intent.putExtra(Intent.EXTRA_TEXT, responseString);
-//                    startActivity(intent);
-//                    Log.e("Bionic", user.toString());
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                    Log.e("Bionic", "error parsing");
-//                }
-//            }
-//        });
     }
 
     public void login(String login,String pass){
