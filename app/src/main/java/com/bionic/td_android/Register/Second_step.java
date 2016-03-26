@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -104,10 +105,38 @@ public class Second_step extends Fragment {
                 && ( (day_contract.isChecked() && !contract_days.getText().toString().isEmpty()) || zero_day_contract.isChecked())
                 && (mounthly_payments.isChecked() || four_week_payments.isChecked());
 
+
+        int time = getHoursSum();
+        int expectedTime = 0;
+        try{
+            expectedTime = Integer.parseInt(contract_days.getText().toString());
+        }catch (Exception e){
+            Log.e("Bionic","Error parsing time");
+            return false;
+        }
+        if(time != expectedTime)return false;
         return checkbox;
 
     }
 
+    private int getHoursSum(){
+        int res = 0;
+        try{
+            res += Integer.parseInt(monday.getText().toString());
+            res += Integer.parseInt(tuesday.getText().toString());
+            res += Integer.parseInt(wednesday.getText().toString());
+            res += Integer.parseInt(thursday.getText().toString());
+            res += Integer.parseInt(friday.getText().toString());
+            res += Integer.parseInt(saturday.getText().toString());
+            res += Integer.parseInt(sunday.getText().toString());
+            return res;
+
+        }catch (Exception e){
+            Log.e("Bionic","Error parsing time");
+            return 0;
+        }
+
+    }
     private User formSecondPart(){
         User user = new User();
         List<Job> jobs = new ArrayList<>();
