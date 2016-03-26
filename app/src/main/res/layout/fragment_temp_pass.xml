@@ -34,12 +34,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Temporary password"
+                android:id="@+id/input_temp_password"
 
                 />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="New password"
+                android:id="@+id/input_new_password"
 
                 />
 
@@ -47,6 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Repeat new password"
+                android:id="@+id/input_repeat_password"
 
                 />
 
@@ -64,6 +67,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="Apply"
+                    android:id="@+id/button_apply_new_password"
 
                     />
 

@@ -122,13 +122,20 @@ public class Second_step extends Fragment {
     private int getHoursSum(){
         int res = 0;
         try{
-            res += Integer.parseInt(monday.getText().toString());
-            res += Integer.parseInt(tuesday.getText().toString());
-            res += Integer.parseInt(wednesday.getText().toString());
-            res += Integer.parseInt(thursday.getText().toString());
-            res += Integer.parseInt(friday.getText().toString());
-            res += Integer.parseInt(saturday.getText().toString());
-            res += Integer.parseInt(sunday.getText().toString());
+            if(!monday.getText().toString().isEmpty())
+                res += Integer.parseInt(monday.getText().toString());
+            if(!tuesday.getText().toString().isEmpty())
+                res += Integer.parseInt(tuesday.getText().toString());
+            if(!wednesday.getText().toString().isEmpty())
+                res += Integer.parseInt(wednesday.getText().toString());
+            if(!thursday.getText().toString().isEmpty())
+                res += Integer.parseInt(thursday.getText().toString());
+            if(!friday.getText().toString().isEmpty())
+                res += Integer.parseInt(friday.getText().toString());
+            if(!saturday.getText().toString().isEmpty())
+                res += Integer.parseInt(saturday.getText().toString());
+            if(!sunday.getText().toString().isEmpty())
+                res += Integer.parseInt(sunday.getText().toString());
             return res;
 
         }catch (Exception e){

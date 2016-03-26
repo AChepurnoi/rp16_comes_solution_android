@@ -12,12 +12,14 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.bionic.td_android.Entity.PasswordsDTO;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.MainWindow.MainActivity;
 import com.bionic.td_android.Networking.API;
 import com.bionic.td_android.R;
 import com.bionic.td_android.Register.RegisterActivity;
 import com.bionic.td_android.Utility.EmailValidator;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -81,6 +83,69 @@ public class LoginActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    public void change_password(String email){
+
+        active = new Temporary_pass_fragment();
+        ((Temporary_pass_fragment)active).setEmail(email);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, active);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+    }
+
+    public void changePassword(String temp, String newPassword, String email){
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        String url = API.CHANGE_PASSWORD();
+        String encoded = Base64.encodeToString((email + ":" + temp).getBytes(), 0);
+        Log.e("Bionic", encoded);
+        client.addHeader("Authorization", "Basic " + encoded);
+        final AlertDialog dialog = new SpotsDialog(LoginActivity.this,"Changing password");
+        PasswordsDTO dto = new PasswordsDTO();
+        dto.setEmail(email);
+        dto.setOldPassword(temp);
+        dto.setNewPassword(newPassword);
+
+        String jsonInString = null;
+        try {
+            jsonInString = new ObjectMapper().writeValueAsString(dto);
+            Log.e("Bionic",jsonInString);
+        } catch (JsonProcessingException e) {
+            Snackbar.make(layout,"Server error",Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        dialog.show();
+
+        //Дикий костыль, потому что на сервер приходит всегда сообщение без 2 последних символов, именно отсюда
+        //в логах сообщение полное - приходит без двух последних символов.Нужно пофиксить как-то (??)
+        jsonInString = jsonInString + "kk";
+
+
+
+        client.put(getApplicationContext(), url, new ByteArrayEntity(jsonInString.getBytes()),
+                "application/json", new TextHttpResponseHandler() {
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        dialog.dismiss();
+                        Snackbar.make(layout,"Cannot change password",Snackbar.LENGTH_LONG).show();
+                        Log.e("Bionic",responseString);
+
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                        dialog.dismiss();
+                        onBackPressed();
+                        Snackbar.make(layout,"Password has been changed",Snackbar.LENGTH_LONG).show();
+                    }
+                });
+
+
+
+    }
+
     public void resetPassword(String email){
 
         final LoginActivity activity = this;
@@ -108,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    public void login(String login,String pass){
+    public void login(final String login,String pass){
 
 
 
@@ -123,17 +188,30 @@ public class LoginActivity extends AppCompatActivity {
         String url = API.GET_USER();
         final AlertDialog dialog = new SpotsDialog(LoginActivity.this,"Loging in");
         dialog.show();
-        Log.e("Bionic","Login: " + login + ". Pass: " + pass);
+        Log.e("Bionic", "Login: " + login + ". Pass: " + pass);
         String encoded = Base64.encodeToString((login + ":" + pass).getBytes(), 0);
         Log.e("Bionic", encoded);
         AsyncHttpClient client = new AsyncHttpClient();
-        client.addHeader("Authorization","Basic " + encoded);
+        client.addHeader("Authorization", "Basic " + encoded);
         client.get(this, url, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 dialog.dismiss();
                 Log.e("Bionic", "Fail " + statusCode);
-                Snackbar.make(layout,"Unable to login.",Snackbar.LENGTH_LONG).show();
+
+                switch (statusCode){
+
+                    case 403:
+                        forgot_password();
+                        break;
+
+                    case 409:
+                        change_password(login);
+                        break;
+
+                    default:
+                        Snackbar.make(layout, "Unable to login.", Snackbar.LENGTH_LONG).show();
+                }
 
             }
 
@@ -143,13 +221,13 @@ public class LoginActivity extends AppCompatActivity {
                 User user = null;
                 try {
                     user = new ObjectMapper().readValue(responseString, User.class);
-                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                    intent.putExtra(Intent.EXTRA_TEXT,responseString);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra(Intent.EXTRA_TEXT, responseString);
                     startActivity(intent);
                     Log.e("Bionic", user.toString());
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Log.e("Bionic","error parsing");
+                    Log.e("Bionic", "error parsing");
                 }
             }
         });
