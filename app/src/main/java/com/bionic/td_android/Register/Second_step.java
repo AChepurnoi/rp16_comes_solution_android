@@ -106,22 +106,24 @@ public class Second_step extends Fragment {
                 && (mounthly_payments.isChecked() || four_week_payments.isChecked());
 
 
+        if(day_contract.isChecked()) {
 
-        int time = getHoursSum();
-        int expectedTime = 0;
-        try{
-            expectedTime = Integer.parseInt(contract_days.getText().toString());
-        }catch (Exception e){
-            Log.e("Bionic","Error parsing time");
-            return false;
+            int time = getHoursSum();
+            int expectedTime = 0;
+            try {
+                expectedTime = Integer.parseInt(contract_days.getText().toString());
+            } catch (Exception e) {
+                Log.e("Bionic", "Error parsing time");
+                return false;
+            }
+            if (time != expectedTime) return false;
+
+
+            if (!(isDayValid(monday) && isDayValid(tuesday) && isDayValid(wednesday) && isDayValid(thursday) && isDayValid(friday) && isDayValid(saturday) && isDayValid(sunday))) {
+                return false;
+            }
+
         }
-        if(time != expectedTime)return false;
-
-
-        if (!(isDayValid(monday) && isDayValid(tuesday) && isDayValid(wednesday) && isDayValid(thursday) && isDayValid(friday) && isDayValid(saturday) && isDayValid(sunday))) {
-            return false;
-        }
-
         return checkbox;
 
     }

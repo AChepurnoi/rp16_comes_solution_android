@@ -93,7 +93,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Code Area"
+                android:hint="Year of Birth"
                 android:id="@+id/input_code_area"
                 android:inputType="textPersonName"
 
