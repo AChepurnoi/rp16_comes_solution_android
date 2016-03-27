@@ -201,6 +201,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 switch (statusCode){
 
+                    case 404:
+                        Snackbar.make(layout, "User with this email is not registered", Snackbar.LENGTH_LONG).show();
+                        break;
+
                     case 403:
                         forgot_password();
                         break;

@@ -33,6 +33,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textPassword"
                 android:hint="Temporary password"
                 android:id="@+id/input_temp_password"
 
@@ -40,6 +41,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textPassword"
                 android:hint="New password"
                 android:id="@+id/input_new_password"
 
@@ -48,6 +50,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textPassword"
                 android:hint="Repeat new password"
                 android:id="@+id/input_repeat_password"
 
