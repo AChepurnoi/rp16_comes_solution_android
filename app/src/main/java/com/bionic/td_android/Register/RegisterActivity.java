@@ -13,11 +13,15 @@ import android.view.View;
 
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Login.LoginActivity;
+import com.bionic.td_android.MainWindow.MainActivity;
 import com.bionic.td_android.Networking.API;
 import com.bionic.td_android.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
+
+import java.io.IOException;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.ByteArrayEntity;
@@ -47,7 +51,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    private void forward(){
+    private void forward(User user){
+        this.user = user;
         second = active = new Second_step();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, active);
@@ -55,11 +60,30 @@ public class RegisterActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void nextStep(User user){
-
+    public void nextStep(User user,String email) {
+        final User inUser = user;
         if( ((First_step) active).validateForm() ) {
-            this.user = user;
-            forward();
+            String url = API.IS_EXIST();
+            AsyncHttpClient client = new AsyncHttpClient();
+            RequestParams params = new RequestParams();
+            params.put("email",email);
+            final AlertDialog dialog = new SpotsDialog(RegisterActivity.this,"Please wait");
+            dialog.show();
+            client.get(this, url,params, new TextHttpResponseHandler() {
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    Log.e("Bionic", "Fail " + statusCode + responseString);
+                    dialog.cancel();
+                    Snackbar.make(layout, "User already exist.", Snackbar.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                    dialog.cancel();
+                    forward(inUser);
+                }
+            });
+
         }
         else Snackbar.make(layout,"Fill in necessary forms or check password match",Snackbar.LENGTH_LONG).show();
     }

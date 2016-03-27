@@ -1,9 +1,12 @@
 package com.bionic.td_android.Register;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -16,10 +19,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bionic.td_android.Entity.User;
+import com.bionic.td_android.MainWindow.MainActivity;
+import com.bionic.td_android.Networking.API;
 import com.bionic.td_android.R;
 import com.bionic.td_android.Utility.EmailValidator;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.TextHttpResponseHandler;
 
+import java.io.IOException;
 import java.util.Date;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by user on 17.03.2016.
@@ -98,9 +109,9 @@ public class First_step extends Fragment {
             @Override
             public void onClick(View v) {
                 RegisterActivity parent = (RegisterActivity) getActivity();
-                parent.nextStep(formUser());
-            }
-        });
+                parent.nextStep(formUser(),email.getText().toString());
+        }
+    });
 
         repeat_password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
@@ -108,7 +119,7 @@ public class First_step extends Fragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     RegisterActivity parent = (RegisterActivity) getActivity();
-                    parent.nextStep(formUser());
+                    parent.nextStep(formUser(),email.getText().toString());
                 }
                 return false;
             }
