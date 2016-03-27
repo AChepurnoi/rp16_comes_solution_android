@@ -99,11 +99,12 @@ public class Second_step extends Fragment {
 
     }
 
-    public boolean validateForm(){
+    public boolean validateForm() {
 
         boolean checkbox = (driver.isChecked() || operator.isChecked())
                 && ( (day_contract.isChecked() && !contract_days.getText().toString().isEmpty()) || zero_day_contract.isChecked())
                 && (mounthly_payments.isChecked() || four_week_payments.isChecked());
+
 
 
         int time = getHoursSum();
@@ -115,8 +116,22 @@ public class Second_step extends Fragment {
             return false;
         }
         if(time != expectedTime)return false;
+
+
+        if (!(isDayValid(monday) && isDayValid(tuesday) && isDayValid(wednesday) && isDayValid(thursday) && isDayValid(friday) && isDayValid(saturday) && isDayValid(sunday))) {
+            return false;
+        }
+
         return checkbox;
 
+    }
+
+    private boolean isDayValid(EditText day) {
+        if ((Integer.parseInt(day.getText().toString()) < 0 || Integer.parseInt(day.getText().toString()) > 24)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private int getHoursSum(){
