@@ -41,6 +41,7 @@ public class User {
 
     public User() {
         id = 0;
+        enabled = true;
     }
 
     public WorkSchedule getWorkSchedule() {
