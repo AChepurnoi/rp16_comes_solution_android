@@ -58,6 +58,14 @@ public class Dashboard_fragment extends Fragment {
             }
         });
 
+        Button new_shift = (Button)view.findViewById(R.id.button_shift);
+        new_shift.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.new_shift();
+            }
+        });
+
     }
 
     private void configureViews(View view){
@@ -74,7 +82,6 @@ public class Dashboard_fragment extends Fragment {
     }
 
     private void configureToolbar(View view){
-
 
         toolbar = (Toolbar)view.findViewById(R.id.simple_toolbar);
         activity.setSupportActionBar(toolbar);

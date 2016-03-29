@@ -53,8 +53,6 @@ public class Account_fragment extends Fragment {
             return text;
 
 
-
-
         }
 
 
@@ -155,7 +153,6 @@ public class Account_fragment extends Fragment {
     }
 
     private void configureToolbar(View view){
-
 
         toolbar = (Toolbar)view.findViewById(R.id.simple_toolbar);
         activity.setSupportActionBar(toolbar);

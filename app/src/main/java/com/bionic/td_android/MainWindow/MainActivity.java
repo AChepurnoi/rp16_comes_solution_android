@@ -72,9 +72,16 @@ public class MainActivity extends AppCompatActivity {
 
         transaction.commit();
 
+    }
 
+    public void new_shift() {
+        active = new Shift_fragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
+        transaction.replace(R.id.fragment_container, active);
+        transaction.addToBackStack(null);
 
+        transaction.commit();
     }
 
     @Override
