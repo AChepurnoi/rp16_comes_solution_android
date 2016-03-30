@@ -66,6 +66,14 @@ public class Dashboard_fragment extends Fragment {
             }
         });
 
+        Button overview = (Button)view.findViewById(R.id.button_overview);
+        overview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.overview();
+            }
+        });
+
     }
 
     private void configureViews(View view){

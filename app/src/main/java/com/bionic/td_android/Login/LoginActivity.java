@@ -19,6 +19,7 @@ import com.bionic.td_android.Networking.API;
 import com.bionic.td_android.R;
 import com.bionic.td_android.Register.RegisterActivity;
 import com.bionic.td_android.Utility.EmailValidator;
+import com.bionic.td_android.Utility.EntitySaver;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loopj.android.http.AsyncHttpClient;
@@ -226,7 +227,8 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     user = new ObjectMapper().readValue(responseString, User.class);
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra(Intent.EXTRA_TEXT, responseString);
+//                    intent.putExtra(Intent.EXTRA_TEXT, responseString);
+                    EntitySaver.save(user);
                     startActivity(intent);
                     Log.e("Bionic", user.toString());
                 } catch (IOException e) {

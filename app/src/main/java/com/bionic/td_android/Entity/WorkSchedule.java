@@ -3,11 +3,12 @@ package com.bionic.td_android.Entity;
 /**
  * Created by user on 19.03.2016.
  */
+import com.orm.SugarRecord;
+
 import java.util.Date;
 
-
-public class WorkSchedule {
-    private Integer id;
+public class WorkSchedule extends SugarRecord {
+    private Long id;
 
     private Date creationTime;
 
@@ -20,14 +21,14 @@ public class WorkSchedule {
     private String saturday;
 
     public WorkSchedule() {
-        id = 0;
+        id = 0l;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -15,8 +15,8 @@ User not found - NOT_FOUND(404, "Not Found"),
 [16:55:03] Taras Yaroshchuk: (@RequestBody PasswordsDTO passwordsDTO)
 
      */
-    private static String SERVER_ADDRESS = "http://10.0.3.2:8080/";
-//    private static String SERVER_ADDRESS = "http://77.47.204.138:8080/";
+//    private static String SERVER_ADDRESS = "http://10.0.3.2:8080/";
+    private static String SERVER_ADDRESS = "http://77.47.204.138:8080/";
     private static String LOG_IN = SERVER_ADDRESS + "rest/api/auth/login";
     private static String GET_USER = SERVER_ADDRESS + "rest/api/users/login";
     private static String REGISTER = SERVER_ADDRESS + "rest/api/auth";

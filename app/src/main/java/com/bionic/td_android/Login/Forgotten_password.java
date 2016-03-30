@@ -34,6 +34,8 @@ public class Forgotten_password extends Fragment {
         View view = inflater.inflate(R.layout.fragment_forgotten_pass, container, false);
         configurePage(view);
         return view;
+
+
     }
 
 
