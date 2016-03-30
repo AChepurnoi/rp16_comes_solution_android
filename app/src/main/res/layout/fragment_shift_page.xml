@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     >
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <include layout="@layout/toolbar_simple" />
 
@@ -63,34 +62,21 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/block_shift_info_from_date_text"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:hint="01/01/2001"
-                        android:textAlignment="center"
-                        android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
-
-                    <ImageButton
-                        android:id="@+id/block_shift_info_from_date_button"
+                        android:id="@+id/block_shift_info_from_date"
                         style="@android:style/Widget.DeviceDefault.Light.Spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@android:drawable/ic_menu_my_calendar" />
+                        android:hint="01/01/2001"
+                        android:textSize="20sp" />
 
-                    <EditText
-                        android:id="@+id/block_shift_info_from_hour_text"
+                    <TextView
+                        android:id="@+id/block_shift_info_from_time"
+                        style="@android:style/Widget.DeviceDefault.Light.Spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:hint="00"
-                        android:inputType="time"/>
-                    <EditText
-                        android:id="@+id/block_shift_info_from_minute_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:hint="00"
-                        android:inputType="time"/>
+                        android:layout_marginLeft="10dp"
+                        android:hint="00:00"
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
@@ -115,42 +101,29 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/block_shift_info_to_date_text"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:hint="01/01/2001"
-                        android:textAlignment="center"
-                        android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
-
-                    <ImageButton
-                        android:id="@+id/block_shift_info_to_date_button"
+                        android:id="@+id/block_shift_info_to_date"
                         style="@android:style/Widget.DeviceDefault.Light.Spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@android:drawable/ic_menu_my_calendar" />
+                        android:hint="01/01/2001"
+                        android:textSize="20sp" />
 
-                    <EditText
-                        android:id="@+id/block_shift_info_to_hour_text"
+                    <TextView
+                        android:id="@+id/block_shift_info_to_time"
+                        style="@android:style/Widget.DeviceDefault.Light.Spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:hint="00"
-                        android:inputType="time"/>
-                    <EditText
-                        android:id="@+id/block_shift_info_to_minute_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:hint="00"
-                        android:inputType="time"/>
+                        android:layout_marginLeft="10dp"
+                        android:hint="00:00"
+                        android:textSize="20sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -164,23 +137,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/block_shift_info_pause_hour"
+                    <TextView
+                        android:id="@+id/block_shift_info_pauze"
+                        style="@android:style/Widget.DeviceDefault.Light.Spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:hint="00"
-                        android:inputType="time"/>
-                    <EditText
-                        android:id="@+id/block_shift_info_pause_minute"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:hint="00"
-                        android:inputType="time"/>
+                        android:layout_marginLeft="10dp"
+                        android:hint="00:00"
+                        android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -189,8 +155,7 @@
             android:orientation="vertical"
             android:paddingBottom="30dp"
             android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            >
+            android:paddingRight="30dp">
 
 
             <TextView
@@ -229,35 +194,21 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/block_drive_info_from_date_text"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:hint="01/01/2001"
-                        android:textAlignment="center"
-                        android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
-
-                    <ImageButton
-                        android:id="@+id/block_drive_info_from_date_button"
+                        android:id="@+id/block_drive_info_from_date"
                         style="@android:style/Widget.DeviceDefault.Light.Spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@android:drawable/ic_menu_my_calendar" />
+                        android:hint="01/01/2001"
+                        android:textSize="20sp" />
 
-                    <EditText
-                        android:id="@+id/block_drive_info_from_hour_text"
+                    <TextView
+                        android:id="@+id/block_drive_info_from_time"
+                        style="@android:style/Widget.DeviceDefault.Light.Spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:hint="00"
-                        android:inputType="time"/>
-                    <EditText
-                        android:id="@+id/block_drive_info_from_minute_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:hint="00"
-                        android:inputType="time"/>
-
+                        android:layout_marginLeft="10dp"
+                        android:hint="00:00"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -281,34 +232,21 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/block_drive_info_to_date_text"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:hint="01/01/2001"
-                        android:textAlignment="center"
-                        android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
-
-                    <ImageButton
-                        android:id="@+id/block_drive_info_to_date_button"
+                        android:id="@+id/block_drive_info_to_date"
                         style="@android:style/Widget.DeviceDefault.Light.Spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@android:drawable/ic_menu_my_calendar" />
+                        android:hint="01/01/2001"
+                        android:textSize="20sp" />
 
-                    <EditText
-                        android:id="@+id/block_drive_info_to_hour_text"
+                    <TextView
+                        android:id="@+id/block_drive_info_to_time"
+                        style="@android:style/Widget.DeviceDefault.Light.Spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:hint="00"
-                        android:inputType="time"/>
-                    <EditText
-                        android:id="@+id/block_drive_info_to_minute_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:hint="00"
-                        android:inputType="time"/>
+                        android:layout_marginLeft="10dp"
+                        android:hint="00:00"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -330,20 +268,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/block_drive_info_pause_hour"
+                    <TextView
+                        android:id="@+id/block_drive_info_pauze"
+                        style="@android:style/Widget.DeviceDefault.Light.Spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:hint="00"
-                        android:inputType="time"/>
-                    <EditText
-                        android:id="@+id/block_drive_info_pause_minute"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:hint="00"
-                        android:inputType="time"/>
+                        android:layout_marginLeft="10dp"
+                        android:hint="00:00"
+                        android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>
 
