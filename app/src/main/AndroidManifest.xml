@@ -7,10 +7,18 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Main">
+        android:theme="@style/Main"
+        android:name="com.orm.SugarApp"
+        >
+
+
+        <meta-data android:name="DATABASE" android:value="truck_driver_bionic.db" />
+        <meta-data android:name="VERSION" android:value="4" />
+        <meta-data android:name="QUERY_LOG" android:value="true" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.bionic" />
+
         <activity android:name=".Login.LoginActivity"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>

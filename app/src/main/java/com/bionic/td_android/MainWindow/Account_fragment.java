@@ -16,6 +16,7 @@ import com.bionic.td_android.Entity.Job;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Entity.WorkSchedule;
 import com.bionic.td_android.R;
+import com.bionic.td_android.Utility.EntitySaver;
 
 import java.util.List;
 
@@ -129,6 +130,7 @@ public class Account_fragment extends Fragment {
     }
 
     private void configUser(){
+        user = EntitySaver.getUser();
         name.setText(user.getFirstName() + " " + user.getInsertion() + " " + user.getLastName());
         sex.setText(user.getSex());
         email.setText(user.getEmail());

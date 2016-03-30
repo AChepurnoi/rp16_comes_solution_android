@@ -7,29 +7,32 @@ package com.bionic.td_android.Entity;
  *
  */
 
+import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
+
 import java.util.List;
 
 /**
  * @author vitalii.levash
  *
  */
-public class Job {
-    private Integer id;
+public class Job extends SugarRecord{
+    private Long id;
     private String jobName;
 
 
-
+    @Ignore
     private List<User> users;
 
     public Job() {
-        id = 0;
+        id = 0l;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

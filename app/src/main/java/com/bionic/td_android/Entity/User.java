@@ -3,6 +3,9 @@ package com.bionic.td_android.Entity;
 /**
  * Created by user on 19.03.2016.
  */
+import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
+
 import java.util.Date;
 import java.util.List;
 
@@ -12,11 +15,8 @@ import java.util.List;
  * @author Dima Budko
  * @version 0.3
  */
-
-public class User {
-
-    private Integer id;
-
+public class User extends SugarRecord{
+    private Long id;
     private String email;
     private String password;
     private String firstName;
@@ -27,7 +27,12 @@ public class User {
     private boolean zeroHours;
     private int contractHours;
     private boolean enabled;
+
+    private boolean verified;
+
+    @Ignore
     private Date birthDate;
+
     private Date passwordExpire;
 
     private WorkSchedule workSchedule;
@@ -38,26 +43,11 @@ public class User {
 
     private List<Job> jobs;
 
-
     public User() {
-        id = 0;
-        enabled = true;
     }
 
-    public WorkSchedule getWorkSchedule() {
-        return workSchedule;
-    }
-
-    public void setWorkSchedule(WorkSchedule workSchedule) {
-        this.workSchedule = workSchedule;
-    }
-
-    public Integer getId() {
+    public Long getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getEmail() {
@@ -140,7 +130,6 @@ public class User {
         this.employer = employer;
     }
 
-
     public List<Job> getJobs() {
         return jobs;
     }
@@ -181,6 +170,26 @@ public class User {
         this.role = role;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public WorkSchedule getWorkSchedule() {
+        return workSchedule;
+    }
+
+    public void setWorkSchedule(WorkSchedule workSchedule) {
+        this.workSchedule = workSchedule;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -201,6 +210,6 @@ public class User {
                 ", role=" + role +
                 ", employer=" + employer +
                 ", jobs=" + jobs +
-                '}';
+                "}";
     }
 }

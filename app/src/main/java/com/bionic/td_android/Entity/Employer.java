@@ -7,25 +7,27 @@ package com.bionic.td_android.Entity;
  *
  */
 
+import com.orm.SugarRecord;
+
 /**
  * @author vitalii.levash
  * @version 0.1
  */
-public class Employer {
-    private Integer id;
+public class Employer extends SugarRecord {
+    private Long id;
     private String name;
 
     public Employer(){
-        id = 0;
+        id = 0l;
     }
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

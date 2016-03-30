@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:paddingTop="5dp"
+    android:id="@+id/list_adapter_container_views"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Week"
+        android:layout_weight="1"
+        android:textAlignment="center"
+        android:id="@+id/week_view"
+        android:textSize="24sp"
+        android:background="@drawable/back"
+        />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="4545"
+        android:layout_weight="1"
+        android:textAlignment="center"
+        android:id="@+id/regular_payments_view"
+        android:textSize="24sp"
+        android:background="@drawable/back"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="4545"
+        android:layout_weight="1"
+        android:textAlignment="center"
+        android:id="@+id/additional_payments_view"
+        android:textSize="24sp"
+        android:background="@drawable/back"
+        />
+
+
+
+</LinearLayout>
