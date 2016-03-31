@@ -77,6 +77,18 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    public void work_information(){
+
+        Fragment a = active = new Account_fragment.WorkInformation_fragment();
+        fragments.add(a);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, active);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+    }
+
     public void change_password(){
 
         Fragment a = active = new Account_fragment.PersonalInformation_fragment.ChangePassword_fragment();

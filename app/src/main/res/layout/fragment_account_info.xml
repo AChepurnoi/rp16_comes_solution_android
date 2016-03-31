@@ -349,6 +349,7 @@
             android:layout_gravity="center"
             android:textSize="16sp"
             android:paddingBottom="50dp"
+            android:id="@+id/button_work_info"
             android:textColor="@android:color/holo_blue_light"
             />
     </LinearLayout>

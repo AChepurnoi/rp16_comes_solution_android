@@ -50,8 +50,46 @@
                 android:layout_height="wrap_content"
                 android:hint="Crane Operator"
                 android:id="@+id/checkbox_operator"
-
                 />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contract"
+                    android:textSize="16sp"
+
+                    />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/checkbox_day_contract"
+                    />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="days"
+                    android:id="@+id/input_contract_days"
+                    android:inputType="numberSigned"
+                    />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="0-day"
+                    android:id="@+id/checkbox_zero_contract"
+                    android:layout_marginRight="30dp"
+                    />
+
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -280,44 +318,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
 
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Contract"
-                    android:textSize="16sp"
-
-                    />
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:id="@+id/checkbox_day_contract"
-                    />
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="days"
-                    android:id="@+id/input_contract_days"
-                    android:inputType="numberSigned"
-                    />
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="0-day"
-                    android:id="@+id/checkbox_zero_contract"
-                    android:layout_marginRight="30dp"
-                    />
-
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
