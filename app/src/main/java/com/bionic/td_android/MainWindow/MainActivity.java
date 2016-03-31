@@ -65,6 +65,30 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    public void personal_information(){
+
+        Fragment a = active = new Account_fragment.PersonalInformation_fragment();
+        fragments.add(a);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, active);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+    }
+
+    public void change_password(){
+
+        Fragment a = active = new Account_fragment.PersonalInformation_fragment.ChangePassword_fragment();
+        fragments.add(a);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, active);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+    }
+
 
 
     @Override
@@ -110,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if(fragments.size() > 1){
+//            getSupportFragmentManager().popBackStack();
             super.onBackPressed();
             fragments.pop();
             active = fragments.peek();

@@ -2,6 +2,7 @@ package com.bionic.td_android.MainWindow;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -9,7 +10,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bionic.td_android.Entity.Job;
@@ -82,10 +86,171 @@ public class Account_fragment extends Fragment {
 
     }
 
+    public static class PersonalInformation_fragment extends Fragment{
+
+
+        public static class ChangePassword_fragment extends Fragment{
+
+
+            private EditText tmpPass,newPass,repeatPass;
+            private MainActivity activity;
+            private Toolbar toolbar;
+
+
+            @Nullable
+            @Override
+            public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+                View view = inflater.inflate(R.layout.fragment_temp_pass,container,false);
+                configure(view);
+                return view;
+            }
+
+            private void configure(View view){
+                activity = (MainActivity) getActivity();
+                configureToolbar(view);
+                configureViews(view);
+
+            }
+
+
+            private boolean validate(String tmp,String newPs,String repeatPs){
+
+                if(newPs.equals(repeatPs))return true;
+                return false;
+
+            }
+
+
+            private void configureViews(final View view){
+                tmpPass = (EditText) view.findViewById(R.id.input_temp_password);
+                tmpPass.setHint("Password");
+                newPass = (EditText) view.findViewById(R.id.input_new_password);
+                repeatPass = (EditText) view.findViewById(R.id.input_repeat_password);
+
+                Button button = (Button) view.findViewById(R.id.button_apply_new_password);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v){
+
+                        String tmp = tmpPass.getText().toString();
+                        String newPassword = newPass.getText().toString();
+                        String repeatPassword = repeatPass.getText().toString();
+                        if (validate(tmp, newPassword, repeatPassword)){
+                            //Changing password
+                        }
+                        else Snackbar.make(view, "Check password matching", Snackbar.LENGTH_LONG).show();
+
+                    }
+                });
+            }
+
+
+            private void configureToolbar(View view){
+
+
+                toolbar = (Toolbar)view.findViewById(R.id.simple_toolbar);
+                activity.setSupportActionBar(toolbar);
+                activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+                activity.getSupportActionBar().setTitle("Password Changing");
+
+            }
+
+            @Override
+            public boolean onOptionsItemSelected(MenuItem item) {
+
+                switch (item.getItemId()){
+                    case android.R.id.home:
+                        activity.onBackPressed();
+                        return true;
+
+
+                }
+                return super.onOptionsItemSelected(item);
+            }
+        }
+
+        private Toolbar toolbar;
+        private MainActivity activity;
+        private EditText name,lastname,insertion,postalCode,email;
+        private Spinner gender;
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.fragment_personal_information, container, false);
+            configurePage(view);
+            return view;
+        }
+
+        private void configureToolbar(View view){
+
+            toolbar = (Toolbar)view.findViewById(R.id.simple_toolbar);
+            activity.setSupportActionBar(toolbar);
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+            activity.getSupportActionBar().setTitle("Personal information");
+
+        }
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+
+            switch (item.getItemId()){
+                case android.R.id.home:
+                    activity.onBackPressed();
+                    return true;
+
+
+            }
+            return super.onOptionsItemSelected(item);
+        }
+
+
+        private void configurePage(View view){
+            activity = (MainActivity) getActivity();
+            configureToolbar(view);
+            configureViews(view);
+
+
+        }
+
+        private void configureViews(View view){
+            name = (EditText) view.findViewById(R.id.input_name);
+            lastname = (EditText)view.findViewById(R.id.input_surname);
+            insertion = (EditText)view.findViewById(R.id.input_second_name);
+            postalCode = (EditText)view.findViewById(R.id.input_code_area);
+            email = (EditText)view.findViewById(R.id.input_email);
+            gender = (Spinner) view.findViewById(R.id.input_gender);
+
+            User user = EntitySaver.getUser();
+
+            name.setText(user.getFirstName());
+            lastname.setText(user.getLastName());
+            insertion.setText(user.getInsertion());
+            if(user.getSex().equals("Male"))gender.setSelection(0);
+            else gender.setSelection(1);
+
+            email.setText(user.getEmail());
+
+            TextView change_password = (TextView) view.findViewById(R.id.button_change_password);
+            change_password.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activity.change_password();
+                }
+            });
+
+        }
+
+
+
+    }
+
     private MainActivity activity;
     private Toolbar toolbar;
 
-    private TextView name,sex,email,pos_1,pos_2,payment,contract;
+    private TextView name,sex,email,pos_1,pos_2,payment,contract,personalInfo;
     private User user;
     private LinearLayout scheduleContainer;
 
@@ -109,6 +274,8 @@ public class Account_fragment extends Fragment {
 
     }
 
+
+
     private void configureViews(View view){
 
         name = (TextView) view.findViewById(R.id.view_name);
@@ -121,6 +288,15 @@ public class Account_fragment extends Fragment {
         scheduleContainer = (LinearLayout) view.findViewById(R.id.working_schedule_list);
         pos_1.setVisibility(View.INVISIBLE);
         pos_2.setVisibility(View.INVISIBLE);
+        personalInfo = (TextView) view.findViewById(R.id.button_personal_info);
+        personalInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.personal_information();
+            }
+        });
+
+
 
         configUser();
     }

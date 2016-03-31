@@ -130,6 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Adjust personal information"
+                    android:id="@+id/button_personal_info"
                     android:layout_gravity="center"
                     android:paddingTop="5dp"
                     android:textSize="16sp"
