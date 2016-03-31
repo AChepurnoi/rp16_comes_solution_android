@@ -200,7 +200,7 @@ public class LoginActivity extends AppCompatActivity {
                 dialog.dismiss();
                 Log.e("Bionic", "Fail " + statusCode);
 
-                switch (statusCode){
+                switch (statusCode) {
 
                     case 404:
                         Snackbar.make(layout, "User with this email is not registered", Snackbar.LENGTH_LONG).show();
@@ -209,11 +209,9 @@ public class LoginActivity extends AppCompatActivity {
                     case 403:
                         forgot_password();
                         break;
-
                     case 409:
                         change_password(login);
                         break;
-
                     default:
                         Snackbar.make(layout, "Unable to login.", Snackbar.LENGTH_LONG).show();
                 }

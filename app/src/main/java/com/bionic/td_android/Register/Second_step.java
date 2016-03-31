@@ -2,6 +2,7 @@ package com.bionic.td_android.Register;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -99,7 +100,7 @@ public class Second_step extends Fragment {
 
     }
 
-    public boolean validateForm() {
+    public boolean validateForm(View layout) {
 
         boolean checkbox = (driver.isChecked() || operator.isChecked())
                 && ( (day_contract.isChecked() && !contract_days.getText().toString().isEmpty()) || zero_day_contract.isChecked())
@@ -114,12 +115,17 @@ public class Second_step extends Fragment {
                 expectedTime = Integer.parseInt(contract_days.getText().toString());
             } catch (Exception e) {
                 Log.e("Bionic", "Error parsing time");
+                Snackbar.make(layout, "Fill in necessary forms", Snackbar.LENGTH_LONG).show();
                 return false;
             }
-            if (time != expectedTime) return false;
+            if (time != expectedTime) {
+                Snackbar.make(layout,"The hours sum must be equal to total time",Snackbar.LENGTH_LONG).show();
+                return false;
+            }
 
 
             if (!(isDayValid(monday) && isDayValid(tuesday) && isDayValid(wednesday) && isDayValid(thursday) && isDayValid(friday) && isDayValid(saturday) && isDayValid(sunday))) {
+                Snackbar.make(layout,"The input value must be between 0 and 24",Snackbar.LENGTH_LONG).show();
                 return false;
             }
 
@@ -266,8 +272,6 @@ public class Second_step extends Fragment {
             case android.R.id.home:
                 activity.onBackPressed();
                 return true;
-
-
         }
         return super.onOptionsItemSelected(item);
     }

@@ -105,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void secondStedRegister(User user){
 
-        if( ((Second_step) active).validateForm() ) {
+        if( ((Second_step) active).validateForm(layout) ) {
             concatUsers(user);
             try {
                 Log.e("Bionic",new ObjectMapper().writeValueAsString(this.user));
@@ -115,11 +115,6 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.e("Bionic",e.getMessage());
             }
         }
-        else Snackbar.make(layout,"Fill in necessary forms",Snackbar.LENGTH_LONG).show();
-
-
-
-
     }
 
     private void registration() throws Exception{
