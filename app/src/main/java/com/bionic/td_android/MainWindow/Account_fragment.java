@@ -6,6 +6,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,6 +25,7 @@ import com.bionic.td_android.Entity.Job;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Entity.WorkSchedule;
 import com.bionic.td_android.R;
+import com.bionic.td_android.Utility.EmailValidator;
 import com.bionic.td_android.Utility.EntitySaver;
 
 import java.util.ArrayList;
@@ -220,6 +223,21 @@ public class Account_fragment extends Fragment {
 
         }
 
+        private boolean validate(){
+
+            if(name.getText().toString().isEmpty() || lastname.getText().toString().isEmpty()
+                    || email.getText().toString().isEmpty() )return false;
+
+            EmailValidator validator = new EmailValidator();
+            if(validator.validate(email.getText().toString()) == false) return false;
+
+
+//            @TODO add postal code validation
+
+
+            return true;
+        }
+
         private void configureViews(View view){
             name = (EditText) view.findViewById(R.id.input_name);
             lastname = (EditText)view.findViewById(R.id.input_surname);
@@ -246,6 +264,14 @@ public class Account_fragment extends Fragment {
                 }
             });
 
+            Button save = (Button) view.findViewById(R.id.button_save);
+            save.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
         }
 
 
@@ -253,7 +279,7 @@ public class Account_fragment extends Fragment {
     }
 
 
-    public static class WorkInformation_fragment extends Fragment{
+    public static class WorkInformation_fragment extends Fragment implements TextWatcher{
 
 
         private MainActivity activity;
@@ -265,6 +291,7 @@ public class Account_fragment extends Fragment {
         private CheckBox mounthly_payments, four_week_payments;
         private View scheduleBlock;
         private View button_help;
+        private TextView error;
 
 
         @Nullable
@@ -274,6 +301,37 @@ public class Account_fragment extends Fragment {
 
             configure(view);
             return view;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+            if(day_contract.isChecked()) {
+
+                int time = getHoursSum();
+                int expectedTime = 0;
+                try {
+                    expectedTime = Integer.parseInt(contract_days.getText().toString());
+                } catch (Exception e) {
+                    Log.e("Bionic", "Error parsing time");
+                }
+                if (time != expectedTime) {
+                    error.setVisibility(View.VISIBLE);
+
+                }else error.setVisibility(View.GONE);
+
+
+            }
         }
 
         private void configure(View view){
@@ -331,12 +389,22 @@ public class Account_fragment extends Fragment {
             friday = (EditText) view.findViewById(R.id.input_friday);
             saturday = (EditText) view.findViewById(R.id.input_saturday);
             sunday = (EditText) view.findViewById(R.id.input_sunday);
+
+            monday.addTextChangedListener(this);
+            tuesday.addTextChangedListener(this);
+            wednesday.addTextChangedListener(this);
+            thursday.addTextChangedListener(this);
+            friday.addTextChangedListener(this);
+            saturday.addTextChangedListener(this);
+            sunday.addTextChangedListener(this);
+
             day_contract = (CheckBox) view.findViewById(R.id.checkbox_day_contract);
             zero_day_contract = (CheckBox) view.findViewById(R.id.checkbox_zero_contract);
             contract_days = (EditText) view.findViewById(R.id.input_contract_days);
             mounthly_payments = (CheckBox) view.findViewById(R.id.checkbox_mounth_payments);
             four_week_payments = (CheckBox) view.findViewById(R.id.checkbox_four_week_payments);
             scheduleBlock = view.findViewById(R.id.block_schedule);
+            error = (TextView) view.findViewById(R.id.error_hours);
             Button register = (Button)view.findViewById(R.id.button_register);
             button_help = view.findViewById(R.id.button_help);
 

@@ -6,6 +6,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.bionic.td_android.Entity.Job;
 import com.bionic.td_android.Entity.User;
@@ -27,7 +30,7 @@ import java.util.List;
 /**
  * Created by user on 18.03.2016.
  */
-public class Second_step extends Fragment {
+public class Second_step extends Fragment implements TextWatcher{
 
     private RegisterActivity activity;
     private Toolbar toolbar;
@@ -37,6 +40,7 @@ public class Second_step extends Fragment {
     private EditText contract_days;
     private CheckBox mounthly_payments, four_week_payments;
     private View scheduleBlock;
+    private TextView error;
     private View button_help;
 
     @Nullable
@@ -57,6 +61,35 @@ public class Second_step extends Fragment {
 
     }
 
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+    @Override
+    public void afterTextChanged(Editable s) {
+
+        if(day_contract.isChecked()) {
+
+            int time = getHoursSum();
+            int expectedTime = 0;
+            try {
+                expectedTime = Integer.parseInt(contract_days.getText().toString());
+            } catch (Exception e) {
+                Log.e("Bionic", "Error parsing time");
+            }
+            if (time != expectedTime) {
+                error.setVisibility(View.VISIBLE);
+
+            }else error.setVisibility(View.GONE);
+
+
+        }
+    }
+
     private void configureViews(View view){
 
         driver = (CheckBox) view.findViewById(R.id.checkbox_driver);
@@ -68,6 +101,16 @@ public class Second_step extends Fragment {
         friday = (EditText) view.findViewById(R.id.input_friday);
         saturday = (EditText) view.findViewById(R.id.input_saturday);
         sunday = (EditText) view.findViewById(R.id.input_sunday);
+
+
+        monday.addTextChangedListener(this);
+        tuesday.addTextChangedListener(this);
+        wednesday.addTextChangedListener(this);
+        thursday.addTextChangedListener(this);
+        friday.addTextChangedListener(this);
+        saturday.addTextChangedListener(this);
+        sunday.addTextChangedListener(this);
+
         day_contract = (CheckBox) view.findViewById(R.id.checkbox_day_contract);
         zero_day_contract = (CheckBox) view.findViewById(R.id.checkbox_zero_contract);
         contract_days = (EditText) view.findViewById(R.id.input_contract_days);
@@ -76,6 +119,7 @@ public class Second_step extends Fragment {
         scheduleBlock = view.findViewById(R.id.block_schedule);
         Button register = (Button)view.findViewById(R.id.button_register);
         button_help = view.findViewById(R.id.button_help);
+        error = (TextView) view.findViewById(R.id.error_hours);
 
         button_help.setOnClickListener(new View.OnClickListener() {
             @Override
