@@ -3,12 +3,18 @@ package com.bionic.td_android.Entity;
 /**
  * Created by user on 19.03.2016.
  */
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.orm.SugarRecord;
 
+import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.List;
 
 public class WorkSchedule extends SugarRecord {
-    private Long id;
+    @JsonProperty("id")
+    private Long mId;
+
 
     private Date creationTime;
 
@@ -20,16 +26,31 @@ public class WorkSchedule extends SugarRecord {
     private String friday;
     private String saturday;
 
+
+
+    @JsonIgnore
+    @Override
+    public List<Field> getTableFields() {
+        return super.getTableFields();
+    }
+
+    @JsonIgnore
+    @Override
+    public String getSqlName() {
+        return super.getSqlName();
+    }
+
     public WorkSchedule() {
-        id = 0l;
+        mId = 0l;
     }
 
-    public Long getId() {
-        return id;
+    @JsonProperty("id")
+    public Long getmId() {
+        return mId;
     }
-
-    public void setId(Long id) {
-        this.id = id;
+    @JsonProperty("id")
+    public void setmId(Long id) {
+        this.mId = id;
     }
 
 
@@ -100,7 +121,7 @@ public class WorkSchedule extends SugarRecord {
     @Override
     public String toString() {
         return "WorkSchedule{" +
-                "id=" + id +
+                "id=" + mId +
                 ", creationTime=" + creationTime +
                 ", sunday='" + sunday + '\'' +
                 ", monday='" + monday + '\'' +

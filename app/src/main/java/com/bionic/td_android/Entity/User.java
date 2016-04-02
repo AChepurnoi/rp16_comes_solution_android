@@ -3,9 +3,13 @@ package com.bionic.td_android.Entity;
 /**
  * Created by user on 19.03.2016.
  */
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
 
@@ -15,8 +19,12 @@ import java.util.List;
  * @author Dima Budko
  * @version 0.3
  */
+
 public class User extends SugarRecord{
-    private Long id;
+
+
+    @JsonProperty("id")
+    private Long mId;
     private String email;
     private String password;
     private String firstName;
@@ -43,11 +51,15 @@ public class User extends SugarRecord{
 
     private List<Job> jobs;
 
+
+
     public User() {
+        mId = 0l;
     }
 
-    public Long getId() {
-        return id;
+    @JsonProperty("id")
+    public Long getmId() {
+        return mId;
     }
 
     public String getEmail() {
@@ -93,6 +105,7 @@ public class User extends SugarRecord{
     public String getSex() {
         return sex;
     }
+
 
     public void setSex(String sex) {
         this.sex = sex;
@@ -170,8 +183,9 @@ public class User extends SugarRecord{
         this.role = role;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @JsonProperty("id")
+    public void setmId(Long id) {
+        this.mId = id;
     }
 
     public WorkSchedule getWorkSchedule() {
@@ -193,7 +207,7 @@ public class User extends SugarRecord{
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "mId=" + mId +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
@@ -211,5 +225,18 @@ public class User extends SugarRecord{
                 ", employer=" + employer +
                 ", jobs=" + jobs +
                 "}";
+
+    }
+
+    @JsonIgnore
+    @Override
+    public List<Field> getTableFields() {
+        return super.getTableFields();
+    }
+
+    @JsonIgnore
+    @Override
+    public String getSqlName() {
+        return super.getSqlName();
     }
 }

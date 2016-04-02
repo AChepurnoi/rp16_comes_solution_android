@@ -9,11 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Login.LoginActivity;
 import com.bionic.td_android.R;
+import com.bionic.td_android.Utility.EntitySaver;
 
 /**
  * Created by user on 18.03.2016.
@@ -25,6 +27,7 @@ public class Dashboard_fragment extends Fragment {
     private MainActivity activity;
     private User user;
     private TextView greeting;
+    private LinearLayout alert;
 
     @Nullable
     @Override
@@ -37,15 +40,21 @@ public class Dashboard_fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        user = EntitySaver.getUser();
 
     }
 
     private void configurePage(View view){
 
         activity = (MainActivity)getActivity();
-        user = activity.getUser();
+        user = EntitySaver.getUser();
+
+
         configureToolbar(view);
         configureViews(view);
+
+        if(!user.isVerified())alert.setVisibility(View.VISIBLE);
+        else alert.setVisibility(View.GONE);
 
         greeting = (TextView) view.findViewById(R.id.user_name_textfield);
         if(user != null && greeting != null)greeting.setText(user.getFirstName() + " " + user.getLastName());
@@ -87,6 +96,17 @@ public class Dashboard_fragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        alert = (LinearLayout) view.findViewById(R.id.verification_alert);
+        TextView sendLink = (TextView) view.findViewById(R.id.button_send_link);
+        sendLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
     }
 
     private void configureToolbar(View view){

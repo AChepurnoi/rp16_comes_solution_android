@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.R;
+import com.bionic.td_android.Utility.EntitySaver;
 
 /**
  * Created by user on 18.03.2016.
@@ -24,7 +26,7 @@ public class Temporary_pass_fragment extends Fragment{
     private LoginActivity activity;
     private Toolbar toolbar;
     private String email;
-
+    private User user;
 
     @Nullable
     @Override
@@ -37,6 +39,7 @@ public class Temporary_pass_fragment extends Fragment{
 
     private void configure(View view){
         activity = (LoginActivity) getActivity();
+        user = EntitySaver.getUser();
         configureToolbar(view);
         configureViews(view);
 
@@ -68,7 +71,7 @@ public class Temporary_pass_fragment extends Fragment{
                     String newPassword = newPass.getText().toString();
                     String repeatPassword = repeatPass.getText().toString();
                     if (validate(tmp, newPassword, repeatPassword))
-                        activity.changePassword(tmp,newPassword,email);
+                        activity.changePassword(tmp,newPassword,user);
                     else Snackbar.make(view, "Check password mathing", Snackbar.LENGTH_LONG).show();
 
                 }catch (Exception e){

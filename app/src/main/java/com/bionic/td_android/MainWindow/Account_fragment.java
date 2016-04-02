@@ -1,6 +1,8 @@
 package com.bionic.td_android.MainWindow;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -8,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,15 +25,27 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bionic.td_android.Entity.Job;
+import com.bionic.td_android.Entity.PasswordsDTO;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Entity.WorkSchedule;
+import com.bionic.td_android.Networking.API;
 import com.bionic.td_android.R;
 import com.bionic.td_android.Utility.EmailValidator;
 import com.bionic.td_android.Utility.EntitySaver;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.TextHttpResponseHandler;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.ByteArrayEntity;
+import dmax.dialog.SpotsDialog;
 
 /**
  * Created by user on 18.03.2016.
@@ -144,8 +159,47 @@ public class Account_fragment extends Fragment {
                         String tmp = tmpPass.getText().toString();
                         String newPassword = newPass.getText().toString();
                         String repeatPassword = repeatPass.getText().toString();
+                        User user = EntitySaver.getUser();
                         if (validate(tmp, newPassword, repeatPassword)){
-                            //Changing password
+                            AsyncHttpClient client = new AsyncHttpClient();
+                            String url = API.CHANGE_PASSWORD(user.getmId());
+                            String encoded = Base64.encodeToString((user.getEmail() + ":" + tmp).getBytes(), 0);
+                            Log.e("Bionic", encoded);
+                            client.addHeader("Authorization", "Basic " + encoded);
+                            final android.app.AlertDialog dialog = new SpotsDialog(getContext(),"Changing password");
+                            PasswordsDTO dto = new PasswordsDTO();
+                            dto.setOldPassword(tmp);
+                            dto.setNewPassword(newPassword);
+                            String jsonInString = null;
+                            try {
+                                jsonInString = new ObjectMapper().writeValueAsString(dto);
+                                Log.e("Bionic",jsonInString);
+                            } catch (JsonProcessingException e) {
+                                Snackbar.make(getView(),"Application error",Snackbar.LENGTH_LONG).show();
+                                return;
+                            }
+                            dialog.show();
+                            //Дикий костыль, потому что на сервер приходит всегда сообщение без 2 последних символов, именно отсюда
+                            //в логах сообщение полное - приходит без двух последних символов.Нужно пофиксить как-то (??)
+                            jsonInString = jsonInString + "kk";
+                            client.put(getContext(), url, new ByteArrayEntity(jsonInString.getBytes()),
+                                    "application/json", new TextHttpResponseHandler() {
+                                        @Override
+                                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                                            dialog.dismiss();
+                                            Snackbar.make(getView(),"Invalid password",Snackbar.LENGTH_LONG).show();
+                                            Log.e("Bionic",responseString);
+
+                                        }
+
+                                        @Override
+                                        public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                                            dialog.dismiss();
+
+                                            Snackbar.make(getView(),"Password has been changed",Snackbar.LENGTH_LONG).show();
+                                        }
+                                    });
+
                         }
                         else Snackbar.make(view, "Check password matching", Snackbar.LENGTH_LONG).show();
 
@@ -183,6 +237,14 @@ public class Account_fragment extends Fragment {
         private MainActivity activity;
         private EditText name,lastname,insertion,postalCode,email;
         private Spinner gender;
+        private User user;
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            user = EntitySaver.getUser();
+            updateView(getView());
+        }
 
         @Nullable
         @Override
@@ -238,16 +300,10 @@ public class Account_fragment extends Fragment {
             return true;
         }
 
-        private void configureViews(View view){
-            name = (EditText) view.findViewById(R.id.input_name);
-            lastname = (EditText)view.findViewById(R.id.input_surname);
-            insertion = (EditText)view.findViewById(R.id.input_second_name);
-            postalCode = (EditText)view.findViewById(R.id.input_code_area);
-            email = (EditText)view.findViewById(R.id.input_email);
-            gender = (Spinner) view.findViewById(R.id.input_gender);
+
+        private void updateView(View view){
 
             User user = EntitySaver.getUser();
-
             name.setText(user.getFirstName());
             lastname.setText(user.getLastName());
             insertion.setText(user.getInsertion());
@@ -255,6 +311,18 @@ public class Account_fragment extends Fragment {
             else gender.setSelection(1);
 
             email.setText(user.getEmail());
+
+        }
+        private void configureViews(View view){
+
+            name = (EditText) view.findViewById(R.id.input_name);
+            lastname = (EditText)view.findViewById(R.id.input_surname);
+            insertion = (EditText)view.findViewById(R.id.input_second_name);
+            postalCode = (EditText)view.findViewById(R.id.input_code_area);
+            email = (EditText)view.findViewById(R.id.input_email);
+            gender = (Spinner) view.findViewById(R.id.input_gender);
+
+            updateView(view);
 
             TextView change_password = (TextView) view.findViewById(R.id.button_change_password);
             change_password.setOnClickListener(new View.OnClickListener() {
@@ -267,7 +335,78 @@ public class Account_fragment extends Fragment {
             Button save = (Button) view.findViewById(R.id.button_save);
             save.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v){
+                    if(!validate()) return;
+                    Log.e("Bionic", "User before: " + user.toString());
+
+                    user.setFirstName(name.getText().toString());
+                    user.setLastName(lastname.getText().toString());
+                    user.setInsertion(insertion.getText().toString());
+                    user.setEmail(email.getText().toString());
+                    user.setSex(gender.getSelectedItem().toString());
+                    Log.e("Bionic", "User after: " + user.toString());
+                    final String url = API.UPDATE_USER(user.getmId());
+                    final android.app.AlertDialog dialog = new SpotsDialog(getContext(),"Editing");
+                    dialog.show();
+                    AsyncHttpClient client = new AsyncHttpClient();
+
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    String login = sharedPref.getString("login", "");
+                    String pass = sharedPref.getString("password", "");
+
+                    Log.e("Bionic", "L:" +login + "|P: " +pass + "|id: " + user.getmId());
+                    String encoded = Base64.encodeToString((login + ":" + pass).getBytes(), 0);
+                    client.addHeader("Authorization", "Basic " + encoded);
+                    String jsonInString = null;
+                    user.setId(user.getmId());
+                    try {
+
+                        ObjectMapper mapper = new ObjectMapper();
+                        ObjectWriter writer = mapper.writerWithType(User.class);
+                        jsonInString = writer.writeValueAsString(user);
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                        dialog.dismiss();
+                        Snackbar.make(getView(),"Parsing error",Snackbar.LENGTH_LONG).show();
+                    }
+
+                    //Опять эта же проблема
+                    jsonInString = jsonInString + "kk";
+                    Log.e("Bionic", "JSON: " + jsonInString);
+                    client.put(getContext(), url, new ByteArrayEntity(jsonInString.getBytes()),
+                            "application/json", new TextHttpResponseHandler() {
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                                    switch (statusCode){
+                                        case 403:
+                                            Snackbar.make(getView(), "This email is already exsists", Snackbar.LENGTH_LONG).show();
+                                            break;
+                                        default:
+                                            Snackbar.make(getView(), "Error editing profile", Snackbar.LENGTH_LONG).show();
+                                            break;
+
+                                    }
+                                    dialog.dismiss();
+                                }
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, String responseString) {
+
+                                    dialog.dismiss();
+                                    Snackbar.make(getView(), "Changes saved", Snackbar.LENGTH_LONG).show();
+                                    User user = null;
+                                    try {
+                                        user = new ObjectMapper().readValue(responseString, User.class);
+                                        EntitySaver.save(user);
+                                        Log.e("Bionic", user.toString());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        Log.e("Bionic", "error parsing");
+                                    }
+
+
+                                }
+                            });
+
 
                 }
             });
@@ -292,6 +431,7 @@ public class Account_fragment extends Fragment {
         private View scheduleBlock;
         private View button_help;
         private TextView error;
+        private User user;
 
 
         @Nullable
@@ -337,6 +477,7 @@ public class Account_fragment extends Fragment {
         private void configure(View view){
 
             activity = (MainActivity)getActivity();
+
             configureToolbar(view);
             configureViews(view);
             checkboxBehaviour();
@@ -345,7 +486,7 @@ public class Account_fragment extends Fragment {
         }
 
         private void loadValues(){
-            User user = EntitySaver.getUser();
+            user = EntitySaver.getUser();
 
             List<Job> jobs = user.getJobs();
             for (Job job : jobs) {
@@ -382,6 +523,7 @@ public class Account_fragment extends Fragment {
 
             driver = (CheckBox) view.findViewById(R.id.checkbox_driver);
             operator = (CheckBox) view.findViewById(R.id.checkbox_operator);
+
             monday = (EditText) view.findViewById(R.id.input_monday);
             tuesday = (EditText) view.findViewById(R.id.input_tuesday);
             wednesday = (EditText) view.findViewById(R.id.input_wednesday);
@@ -425,6 +567,98 @@ public class Account_fragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
+                    if(!validateForm(v)) return;
+                    Log.e("Bionic", "User before: " + user.toString());
+
+                    List<Job> jobs = new ArrayList<Job>();
+                    if(driver.isChecked())jobs.add(new Job("Driver"));
+                    if(operator.isChecked())jobs.add(new Job("Operator"));
+                    user.setJobs(jobs);
+
+                    if(zero_day_contract.isChecked()){
+                        user.setZeroHours(true);
+                        user.setWorkSchedule(null);
+                    }
+                    else {
+                        if(!contract_days.getText().toString().isEmpty())
+                            user.setContractHours(Integer.parseInt(contract_days.getText().toString()));
+                        user.setZeroHours(false);
+                        WorkSchedule schedule = new WorkSchedule();
+                        schedule.setCreationTime(new Date());
+                        schedule.setMonday(monday.getText().toString());
+                        schedule.setTuesday(tuesday.getText().toString());
+                        schedule.setWednesday(wednesday.getText().toString());
+                        schedule.setThursday(thursday.getText().toString());
+                        schedule.setFriday(friday.getText().toString());
+                        schedule.setSaturday(saturday.getText().toString());
+                        schedule.setSunday(sunday.getText().toString());
+                        user.setWorkSchedule(schedule);
+                    }
+
+                    if(four_week_payments.isChecked())user.setFourWeekPayOff(true);
+                    else user.setFourWeekPayOff(false);
+
+
+                    Log.e("Bionic", "User after: " + user.toString());
+                    final String url = API.UPDATE_USER(user.getmId());
+                    final android.app.AlertDialog dialog = new SpotsDialog(getContext(),"Editing");
+                    dialog.show();
+                    AsyncHttpClient client = new AsyncHttpClient();
+
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    String login = sharedPref.getString("login", "");
+                    String pass = sharedPref.getString("password", "");
+
+                    Log.e("Bionic", "L:" +login + "|P: " +pass + "|id: " + user.getmId());
+                    String encoded = Base64.encodeToString((login + ":" + pass).getBytes(), 0);
+                    client.addHeader("Authorization", "Basic " + encoded);
+                    String jsonInString = null;
+                    user.setId(user.getmId());
+                    try {
+                        ObjectMapper mapper = new ObjectMapper();
+                        ObjectWriter writer = mapper.writerWithType(User.class);
+                        jsonInString = writer.writeValueAsString(user);
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                        dialog.dismiss();
+                        Snackbar.make(getView(),"Parsing error",Snackbar.LENGTH_LONG).show();
+                    }
+                    //Опять эта же проблема
+                    jsonInString = jsonInString + "kk";
+                    Log.e("Bionic", "JSON: " + jsonInString);
+                    client.put(getContext(), url, new ByteArrayEntity(jsonInString.getBytes()),
+                            "application/json", new TextHttpResponseHandler() {
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                                    dialog.dismiss();
+                                    switch (statusCode){
+                                        case 403:
+                                            Snackbar.make(getView(), "This email is already exsists", Snackbar.LENGTH_LONG).show();
+                                            break;
+                                        default:
+                                            Snackbar.make(getView(), "Error editing profile " + statusCode, Snackbar.LENGTH_LONG).show();
+                                            break;
+                                    }
+
+                                }
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, String responseString) {
+
+                                    dialog.dismiss();
+                                    Snackbar.make(getView(), "Changes saved", Snackbar.LENGTH_LONG).show();
+                                    User user = null;
+                                    try {
+                                        user = new ObjectMapper().readValue(responseString, User.class);
+                                        EntitySaver.save(user);
+                                        Log.e("Bionic", user.toString());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        Log.e("Bionic", "error parsing");
+                                    }
+
+
+                                }
+                            });
 
                 }
             });
@@ -498,46 +732,7 @@ public class Account_fragment extends Fragment {
             }
 
         }
-        private User formSecondPart(){
-            User user = new User();
-            List<Job> jobs = new ArrayList<>();
-            if(driver.isChecked()){
-                Job tmp = new Job();
-                tmp.setJobName("Driver");
-                jobs.add(tmp);
-            }
-            if(operator.isChecked()){
-                Job tmp = new Job();
-                tmp.setJobName("Operator");
-                jobs.add(tmp);
-            }
-            user.setJobs(jobs);
-            WorkSchedule schedule = new WorkSchedule();
-            schedule.setCreationTime(new Date());
-            schedule.setMonday(monday.getText().toString());
-            schedule.setTuesday(tuesday.getText().toString());
-            schedule.setWednesday(wednesday.getText().toString());
-            schedule.setThursday(thursday.getText().toString());
-            schedule.setFriday(friday.getText().toString());
-            schedule.setSaturday(saturday.getText().toString());
-            schedule.setSunday(sunday.getText().toString());
-            user.setWorkSchedule(schedule);
-            if(day_contract.isChecked()){
-                user.setZeroHours(false);
-                if(!contract_days.getText().toString().isEmpty())
-                    user.setContractHours(Integer.parseInt(contract_days.getText().toString()));
-            }
 
-            if(zero_day_contract.isChecked()){
-                user.setZeroHours(true);
-            }
-
-            if(four_week_payments.isChecked())user.setFourWeekPayOff(true);
-
-            return user;
-
-
-        }
 
         private void checkboxBehaviour(){
 
@@ -666,8 +861,6 @@ public class Account_fragment extends Fragment {
                 activity.work_information();
             }
         });
-
-
 
         configUser();
     }

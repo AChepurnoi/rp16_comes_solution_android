@@ -5,20 +5,12 @@ package com.bionic.td_android.Entity;
  */
 
 public class PasswordsDTO {
-    private String email;
     private String oldPassword;
     private String newPassword;
 
     public PasswordsDTO() {
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getOldPassword() {
         return oldPassword;
@@ -39,7 +31,6 @@ public class PasswordsDTO {
     @Override
     public String toString() {
         return "PasswordsDTO{" +
-                "email='" + email + '\'' +
                 ", oldPassword='" + oldPassword + '\'' +
                 ", newPassword='" + newPassword + '\'' +
                 '}';

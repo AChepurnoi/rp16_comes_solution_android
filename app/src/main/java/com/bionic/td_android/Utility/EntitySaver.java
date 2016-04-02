@@ -19,10 +19,12 @@ public class EntitySaver {
         Job.deleteAll(Job.class);
         Employer.deleteAll(Employer.class);
 
-        user.getWorkSchedule().save();
-        for (Job job : user.getJobs()) {
-            job.save();
-        }
+        if(user.getWorkSchedule() != null)user.getWorkSchedule().save();
+
+        if(user.getJobs() != null)
+            for (Job job : user.getJobs())
+                job.save();
+
         if(user.getEmployer() != null)
             user.getEmployer().save();
 
@@ -32,7 +34,8 @@ public class EntitySaver {
     public static User getUser(){
         User user;
         List<User> users = User.listAll(User.class);
-        user = users.get(0);
+
+        user = users.get(users.size() - 1);
         List<Job> jobs = Job.listAll(Job.class);
         user.setJobs(jobs);
 

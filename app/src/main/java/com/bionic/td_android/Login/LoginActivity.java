@@ -2,7 +2,9 @@ package com.bionic.td_android.Login;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -87,7 +89,6 @@ public class LoginActivity extends AppCompatActivity {
     public void change_password(String email){
 
         active = new Temporary_pass_fragment();
-        ((Temporary_pass_fragment)active).setEmail(email);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         transaction.replace(R.id.fragment_container, active);
@@ -96,16 +97,15 @@ public class LoginActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void changePassword(String temp, String newPassword, String email){
+    public void changePassword(String temp, String newPassword, User user){
 
         AsyncHttpClient client = new AsyncHttpClient();
-        String url = API.CHANGE_PASSWORD();
-        String encoded = Base64.encodeToString((email + ":" + temp).getBytes(), 0);
+        String url = API.CHANGE_PASSWORD(user.getmId());
+        String encoded = Base64.encodeToString((user.getEmail() + ":" + temp).getBytes(), 0);
         Log.e("Bionic", encoded);
         client.addHeader("Authorization", "Basic " + encoded);
         final AlertDialog dialog = new SpotsDialog(LoginActivity.this,"Changing password");
         PasswordsDTO dto = new PasswordsDTO();
-        dto.setEmail(email);
         dto.setOldPassword(temp);
         dto.setNewPassword(newPassword);
 
@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
         dialog.show();
 
         //Дикий костыль, потому что на сервер приходит всегда сообщение без 2 последних символов, именно отсюда
-        //в логах сообщение полное - приходит без двух последних символов.Нужно пофиксить как-то (??)
+        //в логах сообщение полное - приходит без двух последних символов.Нужно пофиксить как-то (??????)
         jsonInString = jsonInString + "kk";
 
 
@@ -185,6 +185,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
+
         Log.e("Bionic", "Start");
         String url = API.GET_USER();
         final AlertDialog dialog = new SpotsDialog(LoginActivity.this,"Loging in");
@@ -194,12 +195,20 @@ public class LoginActivity extends AppCompatActivity {
         Log.e("Bionic", encoded);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("Authorization", "Basic " + encoded);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("login",login);
+        editor.putString("password",pass);
+        editor.commit();
+
         client.get(this, url, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 dialog.dismiss();
                 Log.e("Bionic", "Fail " + statusCode);
 
+                User user = null;
                 switch (statusCode) {
 
                     case 404:
@@ -207,10 +216,39 @@ public class LoginActivity extends AppCompatActivity {
                         break;
 
                     case 403:
+                        Log.e("Bionic",statusCode + "code " + responseString);
+//                        change_password(login);
                         forgot_password();
+                        Snackbar.make(layout, "Password expired. Please request new temporary password", Snackbar.LENGTH_LONG).show();
+                        break;
+                    case 412:
+
+
+                        try {
+                            user = new ObjectMapper().readValue(responseString, User.class);
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            EntitySaver.save(user);
+
+                            startActivity(intent);
+                            Log.e("Bionic", user.toString());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Log.e("Bionic", "error parsing");
+                        }
                         break;
                     case 409:
-                        change_password(login);
+//                        forgot_password();
+
+                        try {
+                            user = new ObjectMapper().readValue(responseString, User.class);
+                            EntitySaver.save(user);
+                            change_password(login);
+                            Log.e("Bionic", user.toString());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Log.e("Bionic", "error parsing");
+                        }
+                        Snackbar.make(layout, "Please change your password", Snackbar.LENGTH_LONG).show();
                         break;
                     default:
                         Snackbar.make(layout, "Unable to login.", Snackbar.LENGTH_LONG).show();
@@ -226,6 +264,7 @@ public class LoginActivity extends AppCompatActivity {
                     user = new ObjectMapper().readValue(responseString, User.class);
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 //                    intent.putExtra(Intent.EXTRA_TEXT, responseString);
+
                     EntitySaver.save(user);
                     startActivity(intent);
                     Log.e("Bionic", user.toString());
