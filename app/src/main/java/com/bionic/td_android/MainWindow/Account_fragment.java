@@ -613,7 +613,7 @@ public class Account_fragment extends Fragment {
                     String encoded = Base64.encodeToString((login + ":" + pass).getBytes(), 0);
                     client.addHeader("Authorization", "Basic " + encoded);
                     String jsonInString = null;
-                    user.setId(user.getmId());
+                    user.setId(user.getmId()); //Не уверен, зачем это нужно, вроде бы нет, но нужно проверить перед удалением
                     try {
                         ObjectMapper mapper = new ObjectMapper();
                         ObjectWriter writer = mapper.writerWithType(User.class);

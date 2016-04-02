@@ -16,6 +16,7 @@ public class API {
     private static String RESET_PASSWORD = SERVER_ADDRESS + "rest/api/auth/password";
     private static String IS_EXIST = SERVER_ADDRESS + "rest/api/auth/exist";
     private static String UPDATE_USER = SERVER_ADDRESS + "rest/api/users/";
+    private static String VERIFICATION = SERVER_ADDRESS + "rest/api/users/";
     public static String GET_USER() {
         return GET_USER;
     }
@@ -40,6 +41,9 @@ public class API {
 
     public static String UPDATE_USER(long userId){
         return UPDATE_USER + userId;
+    }
+    public static String VERIFICATION(long userId){
+        return VERIFICATION + userId + "/verify";
     }
 
 
