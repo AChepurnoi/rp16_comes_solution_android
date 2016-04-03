@@ -179,6 +179,7 @@ public class Second_step extends Fragment implements TextWatcher{
     }
 
     private boolean isDayValid(EditText day) {
+        if(day.getText().toString().isEmpty())return true;
         if ((Integer.parseInt(day.getText().toString()) < 0 || Integer.parseInt(day.getText().toString()) > 24)) {
             return false;
         } else {
