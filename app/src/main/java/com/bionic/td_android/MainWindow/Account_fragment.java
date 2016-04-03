@@ -630,7 +630,9 @@ public class Account_fragment extends Fragment {
                             "application/json", new TextHttpResponseHandler() {
                                 @Override
                                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                                    Log.e("Bionic", responseString);
+                                    if(responseString != null)
+                                        Log.e("Bionic", responseString);
+
                                     dialog.dismiss();
                                     switch (statusCode){
                                         case 403:

@@ -2,6 +2,7 @@ package com.bionic.td_android.MainWindow;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -109,7 +110,9 @@ public class Dashboard_fragment extends Fragment {
         });
 
         alert = (LinearLayout) view.findViewById(R.id.verification_alert);
+
         final TextView sendLink = (TextView) view.findViewById(R.id.button_send_link);
+        sendLink.setPaintFlags(sendLink.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         sendLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
