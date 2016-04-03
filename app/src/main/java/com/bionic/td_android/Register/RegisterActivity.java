@@ -13,15 +13,12 @@ import android.view.View;
 
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Login.LoginActivity;
-import com.bionic.td_android.MainWindow.MainActivity;
 import com.bionic.td_android.Networking.API;
 import com.bionic.td_android.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
-
-import java.io.IOException;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.ByteArrayEntity;
@@ -147,7 +144,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra(Intent.EXTRA_TEXT,"Registration complete");
+                intent.putExtra(Intent.EXTRA_TEXT,"Registration complete. You have been sent a link to verify your account. Please check your email.");
                 startActivity(intent);
             }
         });

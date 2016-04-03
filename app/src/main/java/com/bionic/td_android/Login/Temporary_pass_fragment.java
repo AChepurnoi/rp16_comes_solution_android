@@ -72,7 +72,7 @@ public class Temporary_pass_fragment extends Fragment{
                     String repeatPassword = repeatPass.getText().toString();
                     if (validate(tmp, newPassword, repeatPassword))
                         activity.changePassword(tmp,newPassword,user);
-                    else Snackbar.make(view, "Check password mathing", Snackbar.LENGTH_LONG).show();
+                    else Snackbar.make(view, "Check password matching", Snackbar.LENGTH_LONG).show();
 
                 }catch (Exception e){
                     Log.e("Bionic","Error with DTO object");
