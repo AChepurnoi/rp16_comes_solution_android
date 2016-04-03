@@ -503,7 +503,7 @@ public class Account_fragment extends Fragment {
 
             }else {
                 day_contract.setChecked(true);
-                contract_days.setText(user.getContractHours());
+                contract_days.setText(String.valueOf(user.getContractHours()));
                 WorkSchedule schedule = user.getWorkSchedule();
                 monday.setText(schedule.getMonday());
                 tuesday.setText(schedule.getTuesday());
