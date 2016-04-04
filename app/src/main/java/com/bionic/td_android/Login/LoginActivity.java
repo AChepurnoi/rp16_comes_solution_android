@@ -208,7 +208,7 @@ public class LoginActivity extends AppCompatActivity {
                 dialog.dismiss();
                 Log.e("Bionic", "Fail " + statusCode + " " + responseString);
 
-                if (responseString.contains("User account is locked")) {
+                if (responseString.contains("locked")) {
                     Snackbar.make(layout, "You have input wrong password 5 times. Your account was blocked for 30 minutes", Snackbar.LENGTH_LONG).show();
                 } else {
 
