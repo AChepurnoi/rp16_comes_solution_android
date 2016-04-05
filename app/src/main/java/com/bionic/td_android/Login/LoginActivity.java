@@ -257,7 +257,7 @@ public class LoginActivity extends AppCompatActivity {
                             break;
 
                         default:
-                            Snackbar.make(layout, "Unable to login.", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(layout, "Your login or password is incorrect", Snackbar.LENGTH_LONG).show();
                     }
 
                 }
