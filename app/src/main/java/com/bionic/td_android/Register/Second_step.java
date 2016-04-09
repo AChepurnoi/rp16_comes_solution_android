@@ -85,8 +85,8 @@ public class Second_step extends Fragment implements TextWatcher{
                 error.setVisibility(View.VISIBLE);
 
             }else error.setVisibility(View.GONE);
-
-
+        }else {
+            error.setVisibility(View.GONE);
         }
     }
 
@@ -114,6 +114,7 @@ public class Second_step extends Fragment implements TextWatcher{
         day_contract = (CheckBox) view.findViewById(R.id.checkbox_day_contract);
         zero_day_contract = (CheckBox) view.findViewById(R.id.checkbox_zero_contract);
         contract_days = (EditText) view.findViewById(R.id.input_contract_days);
+        contract_days.addTextChangedListener(this);
         mounthly_payments = (CheckBox) view.findViewById(R.id.checkbox_mounth_payments);
         four_week_payments = (CheckBox) view.findViewById(R.id.checkbox_four_week_payments);
         scheduleBlock = view.findViewById(R.id.block_schedule);
@@ -264,6 +265,7 @@ public class Second_step extends Fragment implements TextWatcher{
                 zero_day_contract.setChecked(false);
 
                 scheduleBlock.setVisibility(View.VISIBLE);
+                afterTextChanged(null);
 
             }
         });
@@ -277,6 +279,7 @@ public class Second_step extends Fragment implements TextWatcher{
                 }
 
                 scheduleBlock.setVisibility(View.GONE);
+                error.setVisibility(View.GONE);
             }
         });
 

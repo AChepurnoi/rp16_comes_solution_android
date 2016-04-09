@@ -207,60 +207,60 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 dialog.dismiss();
                 Log.e("Bionic", "Fail " + statusCode + " " + responseString);
+                User user = null;
+                switch (statusCode) {
+                    case 401:
+                        if (responseString.contains("locked")) {
+                            Snackbar.make(layout, "You have input wrong password 5 times. Your account was blocked for 30 minutes", Snackbar.LENGTH_LONG).show();
+                        } else {
+                            Snackbar.make(layout, "Your login or password is incorrect", Snackbar.LENGTH_LONG).show();
+                        }
+                    case 404:
+                        Snackbar.make(layout, "User with this email is not registered", Snackbar.LENGTH_LONG).show();
+                        break;
 
-                if (responseString.contains("locked")) {
-                    Snackbar.make(layout, "You have input wrong password 5 times. Your account was blocked for 30 minutes", Snackbar.LENGTH_LONG).show();
-                } else {
-
-                    User user = null;
-                    switch (statusCode) {
-
-                        case 404:
-                            Snackbar.make(layout, "User with this email is not registered", Snackbar.LENGTH_LONG).show();
-                            break;
-
-                        case 403:
-                            Log.e("Bionic", statusCode + "code " + responseString);
+                    case 403:
+                        Log.e("Bionic", statusCode + "code " + responseString);
 //                        change_password(login);
-                            forgot_password();
-                            Snackbar.make(layout, "Password expired. Please request new temporary password", Snackbar.LENGTH_LONG).show();
-                            break;
-                        case 412:
+                        forgot_password();
+                        Snackbar.make(layout, "Password expired. Please request new temporary password", Snackbar.LENGTH_LONG).show();
+                        break;
+                    case 412:
 
 
-                            try {
-                                user = new ObjectMapper().readValue(responseString, User.class);
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                EntitySaver.save(user);
+                        try {
+                            user = new ObjectMapper().readValue(responseString, User.class);
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            EntitySaver.save(user);
 
-                                startActivity(intent);
-                                Log.e("Bionic", user.toString());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                Log.e("Bionic", "error parsing");
-                            }
-                            break;
+                            startActivity(intent);
+                            Log.e("Bionic", user.toString());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Log.e("Bionic", "error parsing " + e.getMessage());
+                        }
+                        break;
 
-                        case 409:
+                    case 409:
 //                        forgot_password();
 
-                            try {
-                                user = new ObjectMapper().readValue(responseString, User.class);
-                                EntitySaver.save(user);
-                                change_password(login);
-                                Log.e("Bionic", user.toString());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                Log.e("Bionic", "error parsing");
-                            }
-                            Snackbar.make(layout, "Please change your password", Snackbar.LENGTH_LONG).show();
-                            break;
+                        try {
+                            user = new ObjectMapper().readValue(responseString, User.class);
+                            EntitySaver.save(user);
+                            change_password(login);
+                            Log.e("Bionic", user.toString());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Log.e("Bionic", "error parsing " + e.getMessage());
+                        }
+                        Snackbar.make(layout, "Please change your password", Snackbar.LENGTH_LONG).show();
+                        break;
 
-                        default:
-                            Snackbar.make(layout, "Your login or password is incorrect", Snackbar.LENGTH_LONG).show();
-                    }
-
+                    default:
+                        Snackbar.make(layout, "Error", Snackbar.LENGTH_LONG).show();
                 }
+
+
 
             }
 
@@ -278,7 +278,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.e("Bionic", user.toString());
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Log.e("Bionic", "error parsing");
+                    Log.e("Bionic", "error parsing " + e.getMessage());
                 }
             }
         });

@@ -95,6 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
         resultive.setEmail(this.user.getEmail());
         resultive.setPassword(this.user.getPassword());
         resultive.setPasswordExpire(this.user.getPasswordExpire());
+        resultive.setPostalCode(this.user.getPostalCode());
 
         this.user = resultive;
 

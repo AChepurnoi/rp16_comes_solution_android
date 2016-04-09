@@ -7,7 +7,6 @@ package com.bionic.td_android.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.orm.SugarRecord;
-import com.orm.dsl.Ignore;
 
 import java.lang.reflect.Field;
 import java.util.Date;
@@ -38,8 +37,7 @@ public class User extends SugarRecord{
 
     private boolean verified;
 
-    @Ignore
-    private Date birthDate;
+    private String postalCode;
 
     private Date passwordExpire;
 
@@ -92,6 +90,14 @@ public class User extends SugarRecord{
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
     public String getInsertion() {
@@ -159,14 +165,6 @@ public class User extends SugarRecord{
         this.enabled = enabled;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
     public Date getPasswordExpire() {
         return passwordExpire;
     }
@@ -218,12 +216,12 @@ public class User extends SugarRecord{
                 ", zeroHours=" + zeroHours +
                 ", contractHours=" + contractHours +
                 ", enabled=" + enabled +
-                ", birthDate=" + birthDate +
                 ", passwordExpire=" + passwordExpire +
                 ", workSchedule=" + workSchedule +
                 ", role=" + role +
                 ", employer=" + employer +
                 ", jobs=" + jobs +
+                ", postalCode= " + postalCode +
                 "}";
 
     }

@@ -288,11 +288,21 @@ public class Account_fragment extends Fragment {
         private boolean validate(){
 
             if(name.getText().toString().isEmpty() || lastname.getText().toString().isEmpty()
-                    || email.getText().toString().isEmpty() )return false;
+                    || email.getText().toString().isEmpty() ){
+                Snackbar.make(getView(),"Fill in necessary forms",Snackbar.LENGTH_LONG).show();
+                return false;
+            }
 
             EmailValidator validator = new EmailValidator();
-            if(validator.validate(email.getText().toString()) == false) return false;
+            if(!validator.validate(email.getText().toString())){
+                Snackbar.make(getView(),"Invalid email",Snackbar.LENGTH_LONG).show();
+                return false;
+            }
 
+            if(!postalCode.getText().toString().isEmpty() && postalCode.getText().toString().length() > 6){
+                Snackbar.make(getView(),"Invalid postal code",Snackbar.LENGTH_LONG).show();
+                return false;
+            }
 
 //            @TODO add postal code validation
 
@@ -307,13 +317,14 @@ public class Account_fragment extends Fragment {
             name.setText(user.getFirstName());
             lastname.setText(user.getLastName());
             insertion.setText(user.getInsertion());
+            postalCode.setText(user.getPostalCode());
             if(user.getSex().equals("Male"))gender.setSelection(0);
             else gender.setSelection(1);
 
             email.setText(user.getEmail());
 
         }
-        private void configureViews(View view){
+        private void configureViews(final View view){
 
             name = (EditText) view.findViewById(R.id.input_name);
             lastname = (EditText)view.findViewById(R.id.input_surname);
@@ -336,7 +347,9 @@ public class Account_fragment extends Fragment {
             save.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
-                    if(!validate()) return;
+                    if(!validate()) {
+                        return;
+                    }
                     Log.e("Bionic", "User before: " + user.toString());
 
                     user.setFirstName(name.getText().toString());
@@ -344,6 +357,8 @@ public class Account_fragment extends Fragment {
                     user.setInsertion(insertion.getText().toString());
                     user.setEmail(email.getText().toString());
                     user.setSex(gender.getSelectedItem().toString());
+                    user.setPostalCode(postalCode.getText().toString());
+
                     Log.e("Bionic", "User after: " + user.toString());
                     final String url = API.UPDATE_USER(user.getmId());
                     final android.app.AlertDialog dialog = new SpotsDialog(getContext(),"Editing");
@@ -457,7 +472,6 @@ public class Account_fragment extends Fragment {
         public void afterTextChanged(Editable s) {
 
             if(day_contract.isChecked()) {
-
                 int time = getHoursSum();
                 int expectedTime = 0;
                 try {
@@ -467,10 +481,10 @@ public class Account_fragment extends Fragment {
                 }
                 if (time != expectedTime) {
                     error.setVisibility(View.VISIBLE);
-
                 }else error.setVisibility(View.GONE);
 
-
+            }else {
+                error.setVisibility(View.GONE);
             }
         }
 
@@ -540,9 +554,13 @@ public class Account_fragment extends Fragment {
             saturday.addTextChangedListener(this);
             sunday.addTextChangedListener(this);
 
+
+
             day_contract = (CheckBox) view.findViewById(R.id.checkbox_day_contract);
             zero_day_contract = (CheckBox) view.findViewById(R.id.checkbox_zero_contract);
             contract_days = (EditText) view.findViewById(R.id.input_contract_days);
+            contract_days.addTextChangedListener(this);
+
             mounthly_payments = (CheckBox) view.findViewById(R.id.checkbox_mounth_payments);
             four_week_payments = (CheckBox) view.findViewById(R.id.checkbox_four_week_payments);
             scheduleBlock = view.findViewById(R.id.block_schedule);
@@ -583,7 +601,9 @@ public class Account_fragment extends Fragment {
                         if(!contract_days.getText().toString().isEmpty())
                             user.setContractHours(Integer.parseInt(contract_days.getText().toString()));
                         user.setZeroHours(false);
-                        WorkSchedule schedule = new WorkSchedule();
+
+                        WorkSchedule schedule = user.getWorkSchedule();
+                        if(schedule == null) schedule = new WorkSchedule();
                         schedule.setCreationTime(new Date());
                         schedule.setMonday(monday.getText().toString());
                         schedule.setTuesday(tuesday.getText().toString());
@@ -703,6 +723,7 @@ public class Account_fragment extends Fragment {
         }
 
         private boolean isDayValid(EditText day) {
+            if(day.getText().toString().isEmpty())return true;
             if ((Integer.parseInt(day.getText().toString()) < 0 || Integer.parseInt(day.getText().toString()) > 24)) {
                 return false;
             } else {
@@ -748,6 +769,7 @@ public class Account_fragment extends Fragment {
                     zero_day_contract.setChecked(false);
 
                     scheduleBlock.setVisibility(View.VISIBLE);
+                    afterTextChanged(null);
 
                 }
             });
@@ -761,6 +783,7 @@ public class Account_fragment extends Fragment {
                     }
 
                     scheduleBlock.setVisibility(View.GONE);
+                    error.setVisibility(View.GONE);
                 }
             });
 
