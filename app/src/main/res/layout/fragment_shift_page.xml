@@ -30,31 +30,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:text="Shift information:"
+                android:text="Beginning of shift:"
                 android:textColor="@color/text_color"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
 
             <LinearLayout
-                android:id="@+id/block_shift_info"
+                android:id="@+id/block_begin_shift"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="From-time:"
-                        android:textColor="@color/text_color"
-                        android:textSize="20sp" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -62,7 +48,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/block_shift_info_from_date"
+                        android:id="@+id/block_begin_shift_date"
                         style="@android:style/Widget.DeviceDefault.Light.Spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -70,7 +56,7 @@
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/block_shift_info_from_time"
+                        android:id="@+id/block_begin_shift_time"
                         style="@android:style/Widget.DeviceDefault.Light.Spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -80,20 +66,34 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp">
+            </LinearLayout>
+        </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="To-time:"
-                        android:textColor="@color/text_color"
-                        android:textSize="20sp" />
-                </LinearLayout>
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="30dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="30dp">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="Beginning of shift:"
+                android:textColor="@color/text_color"
+                android:textSize="20sp" />
+
+
+            <LinearLayout
+                android:id="@+id/block_begin_shift"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -101,51 +101,15 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/block_shift_info_to_date"
+                        android:id="@+id/block_end_shift_date"
                         style="@android:style/Widget.DeviceDefault.Light.Spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="01/01/2001"
                         android:textSize="20sp" />
 
-                    <TextView
-                        android:id="@+id/block_shift_info_to_time"
-                        style="@android:style/Widget.DeviceDefault.Light.Spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:hint="00:00"
-                        android:textSize="20sp" />
-
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pause:"
-                        android:textColor="@color/text_color"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/block_shift_info_pauze"
-                        style="@android:style/Widget.DeviceDefault.Light.Spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:hint="00:00"
-                        android:textSize="20sp" />
-                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -162,114 +126,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:text="Drive information:"
+                android:text="Total pause:"
                 android:textColor="@color/text_color"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
 
             <LinearLayout
-                android:id="@+id/block_drive_info"
+                android:id="@+id/block_pause_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="From-time:"
-                        android:textColor="@color/text_color"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/block_drive_info_from_date"
-                        style="@android:style/Widget.DeviceDefault.Light.Spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="01/01/2001"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/block_drive_info_from_time"
-                        style="@android:style/Widget.DeviceDefault.Light.Spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:hint="00:00"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="To-time:"
-                        android:textColor="@color/text_color"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/block_drive_info_to_date"
-                        style="@android:style/Widget.DeviceDefault.Light.Spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="01/01/2001"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/block_drive_info_to_time"
-                        style="@android:style/Widget.DeviceDefault.Light.Spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:hint="00:00"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pause:"
-                        android:textColor="@color/text_color"
-                        android:textSize="20sp" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/block_drive_info_pauze"
+                        android:id="@+id/block_pause_total"
                         style="@android:style/Widget.DeviceDefault.Light.Spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
