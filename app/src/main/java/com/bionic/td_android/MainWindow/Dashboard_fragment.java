@@ -44,7 +44,7 @@ public class Dashboard_fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view =inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         configurePage(view);
         return view;
     }
@@ -56,22 +56,23 @@ public class Dashboard_fragment extends Fragment {
 
     }
 
-    private void configurePage(View view){
+    private void configurePage(View view) {
 
-        activity = (MainActivity)getActivity();
+        activity = (MainActivity) getActivity();
         user = EntitySaver.getUser();
 
 
         configureToolbar(view);
         configureViews(view);
 
-        if(!user.isVerified())alert.setVisibility(View.VISIBLE);
+        if (!user.isVerified()) alert.setVisibility(View.VISIBLE);
         else alert.setVisibility(View.GONE);
 
         greeting = (TextView) view.findViewById(R.id.user_name_textfield);
-        if(user != null && greeting != null)greeting.setText(user.getFirstName() + " " + user.getLastName());
+        if (user != null && greeting != null)
+            greeting.setText(user.getFirstName() + " " + user.getLastName());
 
-        Button my_account = (Button)view.findViewById(R.id.button_my_account);
+        Button my_account = (Button) view.findViewById(R.id.button_my_account);
         my_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +80,7 @@ public class Dashboard_fragment extends Fragment {
             }
         });
 
-        Button new_shift = (Button)view.findViewById(R.id.button_shift);
+        Button new_shift = (Button) view.findViewById(R.id.button_shift);
         new_shift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +88,7 @@ public class Dashboard_fragment extends Fragment {
             }
         });
 
-        Button overview = (Button)view.findViewById(R.id.button_overview);
+        Button overview = (Button) view.findViewById(R.id.button_overview);
         overview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,9 +96,17 @@ public class Dashboard_fragment extends Fragment {
             }
         });
 
+        Button cao = (Button) view.findViewById(R.id.button_cao);
+        cao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.cao();
+            }
+        });
+
     }
 
-    private void configureViews(View view){
+    private void configureViews(View view) {
 
         TextView logout = (TextView) view.findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +127,7 @@ public class Dashboard_fragment extends Fragment {
             public void onClick(View v) {
 
                 final String url = API.VERIFICATION(user.getmId());
-                final android.app.AlertDialog dialog = new SpotsDialog(getContext(),"Sending verification link");
+                final android.app.AlertDialog dialog = new SpotsDialog(getContext(), "Sending verification link");
                 dialog.show();
                 AsyncHttpClient client = new AsyncHttpClient();
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -128,18 +137,19 @@ public class Dashboard_fragment extends Fragment {
                 String encoded = Base64.encodeToString((login + ":" + pass).getBytes(), 0);
                 client.addHeader("Authorization", "Basic " + encoded);
                 client.get(getContext(), url, new TextHttpResponseHandler() {
-                            @Override
-                            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                                dialog.dismiss();
-                                Snackbar.make(getView(), "Verification failed", Snackbar.LENGTH_LONG).show();
-                            }
-                            @Override
-                            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                                dialog.dismiss();
-                                Snackbar.make(getView(), "Verification mail has been sent", Snackbar.LENGTH_LONG).show();
-                                sendLink.setVisibility(View.GONE);
-                            }
-                        });
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        dialog.dismiss();
+                        Snackbar.make(getView(), "Verification failed", Snackbar.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                        dialog.dismiss();
+                        Snackbar.make(getView(), "Verification mail has been sent", Snackbar.LENGTH_LONG).show();
+                        sendLink.setVisibility(View.GONE);
+                    }
+                });
 
             }
         });
@@ -147,14 +157,13 @@ public class Dashboard_fragment extends Fragment {
 
     }
 
-    private void configureToolbar(View view){
+    private void configureToolbar(View view) {
 
-        toolbar = (Toolbar)view.findViewById(R.id.simple_toolbar);
+        toolbar = (Toolbar) view.findViewById(R.id.simple_toolbar);
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setTitle("Dashboard");
 
     }
-
 
 
 }

@@ -135,6 +135,17 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    public void cao() {
+        Fragment a = active = new Cao_fragment();
+        fragments.add(a);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, active);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -157,4 +168,6 @@ public class MainActivity extends AppCompatActivity {
     public User getUser() {
         return user;
     }
+
+
 }

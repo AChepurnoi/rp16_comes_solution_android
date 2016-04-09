@@ -31,18 +31,6 @@ public class Shift_fragment extends Fragment {
     private MainActivity activity;
     private Toolbar toolbar;
 
-    private TextView shiftFromDate;
-    private TextView shiftToDate;
-    private TextView shiftFromTime;
-    private TextView shiftToTime;
-    private TextView shiftPause;
-
-    private TextView driveFromDate;
-    private TextView driveToDate;
-    private TextView driveFromTime;
-    private TextView driveToTime;
-    private TextView drivePause;
-
     private int year;
     private int month;
     private int day;
@@ -60,105 +48,11 @@ public class Shift_fragment extends Fragment {
 
     private void configurePage(View view) {
         activity = (MainActivity) getActivity();
-        // configureToolbar(view);
+        configureToolbar(view);
         configureViews(view);
     }
 
     private void configureViews(View view) {
-        shiftFromDate = (TextView) view.findViewById(R.id.block_shift_info_from_date);
-        shiftFromTime = (TextView) view.findViewById(R.id.block_shift_info_from_time);
-        shiftToDate = (TextView) view.findViewById(R.id.block_shift_info_to_date);
-        shiftToTime = (TextView) view.findViewById(R.id.block_shift_info_to_time);
-        shiftPause =  (TextView) view.findViewById(R.id.block_shift_info_pauze);
-
-        driveFromDate = (TextView) view.findViewById(R.id.block_drive_info_from_date);
-        driveFromTime = (TextView) view.findViewById(R.id.block_drive_info_from_time);
-        driveToDate = (TextView) view.findViewById(R.id.block_drive_info_to_date);
-        driveToTime = (TextView) view.findViewById(R.id.block_drive_info_to_time);
-        drivePause =  (TextView) view.findViewById(R.id.block_drive_info_pauze);
-
-        Calendar c = Calendar.getInstance();
-        year = c.get(Calendar.YEAR);
-        month = c.get(Calendar.MONTH);
-        day = c.get(Calendar.DAY_OF_MONTH);
-        hour = c.get(Calendar.HOUR_OF_DAY);
-        minute = c.get(Calendar.MINUTE);
-
-        shiftFromDate.setText(new StringBuilder().append(day).append("/").append(month + 1).append("/").append(year));
-        shiftFromTime.setText(new StringBuilder().append(hour).append(":").append(minute));
-        shiftToDate.setText(new StringBuilder().append(day).append("/").append(month + 1).append("/").append(year));
-        shiftToTime.setText(new StringBuilder().append(hour).append(":").append(minute));
-
-        driveFromDate.setText(new StringBuilder().append(day).append("/").append(month + 1).append("/").append(year));
-        driveFromTime.setText(new StringBuilder().append(hour).append(":").append(minute));
-        driveToDate.setText(new StringBuilder().append(day).append("/").append(month + 1).append("/").append(year));
-        driveToTime.setText(new StringBuilder().append(hour).append(":").append(minute));
-
-        shiftFromDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialogFragment(shiftFromDate).show(activity.getSupportFragmentManager(), "datePicker");
-            }
-        });
-        shiftFromTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new TimePickerDialogFragment(shiftFromTime).show(activity.getSupportFragmentManager(), "timePicker");
-            }
-        });
-        shiftToDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialogFragment(shiftToDate).show(activity.getSupportFragmentManager(), "datePicker");
-            }
-        });
-        shiftToTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new TimePickerDialogFragment(shiftToTime).show(activity.getSupportFragmentManager(), "timePicker");
-            }
-        });
-        shiftPause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new TimePickerDialogFragment(shiftPause).show(activity.getSupportFragmentManager(), "timePicker");
-            }
-        });
-
-        driveFromDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialogFragment(driveFromDate).show(activity.getSupportFragmentManager(), "datePicker");
-            }
-        });
-        driveFromTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new TimePickerDialogFragment(driveFromTime).show(activity.getSupportFragmentManager(), "timePicker");
-            }
-        });
-        driveToDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialogFragment(driveToDate).show(activity.getSupportFragmentManager(), "datePicker");
-            }
-        });
-        driveToTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new TimePickerDialogFragment(driveToTime).show(activity.getSupportFragmentManager(), "timePicker");
-            }
-        });
-        drivePause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new TimePickerDialogFragment(drivePause).show(activity.getSupportFragmentManager(), "timePicker");
-            }
-        });
-
-
-
-
 
     }
 
