@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -69,6 +67,40 @@
             </LinearLayout>
         </LinearLayout>
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rides"
+            android:paddingLeft="30dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="10dp"
+            android:id="@+id/rides_container"
+            >
+
+
+
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add new ride"
+            android:id="@+id/button_add_new_ride"
+            android:layout_gravity="right"
+            android:textSize="14sp"
+            android:textColor="@android:color/holo_blue_light"
+            android:paddingTop="30dp"
+            android:paddingRight="30dp"
+            />
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -76,20 +108,22 @@
             android:paddingBottom="30dp"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:paddingTop="30dp">
+            android:paddingTop="30dp"
+
+            >
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:text="Beginning of shift:"
+                android:text="Shift End:"
                 android:textColor="@color/text_color"
                 android:textSize="20sp" />
 
 
             <LinearLayout
-                android:id="@+id/block_begin_shift"
+                android:id="@+id/block_end_shift"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -106,6 +140,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="01/01/2001"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/block_end_shift_time"
+                        style="@android:style/Widget.DeviceDefault.Light.Spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:hint="00:00"
                         android:textSize="20sp" />
 
                 </LinearLayout>
@@ -150,19 +193,37 @@
                         android:layout_marginLeft="10dp"
                         android:hint="00:00"
                         android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/button_edit_pause"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text = "Edit pause time"
+                        android:textColor="@android:color/holo_blue_light"
+                        android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
 
         <Button
-            android:id="@+id/button_register"
+            android:id="@+id/button_apply"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="25dp"
+            android:layout_marginLeft="75dp"
+            android:layout_marginRight="75dp"
+            android:text="Apply changes" />
+        <Button
+            android:id="@+id/button_submit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="25dp"
             android:layout_marginLeft="75dp"
             android:layout_marginRight="75dp"
             android:text="Submit" />
+
 
     </LinearLayout>
 

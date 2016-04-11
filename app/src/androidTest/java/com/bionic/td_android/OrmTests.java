@@ -66,7 +66,7 @@ public class OrmTests extends AndroidTestCase {
 //
 //    }
 
-
+/*
     public void test(){
 
         List<User> users_clear = User.listAll(User.class);
@@ -90,7 +90,6 @@ public class OrmTests extends AndroidTestCase {
         schedule.setMonday("1");
         schedule.setCreationTime(new Date());
         user.setWorkSchedule(schedule);
-        user.setBirthDate(new Date());
         user.setPasswordExpire(new Date());
         user.setRole(UserRoleEnum.USER);
         for (Job job1 : user.getJobs()) {
@@ -105,5 +104,38 @@ public class OrmTests extends AndroidTestCase {
         Log.e("Bionic",users.toString());
 
     }
+*/
+
+    public void test(){
+
+        User user = new User();
+        user.setFirstName("Ivan");
+        user.setLastName("Stepan");
+        List<Job> jobs = new ArrayList<>();
+        Job job = new Job();
+        job.setJobName("Test job");
+        jobs.add(job);
+
+
+        user.setJobs(jobs);
+        WorkSchedule schedule = new WorkSchedule();
+        schedule.setMonday("1");
+        schedule.setCreationTime(new Date());
+        user.setWorkSchedule(schedule);
+        user.setPasswordExpire(new Date());
+        user.setRole(UserRoleEnum.USER);
+        for (Job job1 : user.getJobs()) {
+            job1.save();
+        }
+        user.getWorkSchedule().save();
+
+
+        user.save();
+        List<User> users = User.listAll(User.class);
+        assertNotNull(users);
+        Log.e("Bionic", users.toString());
+
+    }
+
 
 }

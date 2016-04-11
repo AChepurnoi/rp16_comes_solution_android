@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/item_begin_date"
+        style="@android:style/Widget.DeviceDefault.Light.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="01/01/2001"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="From"
+        android:textSize="14sp"
+        android:textColor="@android:color/white"
+
+        />
+
+    <TextView
+        android:id="@+id/item_begin_time"
+        style="@android:style/Widget.DeviceDefault.Light.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:hint="00:00"
+        android:textSize="14sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="To"
+        android:textSize="14sp"
+        android:textColor="@android:color/white"
+
+        />
+
+
+    <TextView
+        android:id="@+id/item_end_time"
+        style="@android:style/Widget.DeviceDefault.Light.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:hint="00:00"
+        android:textSize="14sp"
+
+        />
+
+    <ImageButton
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="#0000"
+        android:src="@android:drawable/ic_delete"
+        android:id="@+id/button_delete_ride"
+
+        />
+
+</LinearLayout>
