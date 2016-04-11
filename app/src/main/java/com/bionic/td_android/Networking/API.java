@@ -17,6 +17,10 @@ public class API {
     private static String IS_EXIST = SERVER_ADDRESS + "rest/api/auth/exist";
     private static String UPDATE_USER = SERVER_ADDRESS + "rest/api/users/";
     private static String VERIFICATION = SERVER_ADDRESS + "rest/api/users/";
+    private static String USERS = SERVER_ADDRESS + "rest/api/users/";
+    public static String ADD_SHIFT(long userId){
+        return USERS + userId +"/shifts";
+    }
     public static String GET_USER() {
         return GET_USER;
     }

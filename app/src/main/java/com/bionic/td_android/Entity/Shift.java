@@ -37,7 +37,7 @@ public class Shift extends SugarRecord implements TextWatcher{
     @JsonIgnore
     private User user;
 
-    private long pauseTime;
+    private long pause;
     private List<Ride> rides;
     public Shift() {
         rides = new ArrayList<>();
@@ -60,12 +60,12 @@ public class Shift extends SugarRecord implements TextWatcher{
         return endTime;
     }
 
-    public long getPauseTime() {
-        return pauseTime;
+    public long getPause() {
+        return pause;
     }
 
-    public void setPauseTime(long pauseTime) {
-        this.pauseTime = pauseTime;
+    public void setPause(long pause) {
+        this.pause = pause;
     }
 
     public void setEndTime(Date endTime) {
@@ -264,7 +264,7 @@ public class Shift extends SugarRecord implements TextWatcher{
         long diffMinutes = diff / (60 * 1000) % 60;
         long diffHours = diff / (60 * 60 * 1000);
         long diffDays = diff / (24 * 60 * 60 * 1000);
-        pauseTime = diff;
+        pause = diff;
         totalPausefield.setText(diffHours + "h " + diffMinutes + "m");
     }
 
@@ -281,8 +281,8 @@ public class Shift extends SugarRecord implements TextWatcher{
             long hours = Long.parseLong(vals[0]);
             long mins = Long.parseLong(vals[1]);
             totalPausefield.setText(hours + "h " + mins + "m");
-            pauseTime = (hours * 3600000) + (mins * 60000);
-            Log.e("Bionic","Setted pause time: " + pauseTime);
+            pause = (hours * 3600000) + (mins * 60000);
+            Log.e("Bionic","Setted pause time: " + pause);
             return true;
         }catch (Exception e){
             return false;
@@ -296,7 +296,7 @@ public class Shift extends SugarRecord implements TextWatcher{
                 ", endTime=" + endTime +
                 ", user=" + user +
                 ", rides=" + rides +
-                ", pause=" + pauseTime +
+                ", pause=" + pause +
                 '}';
     }
 }
