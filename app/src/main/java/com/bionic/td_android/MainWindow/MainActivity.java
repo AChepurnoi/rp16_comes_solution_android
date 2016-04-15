@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.R;
@@ -23,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Stack<Fragment> fragments = new Stack<>();
 
-    private TextView view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,32 +29,16 @@ public class MainActivity extends AppCompatActivity {
         Fragment a = active = new Dashboard_fragment();
         active.setRetainInstance(true);
         fragments.add(a);
-
-//        Bundle bundle = getIntent().getExtras();
-//        if(bundle != null){
-//            if(bundle.getString(Intent.EXTRA_TEXT) != null) {
-//                try {
-//                    user = new ObjectMapper().readValue(bundle.getString(Intent.EXTRA_TEXT),User.class);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                    Log.e("Bionic","Error parsing User in Main Activity");
-//                }
-//                getIntent().removeExtra(Intent.EXTRA_TEXT);
-//
-//            }
-//        }
         user = EntitySaver.getUser();
-
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, active).addToBackStack(null).commit();
 
     }
 
+    public void callFragment(Fragment fragment){
 
-    public void overview(){
-
-        Fragment a = active = new Overview_fragment();
-        fragments.add(a);
+        active = fragment;
+        fragments.add(active);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         transaction.replace(R.id.fragment_container, active);
@@ -64,86 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
         transaction.commit();
     }
-
-    public void personal_information(){
-
-        Fragment a = active = new Account_fragment.PersonalInformation_fragment();
-        fragments.add(a);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.replace(R.id.fragment_container, active);
-        transaction.addToBackStack(null);
-
-        transaction.commit();
-    }
-
-    public void work_information(){
-
-        Fragment a = active = new Account_fragment.WorkInformation_fragment();
-        fragments.add(a);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.replace(R.id.fragment_container, active);
-        transaction.addToBackStack(null);
-
-        transaction.commit();
-    }
-
-    public void change_password(){
-
-        Fragment a = active = new Account_fragment.PersonalInformation_fragment.ChangePassword_fragment();
-        fragments.add(a);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.replace(R.id.fragment_container, active);
-        transaction.addToBackStack(null);
-
-        transaction.commit();
-    }
-
-
 
     @Override
     protected void onResume() {
         super.onResume();
-
-
-    }
-
-    public void my_account(){
-
-        Fragment a = active = new Account_fragment();
-        fragments.add(a);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        ((Account_fragment)active).setUser(user);
-
-        transaction.replace(R.id.fragment_container, active);
-        transaction.addToBackStack(null);
-
-        transaction.commit();
-
-    }
-
-    public void new_shift() {
-        Fragment a = active = new Shift_fragment();
-        fragments.add(a);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.replace(R.id.fragment_container, active);
-        transaction.addToBackStack(null);
-
-        transaction.commit();
-    }
-
-    public void cao() {
-        Fragment a = active = new Cao_fragment();
-        fragments.add(a);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.replace(R.id.fragment_container, active);
-        transaction.addToBackStack(null);
-
-        transaction.commit();
     }
 
     @Override

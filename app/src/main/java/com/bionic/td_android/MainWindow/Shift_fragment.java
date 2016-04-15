@@ -67,29 +67,23 @@ public class Shift_fragment extends Fragment {
 
 
         Button apply = (Button) view.findViewById(R.id.button_apply);
-        apply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(shift.validate())saveShift(false);
-            }
+        apply.setOnClickListener(v -> {
+            if(shift.validate())saveShift(false);
         });
 
 
         Button submit = (Button) view.findViewById(R.id.button_submit);
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(shift.validate()){
-                    saveShift(true);
+        submit.setOnClickListener(v -> {
+            if(shift.validate()){
+                saveShift(true);
 
-                }
             }
         });
 
     }
 
     private void saveShift(final boolean navigate){
-        Log.e("Bionic",shift.toString());
+        Log.e("Bionic", shift.toString());
 
         User user = EntitySaver.getUser();
         Log.e("Bionic", "Start");
@@ -97,11 +91,9 @@ public class Shift_fragment extends Fragment {
         final AlertDialog dialog = new SpotsDialog(getContext(),"Shift processing");
         dialog.show();
         AsyncHttpClient client = new AsyncHttpClient();
-
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         String login = sharedPref.getString("login", "");
         String pass = sharedPref.getString("password", "");
-
         Log.e("Bionic", "L:" + login + "|P: " + pass + "|id: " + user.getmId());
         String encoded = Base64.encodeToString((login + ":" + pass).getBytes(), 0);
         client.addHeader("Authorization", "Basic " + encoded);

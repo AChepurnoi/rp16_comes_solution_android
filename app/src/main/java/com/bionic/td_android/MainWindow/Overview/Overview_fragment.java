@@ -1,4 +1,4 @@
-package com.bionic.td_android.MainWindow;
+package com.bionic.td_android.MainWindow.Overview;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bionic.td_android.MainWindow.MainActivity;
 import com.bionic.td_android.R;
 
 /**

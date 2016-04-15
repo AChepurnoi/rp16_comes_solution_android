@@ -19,6 +19,7 @@ import com.bionic.td_android.Utility.TimePickerFragment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class Shift extends SugarRecord implements TextWatcher{
     private Long mId;
     private Date startTime;
     private Date endTime;
+
     @JsonIgnore
     private User user;
 
@@ -102,27 +104,37 @@ public class Shift extends SugarRecord implements TextWatcher{
 
 
     @JsonIgnore
+    @Ignore
     private TextView startDatefield;
     @JsonIgnore
+    @Ignore
     private TextView startTimefield;
     @JsonIgnore
+    @Ignore
     private LinearLayout ridesContainer;
     @JsonIgnore
+    @Ignore
     private TextView endDatefiled;
     @JsonIgnore
+    @Ignore
     private TextView endTimefield;
 
     @JsonIgnore
+    @Ignore
     private TextView totalPausefield;
     @JsonIgnore
+    @Ignore
     private TextView editTotalPause;
     @JsonIgnore
+    @Ignore
     private Button save,saveAndExit;
 
     @JsonIgnore
+    @Ignore
     private FragmentManager manager;
 
     @JsonIgnore
+    @Ignore
     private View view;
 
     @JsonIgnore
@@ -137,62 +149,33 @@ public class Shift extends SugarRecord implements TextWatcher{
 
         startDatefield = (TextView) view.findViewById(R.id.block_begin_shift_date);
         startDatefield.addTextChangedListener(this);
-        startDatefield.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerFragment(startDatefield, shift).show(manager, "StartDatePick");
-            }
-        });
+        startDatefield.setOnClickListener(v -> new DatePickerFragment(startDatefield, shift).show(manager, "StartDatePick"));
         startTimefield = (TextView) view.findViewById(R.id.block_begin_shift_time);
         startTimefield.addTextChangedListener(this);
-        startTimefield.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new TimePickerFragment(startTimefield, shift).show(manager, "StartDatePick");
-            }
-        });
+        startTimefield.setOnClickListener(v -> new TimePickerFragment(startTimefield, shift).show(manager, "StartDatePick"));
 
         endDatefiled = (TextView) view.findViewById(R.id.block_end_shift_date);
         endDatefiled.addTextChangedListener(this);
-        endDatefiled.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerFragment(endDatefiled, shift).show(manager, "EndDatePick");
-            }
-        });
+        endDatefiled.setOnClickListener(v -> new DatePickerFragment(endDatefiled, shift).show(manager, "EndDatePick"));
         endTimefield = (TextView) view.findViewById(R.id.block_end_shift_time);
         endTimefield.addTextChangedListener(this);
-        endTimefield.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new TimePickerFragment(endTimefield,shift).show(manager,"EndTimePick");
-            }
-        });
+        endTimefield.setOnClickListener(v -> new TimePickerFragment(endTimefield,shift).show(manager,"EndTimePick"));
 
 
         editTotalPause = (TextView) view.findViewById(R.id.button_edit_pause);
-        editTotalPause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new PauseEditor(shift).show(manager,"Edit pause");
-            }
-        });
+        editTotalPause.setOnClickListener(v -> new PauseEditor(shift).show(manager,"Edit pause"));
         ridesContainer = (LinearLayout) view.findViewById(R.id.rides_container);
 
 
         TextView add_ride = (TextView) view.findViewById(R.id.button_add_new_ride);
-        add_ride.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(rides.size() > 0 ? rides.get(rides.size() - 1).validate(view) : true) {
-                    Ride ride = new Ride();
-                    ride.setShift(shift);
-                    rides.add(ride);
-                    View rideView = ride.getViewPresentation(v.getContext(), manager);
-                    ridesContainer.addView(rideView);
-                    afterTextChanged(null);
-                }
+        add_ride.setOnClickListener(v -> {
+            if(rides.size() > 0 ? rides.get(rides.size() - 1).validate(view) : true) {
+                Ride ride = new Ride();
+                ride.setShift(shift);
+                rides.add(ride);
+                View rideView = ride.getViewPresentation(v.getContext(), manager);
+                ridesContainer.addView(rideView);
+                afterTextChanged(null);
             }
         });
 
@@ -269,10 +252,6 @@ public class Shift extends SugarRecord implements TextWatcher{
     }
 
     public boolean setCustomPauseTime(String time){
-
-        //SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
-//the above commented line was changed to the one below, as per Grodriguez's pertinent comment:
-
         try {
             if(!time.matches("^(\\d+:[0-59]{2})$")){
                 return false;

@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import com.bionic.td_android.R;
 
@@ -38,17 +36,17 @@ public class Cao_fragment extends Fragment {
 
     private void configureViews(View view) {
 
-        WebView webview = (WebView) view.findViewById(R.id.webview);
-        webview.getSettings().setJavaScriptEnabled(true);
-        webview.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                String pdf = "http://www.adobe.com/devnet/acrobat/pdfs/pdf_open_parameters.pdf";
-                view.loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=http://www.adobe.com/devnet/acrobat/pdfs/pdf_open_parameters.pdf");
-                return true;
-            }
-        });
+//        WebView webview = (WebView) view.findViewById(R.id.webview);
+//        webview.getSettings().setJavaScriptEnabled(true);
+//        webview.setWebViewClient(new WebViewClient() {
+//
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                String pdf = "http://www.adobe.com/devnet/acrobat/pdfs/pdf_open_parameters.pdf";
+//                view.loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=http://www.adobe.com/devnet/acrobat/pdfs/pdf_open_parameters.pdf");
+//                return true;
+//            }
+//        });
 
     }
 

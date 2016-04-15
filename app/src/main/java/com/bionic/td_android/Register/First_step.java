@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.R;
@@ -33,8 +31,6 @@ public class First_step extends Fragment {
     private Spinner gender;
     private Button next_step;
     private EmailValidator validator = new EmailValidator();
-
-
     private Toolbar toolbar;
     @Nullable
     @Override
@@ -96,24 +92,17 @@ public class First_step extends Fragment {
         repeat_password = (EditText) view.findViewById(R.id.input_repeat_password);
 
         next_step = (Button) view.findViewById(R.id.button_go_step_2);
-        next_step.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RegisterActivity parent = (RegisterActivity) getActivity();
-                parent.nextStep(formUser(),email.getText().toString());
-        }
+        next_step.setOnClickListener(v -> {
+            RegisterActivity parent = (RegisterActivity) getActivity();
+            parent.nextStep(formUser(),email.getText().toString());
     });
 
-        repeat_password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    RegisterActivity parent = (RegisterActivity) getActivity();
-                    parent.nextStep(formUser(),email.getText().toString());
-                }
-                return false;
+        repeat_password.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                RegisterActivity parent = (RegisterActivity) getActivity();
+                parent.nextStep(formUser(),email.getText().toString());
             }
+            return false;
         });
 
 
@@ -138,8 +127,6 @@ public class First_step extends Fragment {
             case android.R.id.home:
                 activity.onBackPressed();
                 return true;
-
-
         }
         return super.onOptionsItemSelected(item);
     }
