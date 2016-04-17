@@ -25,6 +25,16 @@
 
         </LinearLayout>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:autoLink="web"
+            android:text="@string/CAO_doc"
+            android:id="@+id/button_login"
+
+            />
+
     </LinearLayout>
 
 </ScrollView>

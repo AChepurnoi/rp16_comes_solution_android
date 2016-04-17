@@ -55,7 +55,7 @@ public class Cao_fragment extends Fragment {
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
-        activity.getSupportActionBar().setTitle("Create shift");
+        activity.getSupportActionBar().setTitle("CAO");
     }
 
     @Override
