@@ -250,6 +250,7 @@ public class Ride{
 
             Calendar cal = Calendar.getInstance();
             cal.set(year,monthOfYear,dayOfMonth, 0, 0 ,0);
+
             cal.set(Calendar.MILLISECOND,0);
 
             ride.selectedDate = cal.getTime();
