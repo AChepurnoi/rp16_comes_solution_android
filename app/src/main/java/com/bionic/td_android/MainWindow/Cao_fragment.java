@@ -1,14 +1,18 @@
 package com.bionic.td_android.MainWindow;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.bionic.td_android.R;
 
@@ -35,6 +39,20 @@ public class Cao_fragment extends Fragment {
     }
 
     private void configureViews(View view) {
+
+        Button button= (Button) view.findViewById(R.id.button_cao);
+        button.setOnClickListener((v) -> {
+
+
+            try {
+                String url = getResources().getString(R.string.CAOhref);
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }catch (Exception e){
+                Snackbar.make(v,"Please install web browser",Snackbar.LENGTH_LONG);
+            }
+        });
 
 //        WebView webview = (WebView) view.findViewById(R.id.webview);
 //        webview.getSettings().setJavaScriptEnabled(true);
