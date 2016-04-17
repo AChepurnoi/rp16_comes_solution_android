@@ -4,11 +4,8 @@ package com.bionic.td_android.Entity;
  * Created by user on 19.03.2016.
  */
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.orm.SugarRecord;
 
-import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +16,7 @@ import java.util.List;
  * @version 0.3
  */
 
-public class User extends SugarRecord{
+public class User{
 
 
     @JsonProperty("id")
@@ -28,26 +25,23 @@ public class User extends SugarRecord{
     private String password;
     private String firstName;
     private String lastName;
+
     private String insertion;
     private String sex;
     private boolean fourWeekPayOff;
     private boolean zeroHours;
     private int contractHours;
+
     private boolean enabled;
-
     private boolean verified;
-
     private String postalCode;
-
     private Date passwordExpire;
-
     private WorkSchedule workSchedule;
 
+
     private UserRoleEnum role;
-
     private Employer employer;
-
-    private List<Job> jobs;
+    private List<Integer> jobs;
 
 
 
@@ -149,11 +143,11 @@ public class User extends SugarRecord{
         this.employer = employer;
     }
 
-    public List<Job> getJobs() {
+    public List<Integer> getJobs() {
         return jobs;
     }
 
-    public void setJobs(List<Job> jobs) {
+    public void setJobs(List<Integer> jobs) {
         this.jobs = jobs;
     }
 
@@ -222,19 +216,9 @@ public class User extends SugarRecord{
                 ", employer=" + employer +
                 ", jobs=" + jobs +
                 ", postalCode= " + postalCode +
+                ", verified " + verified +
                 "}";
 
     }
 
-    @JsonIgnore
-    @Override
-    public List<Field> getTableFields() {
-        return super.getTableFields();
-    }
-
-    @JsonIgnore
-    @Override
-    public String getSqlName() {
-        return super.getSqlName();
-    }
 }

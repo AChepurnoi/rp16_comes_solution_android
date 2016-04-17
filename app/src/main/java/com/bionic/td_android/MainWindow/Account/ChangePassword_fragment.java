@@ -12,11 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.MainWindow.MainActivity;
 import com.bionic.td_android.Networking.Requests.ApplyNewPassword;
 import com.bionic.td_android.R;
-import com.bionic.td_android.Utility.EntitySaver;
 
 /**
  * Created by user on 15.04.2016.
@@ -66,7 +66,9 @@ public class ChangePassword_fragment extends Fragment {
             String tmp = tmpPass.getText().toString();
             String newPassword = newPass.getText().toString();
             String repeatPassword = repeatPass.getText().toString();
-            User user = EntitySaver.getUser();
+            DbManager manager = new DbManager(getContext());
+            User user = manager.loadUser();
+
             if (validate(tmp, newPassword, repeatPassword)){
                 new ApplyNewPassword(user,tmp,newPassword,getView()).execute();
             }else Snackbar.make(view, "Check password matching", Snackbar.LENGTH_LONG).show();

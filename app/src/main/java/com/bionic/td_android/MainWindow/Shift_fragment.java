@@ -16,12 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.Ride;
 import com.bionic.td_android.Entity.Shift;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Networking.API;
 import com.bionic.td_android.R;
-import com.bionic.td_android.Utility.EntitySaver;
+import com.bionic.td_android.Utility.BreakCalculator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loopj.android.http.AsyncHttpClient;
@@ -68,15 +69,23 @@ public class Shift_fragment extends Fragment {
 
         Button apply = (Button) view.findViewById(R.id.button_apply);
         apply.setOnClickListener(v -> {
-            if(shift.validate())saveShift(false);
+
+            if(shift.validate()){
+                Log.e("Bionic","SHIFT OK");
+                Log.e("Bionic", shift.toString());
+                Log.e("Bionic","Total breaktime minutes " + new BreakCalculator(shift).calculate());
+            }
+
         });
 
 
         Button submit = (Button) view.findViewById(R.id.button_submit);
         submit.setOnClickListener(v -> {
-            if(shift.validate()){
-                saveShift(true);
 
+            if(shift.validate()){
+                Log.e("Bionic","SHIFT OK");
+                Log.e("Bionic", shift.toString());
+                Log.e("Bionic","Total breaktime minutes " + new BreakCalculator(shift).calculate());
             }
         });
 
@@ -85,7 +94,9 @@ public class Shift_fragment extends Fragment {
     private void saveShift(final boolean navigate){
         Log.e("Bionic", shift.toString());
 
-        User user = EntitySaver.getUser();
+        DbManager manager = new DbManager(getContext());
+        User user = manager.loadUser();
+        //@TODO
         Log.e("Bionic", "Start");
         String url = API.ADD_SHIFT(user.getmId());
         final AlertDialog dialog = new SpotsDialog(getContext(),"Shift processing");

@@ -9,6 +9,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
+import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Login.LoginActivity;
 import com.bionic.td_android.Login.Temporary_pass_fragment;
@@ -16,7 +17,6 @@ import com.bionic.td_android.MainWindow.Account.ChangePassword_fragment;
 import com.bionic.td_android.MainWindow.MainActivity;
 import com.bionic.td_android.Networking.API;
 import com.bionic.td_android.Networking.IRequest;
-import com.bionic.td_android.Utility.EntitySaver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -45,6 +45,7 @@ public class Login implements IRequest {
     @Override
     public void execute() {
 
+        final DbManager manager = new DbManager(activity);
         Log.e("Bionic", "Start");
         String url = API.GET_USER();
         final AlertDialog dialog = new SpotsDialog(activity, "Loging in");
@@ -80,18 +81,15 @@ public class Login implements IRequest {
 
                     case 403:
                         Log.e("Bionic", statusCode + "code " + responseString);
-//                        change_password(login);
                         activity.callFragment(new Temporary_pass_fragment());
                         Snackbar.make(view, "Password expired. Please request new temporary password", Snackbar.LENGTH_LONG).show();
                         break;
                     case 412:
-
-
                         try {
                             user = new ObjectMapper().readValue(responseString, User.class);
                             Intent intent = new Intent(activity, MainActivity.class);
-                            EntitySaver.save(user);
-
+                            manager.clear();
+                            manager.save(user);
                             activity.startActivity(intent);
                             Log.e("Bionic", user.toString());
                         } catch (IOException e) {
@@ -103,7 +101,8 @@ public class Login implements IRequest {
                     case 409:
                         try {
                             user = new ObjectMapper().readValue(responseString, User.class);
-                            EntitySaver.save(user);
+                            manager.clear();
+                            manager.save(user);
                             activity.callFragment(new ChangePassword_fragment());
                             Log.e("Bionic", user.toString());
                         } catch (IOException e) {
@@ -121,12 +120,13 @@ public class Login implements IRequest {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString)  {
                 dialog.dismiss();
+                Log.e("Bionic",responseString);
                 User user = null;
                 try {
                     user = new ObjectMapper().readValue(responseString, User.class);
                     Intent intent = new Intent(activity, MainActivity.class);
-
-                    EntitySaver.save(user);
+                    manager.clear();
+                    manager.save(user);
                     activity.startActivity(intent);
                     Log.e("Bionic", user.toString());
                 } catch (IOException e) {

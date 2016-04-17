@@ -7,10 +7,10 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
+import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Networking.API;
 import com.bionic.td_android.Networking.IRequest;
-import com.bionic.td_android.Utility.EntitySaver;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -30,10 +30,11 @@ public class UpdatePersonalInfo implements IRequest {
 
     User user;
     View view;
-
+    DbManager manager;
     public UpdatePersonalInfo(User user, View view) {
         this.user = user;
         this.view = view;
+        manager = new DbManager(view.getContext());
     }
 
     @Override
@@ -52,7 +53,6 @@ public class UpdatePersonalInfo implements IRequest {
         String encoded = Base64.encodeToString((login + ":" + pass).getBytes(), 0);
         client.addHeader("Authorization", "Basic " + encoded);
         String jsonInString = null;
-        user.setId(user.getmId());
         try {
 
             ObjectMapper mapper = new ObjectMapper();
@@ -89,7 +89,7 @@ public class UpdatePersonalInfo implements IRequest {
                         User user1 = null;
                         try {
                             user1 = new ObjectMapper().readValue(responseString, User.class);
-                            EntitySaver.save(user1);
+                            manager.update(user1);
                             Log.e("Bionic", user1.toString());
                         } catch (IOException e) {
                             e.printStackTrace();

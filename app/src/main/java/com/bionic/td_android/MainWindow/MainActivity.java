@@ -6,9 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.R;
-import com.bionic.td_android.Utility.EntitySaver;
 
 import java.util.Stack;
 
@@ -18,7 +16,6 @@ import java.util.Stack;
 public class MainActivity extends AppCompatActivity {
 
     private Fragment active;
-    private User user;
 
     private Stack<Fragment> fragments = new Stack<>();
 
@@ -29,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         Fragment a = active = new Dashboard_fragment();
         active.setRetainInstance(true);
         fragments.add(a);
-        user = EntitySaver.getUser();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, active).addToBackStack(null).commit();
 
@@ -70,10 +66,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-    public User getUser() {
-        return user;
-    }
-
 
 }

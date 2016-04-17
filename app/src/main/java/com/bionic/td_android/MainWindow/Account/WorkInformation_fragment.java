@@ -18,13 +18,12 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.bionic.td_android.Entity.Job;
+import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Entity.WorkSchedule;
 import com.bionic.td_android.MainWindow.MainActivity;
 import com.bionic.td_android.Networking.Requests.UpdateWorkInfo;
 import com.bionic.td_android.R;
-import com.bionic.td_android.Utility.EntitySaver;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -101,12 +100,13 @@ public class WorkInformation_fragment extends Fragment implements TextWatcher {
     }
 
     private void loadValues(){
-        user = EntitySaver.getUser();
+        DbManager manager = new DbManager(getContext());
+        user = manager.loadUser();
 
-        List<Job> jobs = user.getJobs();
-        for (Job job : jobs) {
-            if(job.getJobName().equals("Driver"))driver.setChecked(true);
-            if(job.getJobName().equals("Operator"))operator.setChecked(true);
+        List<Integer> jobs = user.getJobs();
+        for (Integer job : jobs) {
+            if(job.equals(0))driver.setChecked(true);
+            if(job.equals(1))operator.setChecked(true);
         }
         if(user.isFourWeekPayOff())four_week_payments.setChecked(true);
         else mounthly_payments.setChecked(true);
@@ -183,9 +183,10 @@ public class WorkInformation_fragment extends Fragment implements TextWatcher {
             if(!validateForm(v)) return;
 
             Log.e("Bionic", "User before: " + user.toString());
-            List<Job> jobs = new ArrayList<Job>();
-            if(driver.isChecked())jobs.add(new Job("Driver"));
-            if(operator.isChecked())jobs.add(new Job("Operator"));
+            String[] jobsName = {"Driver", "Operator"};
+            List<Integer> jobs = new ArrayList<Integer>();
+            if(driver.isChecked())jobs.add(0);
+            if(operator.isChecked())jobs.add(1);
             user.setJobs(jobs);
 
             if(zero_day_contract.isChecked()){

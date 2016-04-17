@@ -13,13 +13,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Login.LoginActivity;
 import com.bionic.td_android.MainWindow.Account.Account_fragment;
 import com.bionic.td_android.MainWindow.Overview.Overview_fragment;
 import com.bionic.td_android.Networking.Requests.SendVerification;
 import com.bionic.td_android.R;
-import com.bionic.td_android.Utility.EntitySaver;
 
 /**
  * Created by user on 18.03.2016.
@@ -27,10 +27,8 @@ import com.bionic.td_android.Utility.EntitySaver;
 public class Dashboard_fragment extends Fragment {
 
 
-    private Toolbar toolbar;
     private MainActivity activity;
     private User user;
-    private TextView greeting;
     private LinearLayout alert;
 
     @Nullable
@@ -44,15 +42,15 @@ public class Dashboard_fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        user = EntitySaver.getUser();
+
 
     }
 
     private void configurePage(View view) {
 
         activity = (MainActivity) getActivity();
-        user = EntitySaver.getUser();
-
+        DbManager manager = new DbManager(getContext());
+        user = manager.loadUser();
 
         configureToolbar(view);
         configureViews(view);
@@ -60,7 +58,7 @@ public class Dashboard_fragment extends Fragment {
         if (!user.isVerified()) alert.setVisibility(View.VISIBLE);
         else alert.setVisibility(View.GONE);
 
-        greeting = (TextView) view.findViewById(R.id.user_name_textfield);
+        TextView greeting = (TextView) view.findViewById(R.id.user_name_textfield);
         if (user != null && greeting != null)
             greeting.setText(user.getFirstName() + " " + user.getLastName());
 
@@ -96,7 +94,7 @@ public class Dashboard_fragment extends Fragment {
     }
 
     private void configureToolbar(View view) {
-        toolbar = (Toolbar) view.findViewById(R.id.simple_toolbar);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.simple_toolbar);
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setTitle("Dashboard");
 

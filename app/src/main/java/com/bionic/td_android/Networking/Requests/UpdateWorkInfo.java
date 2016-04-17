@@ -7,10 +7,10 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
+import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Networking.API;
 import com.bionic.td_android.Networking.IRequest;
-import com.bionic.td_android.Utility.EntitySaver;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -29,10 +29,11 @@ import dmax.dialog.SpotsDialog;
 public class UpdateWorkInfo implements IRequest {
     User user;
     View view;
-
+    DbManager manager;
     public UpdateWorkInfo(User user, View view) {
         this.user = user;
         this.view = view;
+        manager = new DbManager(view.getContext());
     }
     @Override
     public void execute() {
@@ -49,7 +50,6 @@ public class UpdateWorkInfo implements IRequest {
         String encoded = Base64.encodeToString((login + ":" + pass).getBytes(), 0);
         client.addHeader("Authorization", "Basic " + encoded);
         String jsonInString = null;
-        user.setId(user.getmId()); //Не уверен, зачем это нужно, вроде бы нет, но нужно проверить перед удалением
         try {
             ObjectMapper mapper = new ObjectMapper();
             ObjectWriter writer = mapper.writerWithType(User.class);
@@ -85,7 +85,7 @@ public class UpdateWorkInfo implements IRequest {
                         User user1 = null;
                         try {
                             user1 = new ObjectMapper().readValue(responseString, User.class);
-                            EntitySaver.save(user1);
+                            manager.update(user1);
                             Log.e("Bionic", user1.toString());
                         } catch (IOException e) {
                             e.printStackTrace();

@@ -18,17 +18,14 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.bionic.td_android.R;
+import com.bionic.td_android.Utility.TimePack;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.orm.SugarRecord;
 
-import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
 
-public class Ride extends SugarRecord {
+public class Ride{
 
 
     @JsonProperty("id")
@@ -76,12 +73,6 @@ public class Ride extends SugarRecord {
         this.shift = shift;
     }
     @JsonIgnore
-    @Override
-    public List<Field> getTableFields() {
-        return super.getTableFields();
-    }
-
-    @JsonIgnore
     private FragmentManager manager;
 
     @JsonIgnore
@@ -89,10 +80,19 @@ public class Ride extends SugarRecord {
 
 
     @JsonIgnore
-    @Override
-    public String getSqlName() {
-        return super.getSqlName();
-    }
+    private TimePack startHour;
+
+    @JsonIgnore
+    private TimePack endHour;
+    @JsonIgnore
+    private Date selectedDate;
+
+    @JsonIgnore
+    private TextView datefield;
+    @JsonIgnore
+    private TextView fromTimefield;
+    @JsonIgnore
+    private TextView endTimefield;
 
     @JsonIgnore
     public View getView(){return view;}
@@ -105,12 +105,12 @@ public class Ride extends SugarRecord {
     }
 
 
-    private TextView datefield;
-    private TextView fromTimefield;
-    private TextView endTimefield;
+
 
     private void configView(){
         final Ride ride = this;
+        startHour = new TimePack();
+        endHour = new TimePack();
         datefield = (TextView) view.findViewById(R.id.item_begin_date);
         datefield.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,15 +122,18 @@ public class Ride extends SugarRecord {
         fromTimefield.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new TimePickerFragment(fromTimefield,ride).show(manager,"StartTime");
-
+                if(selectedDate != null)
+                    new TimePickerFragment(fromTimefield,ride).show(manager,"StartTime");
+                else  Snackbar.make(ride.getView(), "Select date first", Snackbar.LENGTH_LONG).show();
             }
         });
         endTimefield = (TextView) view.findViewById(R.id.item_end_time);
         endTimefield.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new TimePickerFragment(endTimefield,ride).show(manager,"EndTime");
+                if(startHour.isValid())
+                    new TimePickerFragment(endTimefield,ride).show(manager,"EndTime");
+                else  Snackbar.make(ride.getView(), "Input start time first", Snackbar.LENGTH_LONG).show();
             }
         });
 
@@ -144,6 +147,17 @@ public class Ride extends SugarRecord {
 
     }
 
+    public void invalidateEndTime(){
+        endHour.invalidate();
+        endTime = null;
+        endTimefield.setText("00:00");
+    }
+
+    public void invalidateStartTime(){
+        startHour.invalidate();
+        startTime = null;
+        fromTimefield.setText("00:00");
+    }
 
     public static class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
 
@@ -178,41 +192,25 @@ public class Ride extends SugarRecord {
                 text.append("0");
             text.append(minute);
 
+
             if(getTag().contains("Start")) {
-                Calendar calendar = GregorianCalendar.getInstance();
-                Date date = ride.getStartTime();
-                if(date == null){
-                    Snackbar.make(ride.getView(), "Please input date first", Snackbar.LENGTH_LONG).show();
-                    return;
-                }
-                calendar.setTime(date);
-                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                calendar.set(Calendar.MINUTE, minute);
-                calendar.set(Calendar.SECOND,0);
-                calendar.set(Calendar.MILLISECOND,0);
+
+                ride.startHour.hours = hourOfDay;
+                ride.startHour.minutes = minute;
                 textView.setText(text);
-                ride.setStartTime(calendar.getTime());
-                Log.e("Bionic", "Ride date: " + ride.getStartTime().toString());
+                ride.invalidateEndTime();
+                Log.e("Bionic", "Ride date: " + ride.startHour.toString());
+
             }
 
             if (getTag().contains("End")){
 
-                Calendar calendar = GregorianCalendar.getInstance();
-                Date date = ride.getEndTime();
-                if(date == null){
-                    Snackbar.make(ride.getView(),"Please input date first",Snackbar.LENGTH_LONG).show();
-                    return;
-                }
-                calendar.setTime(date);
-                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                calendar.set(Calendar.MINUTE, minute);
-                calendar.set(Calendar.SECOND,0);
-                calendar.set(Calendar.MILLISECOND,0);
+                ride.endHour.hours = hourOfDay;
+                ride.endHour.minutes = minute;
                 textView.setText(text);
-                ride.setEndTime(calendar.getTime());
-                Log.e("Bionic", "Ride end date: " + ride.getEndTime().toString());
+                ride.invokeAutoCountings();
+                Log.e("Bionic", "Ride end date: " + ride.endHour.toString());
             }
-            ride.invokeCountingPause();
         }
     }
 
@@ -249,35 +247,16 @@ public class Ride extends SugarRecord {
             if (monthOfYear + 1 < 10)
                 text.append("0");
             text.append(monthOfYear + 1).append("/").append(year);
+
+            Calendar cal = Calendar.getInstance();
+            cal.set(year,monthOfYear,dayOfMonth, 0, 0 ,0);
+            cal.set(Calendar.MILLISECOND,0);
+
+            ride.selectedDate = cal.getTime();
             textView.setText(text);
+            ride.invalidateStartTime();
+            ride.invalidateEndTime();
 
-            Calendar calendar = GregorianCalendar.getInstance();
-            Date date = ride.getStartTime();
-            if(date != null){
-                calendar.set(year, monthOfYear, dayOfMonth, 0, 0, 0);
-                Calendar tmp = GregorianCalendar.getInstance();
-                tmp.setTime(date);
-
-                calendar.set(Calendar.MINUTE, tmp.get(Calendar.MINUTE));
-                calendar.set(Calendar.HOUR_OF_DAY, tmp.get(Calendar.HOUR_OF_DAY));
-            }
-            else calendar.set(year, monthOfYear, dayOfMonth, 0, 0, 0);
-            calendar.set(Calendar.MILLISECOND,0);
-            ride.setStartTime(calendar.getTime());
-            Log.e("Bionic", "Ride  date: " + ride.getStartTime().toString());
-            Calendar calendar2 = GregorianCalendar.getInstance();
-            if(date != null){
-                calendar2.set(year, monthOfYear, dayOfMonth, 0, 0, 0);
-                Calendar tmp = GregorianCalendar.getInstance();
-                tmp.setTime(date);
-
-                calendar2.set(Calendar.MINUTE, tmp.get(Calendar.MINUTE));
-                calendar2.set(Calendar.HOUR_OF_DAY, tmp.get(Calendar.HOUR_OF_DAY));
-            }else calendar2.set(year, monthOfYear, dayOfMonth, 0, 0, 0);
-            calendar2.set(Calendar.MILLISECOND,0);
-            ride.setEndTime(calendar.getTime());
-            Log.e("Bionic", "Ride  date: " + ride.getEndTime().toString());
-            ride.invokeCountingPause();
         }
     }
 
@@ -285,32 +264,35 @@ public class Ride extends SugarRecord {
     public boolean validate(View view){
 
 
+        if(!startHour.isValid() || !endHour.isValid()) return false;
+
+        createDates();
+
         if(startTime == null || endTime == null){
             Snackbar.make(view,"Input time in rides" , Snackbar.LENGTH_LONG).show();
             return false;
         }
 
-        if(startTime.after(endTime)){
-            Snackbar.make(view,"Start time of ride is after end time" , Snackbar.LENGTH_LONG).show();
-            return false;
-        }
-
-        if( startTime.after(shift.getEndTime())
-            || startTime.before(shift.getStartTime())
-            || endTime.after(shift.getEndTime())
-            || endTime.before(shift.getStartTime())){
-            Snackbar.make(view,"Start time of ride outside of Shift period" , Snackbar.LENGTH_LONG).show();
-            return false;
-
-        }
-
         return true;
+    }
+
+    private void createDates(){
+        Date start = new Date(selectedDate.getTime() + startHour.getLongFromDaystart());
+        startTime = start;
+        Date end = null;
+        Date nextSelectedDay = new Date(selectedDate.getTime() + 86400000l);
+        if(endHour.hours < startHour.hours || (endHour.hours == startHour.hours && endHour.minutes < startHour.minutes))
+            end = new Date(nextSelectedDay.getTime() + endHour.getLongFromDaystart() );
+        else end = new Date(selectedDate.getTime() + endHour.getLongFromDaystart() );
+
+
+        endTime = end;
+
     }
 
 
 
-
-    public void invokeCountingPause(){
+    public void invokeAutoCountings(){
         shift.afterTextChanged(null);
     }
     public long getWorkTime(){

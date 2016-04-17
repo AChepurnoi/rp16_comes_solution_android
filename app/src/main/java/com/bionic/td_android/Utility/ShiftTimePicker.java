@@ -20,15 +20,15 @@ import java.util.GregorianCalendar;
  */
 
 
-public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
+public class ShiftTimePicker extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
 
     public TextView textView;
     private Shift shift;
 
-    public TimePickerFragment() {
+    public ShiftTimePicker() {
 
     }
-    public TimePickerFragment(TextView textView,Shift shift) {
+    public ShiftTimePicker(TextView textView, Shift shift) {
         this.textView = textView;
         this.shift = shift;
     }
@@ -87,6 +87,6 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             shift.setEndTime(calendar.getTime());
             Log.e("Bionic", "Shift end date: " + shift.getEndTime().toString());
         }
-        shift.afterTextChanged(null);
+        shift.recountPause();
     }
 }

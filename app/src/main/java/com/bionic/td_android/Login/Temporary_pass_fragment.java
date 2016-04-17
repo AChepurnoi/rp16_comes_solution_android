@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.R;
-import com.bionic.td_android.Utility.EntitySaver;
 
 /**
  * Created by user on 18.03.2016.
@@ -38,8 +38,9 @@ public class Temporary_pass_fragment extends Fragment{
     }
 
     private void configure(View view){
+        DbManager manager = new DbManager(getContext());
         activity = (LoginActivity) getActivity();
-        user = EntitySaver.getUser();
+        user = manager.loadUser();
         configureToolbar(view);
         configureViews(view);
 

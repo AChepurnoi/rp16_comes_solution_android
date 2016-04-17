@@ -18,14 +18,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.bionic.td_android.Entity.Job;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Entity.WorkSchedule;
 import com.bionic.td_android.R;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by user on 18.03.2016.
@@ -204,18 +201,18 @@ public class Second_step extends Fragment implements TextWatcher{
     }
     private User formSecondPart(){
         User user = new User();
-        List<Job> jobs = new ArrayList<>();
-        if(driver.isChecked()){
-            Job tmp = new Job();
-            tmp.setJobName("Driver");
-            jobs.add(tmp);
-        }
-        if(operator.isChecked()){
-            Job tmp = new Job();
-            tmp.setJobName("Operator");
-            jobs.add(tmp);
-        }
-        user.setJobs(jobs);
+//        List<Job> jobs = new ArrayList<>();
+//        if(driver.isChecked()){
+//            Job tmp = new Job();
+//            tmp.setJobName("Driver");
+//            jobs.add(tmp);
+//        }
+//        if(operator.isChecked()){
+//            Job tmp = new Job();
+//            tmp.setJobName("Operator");
+//            jobs.add(tmp);
+//        }
+//        user.setJobs(jobs);
         WorkSchedule schedule = new WorkSchedule();
         schedule.setCreationTime(new Date());
         schedule.setMonday(monday.getText().toString());

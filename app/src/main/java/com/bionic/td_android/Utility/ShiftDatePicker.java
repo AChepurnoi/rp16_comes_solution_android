@@ -18,15 +18,15 @@ import java.util.GregorianCalendar;
  * Created by user on 09.04.2016.
  */
 
-public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
+public class ShiftDatePicker extends DialogFragment implements DatePickerDialog.OnDateSetListener{
 
     private TextView textView;
     private Shift shift;
 
-    public DatePickerFragment() {
+    public ShiftDatePicker() {
 
     }
-    public DatePickerFragment(TextView textView,Shift shift) {
+    public ShiftDatePicker(TextView textView, Shift shift) {
         this.textView = textView;
         this.shift = shift;
     }
@@ -57,6 +57,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
             Date date = shift.getStartTime();
             if(date != null){
                 calendar.set(year, monthOfYear, dayOfMonth, 0, 0, 0);
+                calendar.set(Calendar.MILLISECOND,0);
                 Calendar tmp = GregorianCalendar.getInstance();
                 tmp.setTime(date);
 
@@ -85,6 +86,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
             shift.setEndTime(calendar.getTime());
             Log.e("Bionic", "Shift date: " + shift.getEndTime().toString());
         }
-        shift.afterTextChanged(null);
+        shift.recountPause();
     }
 }

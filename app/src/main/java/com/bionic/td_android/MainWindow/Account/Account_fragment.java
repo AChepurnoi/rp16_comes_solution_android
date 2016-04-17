@@ -12,12 +12,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bionic.td_android.Entity.Job;
+import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Entity.WorkSchedule;
 import com.bionic.td_android.MainWindow.MainActivity;
 import com.bionic.td_android.R;
-import com.bionic.td_android.Utility.EntitySaver;
 
 import java.util.List;
 
@@ -140,14 +139,17 @@ public class Account_fragment extends Fragment {
     }
 
     private void configUser(){
-        user = EntitySaver.getUser();
+        DbManager manager = new DbManager(getContext());
+        user = manager.loadUser();
+
         name.setText(user.getFirstName() + " " + user.getInsertion() + " " + user.getLastName());
         sex.setText(user.getSex());
         email.setText(user.getEmail());
-        List<Job> list = user.getJobs();
+        List<Integer> list = user.getJobs();
+        String[] jobsName = {"Driver", "Operator"};
         TextView arr[] = {pos_1,pos_2};
         for(int i = 0; i < list.size(); i++){
-            arr[i].setText(list.get(i).getJobName());
+            arr[i].setText(jobsName[list.get(i)]);
             arr[i].setVisibility(View.VISIBLE);
         }
         if(user.isFourWeekPayOff())

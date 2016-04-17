@@ -7,19 +7,15 @@ package com.bionic.td_android.Entity;
  *
  */
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.orm.SugarRecord;
-import com.orm.dsl.Ignore;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 /**
  * @author vitalii.levash
  *
  */
-public class Job extends SugarRecord{
+public class Job{
     @JsonProperty("id")
     private Long mId;
     private String jobName;
@@ -30,19 +26,6 @@ public class Job extends SugarRecord{
         this.jobName = jobName;
     }
 
-    @JsonIgnore
-    @Override
-    public String getSqlName() {
-        return super.getSqlName();
-    }
-
-    @JsonIgnore
-    @Override
-    public List<Field> getTableFields() {
-        return super.getTableFields();
-    }
-
-    @Ignore
     private List<User> users;
 
     public Job() {

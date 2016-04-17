@@ -7,13 +7,11 @@ package com.bionic.td_android.Entity;
  *
  */
 
-import com.orm.SugarRecord;
-
 /**
  * @author vitalii.levash
  * @version 0.1
  */
-public class Employer extends SugarRecord {
+public class Employer {
     private Long id;
     private String name;
 

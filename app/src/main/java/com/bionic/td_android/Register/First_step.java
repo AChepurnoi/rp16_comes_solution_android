@@ -73,6 +73,7 @@ public class First_step extends Fragment {
         user.setSex(gender.getSelectedItem().toString());
         user.setEmail(email.getText().toString());
         user.setPassword(password.getText().toString());
+        user.setPostalCode(code_area.getText().toString());
         user.setPasswordExpire(new Date(new Date().getTime() * 2));
         if(!code_area.getText().toString().isEmpty())
             user.setPostalCode(code_area.getText().toString());

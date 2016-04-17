@@ -3,15 +3,11 @@ package com.bionic.td_android.Entity;
 /**
  * Created by user on 19.03.2016.
  */
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.orm.SugarRecord;
 
-import java.lang.reflect.Field;
 import java.util.Date;
-import java.util.List;
 
-public class WorkSchedule extends SugarRecord {
+public class WorkSchedule{
     @JsonProperty("id")
     private Long mId;
 
@@ -28,17 +24,6 @@ public class WorkSchedule extends SugarRecord {
 
 
 
-    @JsonIgnore
-    @Override
-    public List<Field> getTableFields() {
-        return super.getTableFields();
-    }
-
-    @JsonIgnore
-    @Override
-    public String getSqlName() {
-        return super.getSqlName();
-    }
 
     public WorkSchedule() {
         mId = 0l;

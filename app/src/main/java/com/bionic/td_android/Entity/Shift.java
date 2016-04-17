@@ -8,28 +8,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bionic.td_android.R;
-import com.bionic.td_android.Utility.DatePickerFragment;
+import com.bionic.td_android.Utility.BreakCalculator;
 import com.bionic.td_android.Utility.PauseEditor;
-import com.bionic.td_android.Utility.TimePickerFragment;
+import com.bionic.td_android.Utility.ShiftDatePicker;
+import com.bionic.td_android.Utility.ShiftTimePicker;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.orm.SugarRecord;
-import com.orm.dsl.Ignore;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 
 /**
  * Created by user on 09.04.2016.
  */
-public class Shift extends SugarRecord implements TextWatcher{
+public class Shift implements TextWatcher{
 
     @JsonProperty("id")
     private Long mId;
@@ -38,6 +37,8 @@ public class Shift extends SugarRecord implements TextWatcher{
 
     @JsonIgnore
     private User user;
+
+
 
     private long pause;
     private List<Ride> rides;
@@ -90,51 +91,26 @@ public class Shift extends SugarRecord implements TextWatcher{
     }
 
     @JsonIgnore
-    @Override
-    public List<Field> getTableFields() {
-        return super.getTableFields();
-    }
-
-    @JsonIgnore
-    @Override
-    public String getSqlName() {
-        return super.getSqlName();
-    }
-
-
-
-    @JsonIgnore
-    @Ignore
     private TextView startDatefield;
     @JsonIgnore
-    @Ignore
     private TextView startTimefield;
     @JsonIgnore
-    @Ignore
     private LinearLayout ridesContainer;
     @JsonIgnore
-    @Ignore
     private TextView endDatefiled;
     @JsonIgnore
-    @Ignore
     private TextView endTimefield;
 
     @JsonIgnore
-    @Ignore
     private TextView totalPausefield;
     @JsonIgnore
-    @Ignore
     private TextView editTotalPause;
-    @JsonIgnore
-    @Ignore
-    private Button save,saveAndExit;
+
 
     @JsonIgnore
-    @Ignore
     private FragmentManager manager;
 
     @JsonIgnore
-    @Ignore
     private View view;
 
     @JsonIgnore
@@ -142,6 +118,14 @@ public class Shift extends SugarRecord implements TextWatcher{
         return view;
     }
 
+
+    public void addFirstRide(){
+        Ride ride = new Ride();
+        ride.setShift(this);
+        rides.add(ride);
+        View rideView = ride.getViewPresentation(view.getContext(), manager);
+        ridesContainer.addView(rideView);
+    }
     private void bindViews(){
         final Shift shift = this;
 
@@ -149,27 +133,27 @@ public class Shift extends SugarRecord implements TextWatcher{
 
         startDatefield = (TextView) view.findViewById(R.id.block_begin_shift_date);
         startDatefield.addTextChangedListener(this);
-        startDatefield.setOnClickListener(v -> new DatePickerFragment(startDatefield, shift).show(manager, "StartDatePick"));
+
+        startDatefield.setOnClickListener(v -> new ShiftDatePicker(startDatefield, shift).show(manager, "StartDatePick"));
         startTimefield = (TextView) view.findViewById(R.id.block_begin_shift_time);
         startTimefield.addTextChangedListener(this);
-        startTimefield.setOnClickListener(v -> new TimePickerFragment(startTimefield, shift).show(manager, "StartDatePick"));
+
+        startTimefield.setOnClickListener(v -> new ShiftTimePicker(startTimefield, shift).show(manager, "StartDatePick"));
 
         endDatefiled = (TextView) view.findViewById(R.id.block_end_shift_date);
-        endDatefiled.addTextChangedListener(this);
-        endDatefiled.setOnClickListener(v -> new DatePickerFragment(endDatefiled, shift).show(manager, "EndDatePick"));
+        endDatefiled.setOnClickListener(v -> new ShiftDatePicker(endDatefiled, shift).show(manager, "EndDatePick"));
         endTimefield = (TextView) view.findViewById(R.id.block_end_shift_time);
-        endTimefield.addTextChangedListener(this);
-        endTimefield.setOnClickListener(v -> new TimePickerFragment(endTimefield,shift).show(manager,"EndTimePick"));
+        endTimefield.setOnClickListener(v -> new ShiftTimePicker(endTimefield, shift).show(manager, "EndTimePick"));
 
 
         editTotalPause = (TextView) view.findViewById(R.id.button_edit_pause);
         editTotalPause.setOnClickListener(v -> new PauseEditor(shift).show(manager,"Edit pause"));
         ridesContainer = (LinearLayout) view.findViewById(R.id.rides_container);
 
-
+        addFirstRide();
         TextView add_ride = (TextView) view.findViewById(R.id.button_add_new_ride);
         add_ride.setOnClickListener(v -> {
-            if(rides.size() > 0 ? rides.get(rides.size() - 1).validate(view) : true) {
+            if(rides.get(rides.size() - 1).validate(view)) {
                 Ride ride = new Ride();
                 ride.setShift(shift);
                 rides.add(ride);
@@ -179,9 +163,12 @@ public class Shift extends SugarRecord implements TextWatcher{
             }
         });
 
+
+
     }
 
     public void deleteView(View deleting,Ride ride){
+        if(rides.size() == 1)return;
         ridesContainer.removeView(deleting);
         rides.remove(ride);
         afterTextChanged(null);
@@ -193,30 +180,81 @@ public class Shift extends SugarRecord implements TextWatcher{
         this.manager = manager;
         view = inflater.inflate(R.layout.fragment_shift_page,parent,false);
         bindViews();
-
         return view;
+    }
 
+    public boolean checkOverlays(){
+        for (Ride ride : rides) {
+            for (Ride ride1 : rides) {
+                if(ride != ride1){
+                    if(ride.getStartTime().after(ride1.getStartTime())
+                            && ride.getEndTime().before(ride1.getEndTime()))return true;
 
+                    if(ride.getStartTime().before(ride1.getStartTime())
+                            && ride.getEndTime().after(ride1.getStartTime())
+                            && ride.getEndTime().before(ride1.getEndTime()))return true;
+
+                    if(ride.getStartTime().before(ride1.getEndTime())
+                            && ride.getStartTime().after(ride1.getStartTime())
+                            && ride.getEndTime().after(ride1.getEndTime()))return true;
+                }
+            }
+        }
+        return false;
     }
 
 
+    public boolean checkBounds(){
+
+        for (Ride ride : rides) {
+            if(startTime!= null && endTime!= null) {
+                if (ride.getStartTime().before(startTime) || ride.getStartTime().after(endTime)
+                        || ride.getEndTime().before(startTime) || ride.getEndTime().after(endTime))
+                    return false;
+            }
+            else return false;
+        }
+
+        return true;
+    }
+
+    public boolean checkRides(){
+        for (Ride ride : rides) {
+            if(!ride.validate(view))return false;
+        }
+        return true;
+    }
     public boolean validate(){
 
 
-        if(startTime == null || endTime == null){
-            Snackbar.make(view, "Input start date and end date", Snackbar.LENGTH_LONG).show();
-            return false;
-
-        }
-        if(startTime.after(endTime)){
-            Snackbar.make(view, "Start date is after end date", Snackbar.LENGTH_LONG).show();
+        if(!checkRides()){
+            Snackbar.make(view, "Rides are incorrect", Snackbar.LENGTH_LONG).show();
             return false;
         }
 
-        for (Ride ride : rides) {
-            if(!ride.validate(view))
+        if(checkOverlays()){
+            Snackbar.make(view, "Rides overlaying", Snackbar.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(!checkBounds()){
+            Snackbar.make(view, "Wrong rides bounds", Snackbar.LENGTH_LONG).show();
+            return false;
+
+        }
+
+        if(startTime == null){
+            Snackbar.make(view, "Input start date", Snackbar.LENGTH_LONG).show();
+            return false;
+
+        }
+
+        if(endTime!= null)
+            if(startTime.after(endTime)){
+                Snackbar.make(view, "Start date is after end date", Snackbar.LENGTH_LONG).show();
                 return false;
-        }
+            }
+
         return true;
     }
 
@@ -230,25 +268,73 @@ public class Shift extends SugarRecord implements TextWatcher{
 
     }
 
+    private Date findLastTimeOfRide(){
+        Date end = new Date(0);
+        for (Ride ride : rides) {
+            if(ride.getEndTime().after(end))end = new Date(ride.getEndTime().getTime());
+        }
+        return end;
+    }
+
+    public void calculateEndTime(){
+        Date date = findLastTimeOfRide();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        StringBuilder text = new StringBuilder();
+        if (cal.get(Calendar.HOUR_OF_DAY) < 10)
+            text.append("0");
+        text.append(cal.get(Calendar.HOUR_OF_DAY)).append(":");
+        if (cal.get(Calendar.MINUTE) < 10)
+            text.append("0");
+        text.append(cal.get(Calendar.MINUTE));
+        endTimefield.setText(text);
+
+
+        text = new StringBuilder();
+        if (cal.get(Calendar.DAY_OF_MONTH) < 10)
+            text.append("0");
+        text.append(cal.get(Calendar.DAY_OF_MONTH)).append("/");
+        if (cal.get(Calendar.MONTH) + 1 < 10)
+            text.append("0");
+        text.append(cal.get(Calendar.MONTH) + 1).append("/").append(cal.get(Calendar.YEAR));
+        endDatefiled.setText(text);
+
+
+        endTime = date;
+
+
+
+
+    }
+
+
+
     @Override
     public void afterTextChanged(Editable s) {
 
-        if(endTime == null || startTime == null)return;
-        long interval = endTime.getTime() - startTime.getTime();
-        long workingTime = 0;
 
-        for (Ride ride : rides) {
-            if(ride.getEndTime() == null || ride.getStartTime() == null)return;
-            workingTime += ride.getWorkTime();
-        }
+        boolean valid = checkRides();
+        if(valid)calculateEndTime();
 
-        long diff = interval - workingTime;
-        long diffSeconds = diff / 1000 % 60;
-        long diffMinutes = diff / (60 * 1000) % 60;
-        long diffHours = diff / (60 * 60 * 1000);
-        long diffDays = diff / (24 * 60 * 60 * 1000);
-        pause = diff;
-        totalPausefield.setText(diffHours + "h " + diffMinutes + "m");
+        if(validate()){
+            BreakCalculator counter = new BreakCalculator(this);
+            long pauseMinutes = counter.calculate();
+            totalPausefield.setText(pauseMinutes / 60 + "h " + pauseMinutes % 60 +"m");
+            pause = pauseMinutes;
+        };
+
+
+
+    }
+
+    public void recountPause(){
+        if(validate()){
+            BreakCalculator counter = new BreakCalculator(this);
+            long pauseMinutes = counter.calculate();
+            totalPausefield.setText(pauseMinutes / 60 + "h " + pauseMinutes % 60 +"m");
+            pause = pauseMinutes;
+        };
+
     }
 
     public boolean setCustomPauseTime(String time){

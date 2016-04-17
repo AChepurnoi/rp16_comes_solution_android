@@ -15,12 +15,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.MainWindow.MainActivity;
 import com.bionic.td_android.Networking.Requests.UpdatePersonalInfo;
 import com.bionic.td_android.R;
 import com.bionic.td_android.Utility.EmailValidator;
-import com.bionic.td_android.Utility.EntitySaver;
 
 /**
  * Created by user on 15.04.2016.
@@ -32,11 +32,17 @@ public class PersonalInformation_fragment extends Fragment {
     private EditText name,lastname,insertion,postalCode,email;
     private Spinner gender;
     private User user;
+    private DbManager manager;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        manager = new DbManager(getContext());
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-        user = EntitySaver.getUser();
         updateView();
     }
 
@@ -107,7 +113,7 @@ public class PersonalInformation_fragment extends Fragment {
 
     private void updateView(){
 
-        User user = EntitySaver.getUser();
+        user = manager.loadUser();
         name.setText(user.getFirstName());
         lastname.setText(user.getLastName());
         insertion.setText(user.getInsertion());
@@ -120,6 +126,7 @@ public class PersonalInformation_fragment extends Fragment {
     }
     private void configureViews(final View view){
 
+        user = manager.loadUser();
         name = (EditText) view.findViewById(R.id.input_name);
         lastname = (EditText)view.findViewById(R.id.input_surname);
         insertion = (EditText)view.findViewById(R.id.input_second_name);
