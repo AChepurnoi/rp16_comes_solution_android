@@ -90,11 +90,14 @@ public class BreakCalculator {
         for (;  i < rides.size() ; i++) {
             if(i == rides.size() -1 ){
                 end = endTime;
-                break;
+                continue;
             }
             if(rides.get( i+1 ).getStartTime().equals(end)){
                 end = rides.get(i+1).getEndTime();
-            }else break;
+            }else {
+                i++;
+                break;
+            }
         }
 
         while (i > 0){
