@@ -31,7 +31,7 @@
             android:layout_weight="1"
             android:autoLink="web"
             android:text="@string/CAO_doc"
-            android:id="@+id/button_login"
+            android:id="@+id/button_cao"
 
             />
 
