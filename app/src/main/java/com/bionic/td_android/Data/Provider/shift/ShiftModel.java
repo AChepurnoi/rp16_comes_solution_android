@@ -21,21 +21,21 @@ public interface ShiftModel extends BaseModel {
      * Can be {@code null}.
      */
     @Nullable
-    Integer getStarttime();
+    Long getStarttime();
 
     /**
      * Get the {@code endtime} value.
      * Can be {@code null}.
      */
     @Nullable
-    Integer getEndtime();
+    Long getEndtime();
 
     /**
      * Get the {@code pause} value.
      * Can be {@code null}.
      */
     @Nullable
-    Integer getPause();
+    Long getPause();
 
     /**
      * Get the {@code userid} value.

@@ -38,8 +38,8 @@ public class RideCursor extends AbstractCursor implements RideModel {
      * Can be {@code null}.
      */
     @Nullable
-    public Integer getStarttime() {
-        Integer res = getIntegerOrNull(RideColumns.STARTTIME);
+    public Long getStarttime() {
+        Long res = getLongOrNull(RideColumns.STARTTIME);
         return res;
     }
 
@@ -48,8 +48,8 @@ public class RideCursor extends AbstractCursor implements RideModel {
      * Can be {@code null}.
      */
     @Nullable
-    public Integer getEndtime() {
-        Integer res = getIntegerOrNull(RideColumns.ENDTIME);
+    public Long getEndtime() {
+        Long res = getLongOrNull(RideColumns.ENDTIME);
         return res;
     }
 

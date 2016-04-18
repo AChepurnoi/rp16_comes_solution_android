@@ -5,6 +5,12 @@ import android.content.Context;
 import com.bionic.td_android.Data.Provider.job.JobContentValues;
 import com.bionic.td_android.Data.Provider.job.JobCursor;
 import com.bionic.td_android.Data.Provider.job.JobSelection;
+import com.bionic.td_android.Data.Provider.ride.RideContentValues;
+import com.bionic.td_android.Data.Provider.ride.RideCursor;
+import com.bionic.td_android.Data.Provider.ride.RideSelection;
+import com.bionic.td_android.Data.Provider.shift.ShiftContentValues;
+import com.bionic.td_android.Data.Provider.shift.ShiftCursor;
+import com.bionic.td_android.Data.Provider.shift.ShiftSelection;
 import com.bionic.td_android.Data.Provider.user.UserContentValues;
 import com.bionic.td_android.Data.Provider.user.UserCursor;
 import com.bionic.td_android.Data.Provider.user.UserSelection;
@@ -13,6 +19,8 @@ import com.bionic.td_android.Data.Provider.workschedule.WorkscheduleCursor;
 import com.bionic.td_android.Data.Provider.workschedule.WorkscheduleModel;
 import com.bionic.td_android.Data.Provider.workschedule.WorkscheduleSelection;
 import com.bionic.td_android.Data.Utility.CVHelper;
+import com.bionic.td_android.Entity.Ride;
+import com.bionic.td_android.Entity.Shift;
 import com.bionic.td_android.Entity.User;
 
 import java.util.ArrayList;
@@ -35,6 +43,20 @@ public class DbManager {
         new UserSelection().delete(context);
         new WorkscheduleSelection().delete(context);
         new JobSelection().delete(context);
+        new ShiftSelection().delete(context);
+        new RideSelection().delete(context);
+
+    }
+
+    private void clearUserWorkschedule(){
+        new UserSelection().delete(context);
+        new WorkscheduleSelection().delete(context);
+        new JobSelection().delete(context);
+    }
+    public void loginClear(User user){
+        User current = loadUser();
+        if(current.getmId().equals(user.getmId()))clearUserWorkschedule();
+        else clear();
 
     }
 
@@ -129,6 +151,51 @@ public class DbManager {
         res.setJobs(userJobs);
 
         return res;
+    }
+
+    public Shift loadLocalShift(){
+
+        ShiftSelection shiftSelection = new ShiftSelection();
+        ShiftCursor shifts = shiftSelection.synchronize(2).query(context);
+        RideCursor rides = new RideSelection().shiftid(0).query(context);
+
+        if(!shifts.moveToNext())return null;
+        Shift res = helper.buildShift(shifts);
+        List<Ride> rideList = new ArrayList<>();
+        while (rides.moveToNext()){
+            Ride obj = helper.buildRide(rides);
+            obj.createTimePacks();
+            obj.setShift(res);
+            rideList.add(obj);
+        }
+        res.setRides(rideList);
+//        if(!res.validate())return null;
+        return res;
+    }
+    public void saveUpdateLocalShift(Shift shift){
+
+        clearLocalShift();
+        User user = loadUser();
+        ShiftContentValues shiftVal = helper.build(user.getmId(), shift, true);
+        List<RideContentValues> ridesVal = new ArrayList<>();
+        for (Ride ride : shift.getRides()) {
+            ridesVal.add(helper.build(shift.getmId(),ride));
+        }
+
+        shiftVal.insert(context);
+        for (RideContentValues values : ridesVal) {
+            values.insert(context);
+        }
+
+
+    }
+
+    public void clearLocalShift(){
+
+        ShiftSelection shiftSelection = new ShiftSelection();
+        RideSelection rideSelection = new RideSelection();
+        shiftSelection.serverid(0).delete(context);
+        rideSelection.shiftid(0).delete(context);
     }
 
 

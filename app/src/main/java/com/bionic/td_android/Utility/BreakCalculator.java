@@ -129,6 +129,12 @@ public class BreakCalculator {
         return  time / (60 * 60 * 1000);
     }
 
+
+    /*
+
+
+    Return miliseconds
+     */
     public long calculate(){
         long res = 0;
         res += getPauseTime(getMinutes(getSequentialTimeFirstRide()));
@@ -140,7 +146,7 @@ public class BreakCalculator {
         }while (tmp != 0);
 
 
-        return res;
+        return res * 60000; //return in miliseconds
     }
 
 

@@ -49,7 +49,7 @@ public class ShiftContentValues extends AbstractContentValues {
         return this;
     }
 
-    public ShiftContentValues putStarttime(@Nullable Integer value) {
+    public ShiftContentValues putStarttime(@Nullable Long value) {
         mContentValues.put(ShiftColumns.STARTTIME, value);
         return this;
     }
@@ -59,7 +59,7 @@ public class ShiftContentValues extends AbstractContentValues {
         return this;
     }
 
-    public ShiftContentValues putEndtime(@Nullable Integer value) {
+    public ShiftContentValues putEndtime(@Nullable Long value) {
         mContentValues.put(ShiftColumns.ENDTIME, value);
         return this;
     }
@@ -69,7 +69,7 @@ public class ShiftContentValues extends AbstractContentValues {
         return this;
     }
 
-    public ShiftContentValues putPause(@Nullable Integer value) {
+    public ShiftContentValues putPause(@Nullable Long value) {
         mContentValues.put(ShiftColumns.PAUSE, value);
         return this;
     }

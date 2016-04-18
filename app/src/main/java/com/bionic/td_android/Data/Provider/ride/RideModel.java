@@ -21,14 +21,14 @@ public interface RideModel extends BaseModel {
      * Can be {@code null}.
      */
     @Nullable
-    Integer getStarttime();
+    Long getStarttime();
 
     /**
      * Get the {@code endtime} value.
      * Can be {@code null}.
      */
     @Nullable
-    Integer getEndtime();
+    Long getEndtime();
 
     /**
      * Get the {@code shiftid} value.

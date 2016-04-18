@@ -13,6 +13,11 @@ public class TimePack {
         minutes = -1;
     }
 
+    public TimePack(int hours, int minutes) {
+        this.hours = hours;
+        this.minutes = minutes;
+    }
+
     public boolean isValid(){
         return  hours!= - 1 && minutes != -1;
     }

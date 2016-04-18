@@ -7,6 +7,7 @@ import android.content.ContentResolver;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.bionic.td_android.Data.Provider.base.AbstractContentValues;
 
@@ -49,7 +50,7 @@ public class RideContentValues extends AbstractContentValues {
         return this;
     }
 
-    public RideContentValues putStarttime(@Nullable Integer value) {
+    public RideContentValues putStarttime(@Nullable Long value) {
         mContentValues.put(RideColumns.STARTTIME, value);
         return this;
     }
@@ -59,7 +60,7 @@ public class RideContentValues extends AbstractContentValues {
         return this;
     }
 
-    public RideContentValues putEndtime(@Nullable Integer value) {
+    public RideContentValues putEndtime(@Nullable Long value) {
         mContentValues.put(RideColumns.ENDTIME, value);
         return this;
     }

@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.bionic.td_android.R;
+import com.bionic.td_android.Utility.DateUtility;
 import com.bionic.td_android.Utility.TimePack;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -27,73 +28,33 @@ import java.util.Date;
 
 public class Ride{
 
-
     @JsonProperty("id")
     private Long mId;
     private Date startTime;
     private Date endTime;
-
     @JsonIgnore
     private Shift shift;
 
     public Ride() {
+        mId = 0l;
     }
 
-    @JsonProperty("id")
-    public Long getmId() {
-        return mId;
-    }
-
-    @JsonProperty("id")
-    public void setmId(Long id) {
-        this.mId = id;
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    public Shift getShift() {
-        return shift;
-    }
-
-    public void setShift(Shift shift) {
-        this.shift = shift;
-    }
     @JsonIgnore
     private FragmentManager manager;
-
     @JsonIgnore
     private View view;
-
-
     @JsonIgnore
     private TimePack startHour;
-
     @JsonIgnore
     private TimePack endHour;
     @JsonIgnore
     private Date selectedDate;
-
     @JsonIgnore
     private TextView datefield;
     @JsonIgnore
     private TextView fromTimefield;
     @JsonIgnore
     private TextView endTimefield;
-
     @JsonIgnore
     public View getView(){return view;}
     @JsonIgnore
@@ -101,50 +62,40 @@ public class Ride{
         this.manager = manager;
         view = LayoutInflater.from(context).inflate(R.layout.view_add_ride,null);
         configView();
+        if(startTime != null && endTime !=null)populateView();
         return view;
     }
 
 
+    public void populateView(){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(startTime);
+        datefield.setText(DateUtility.getDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)));
+        fromTimefield.setText(DateUtility.getTime(cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE)));
+        cal.setTime(endTime);
+        endTimefield.setText(DateUtility.getTime(cal.get(Calendar.HOUR_OF_DAY),cal.get(Calendar.MINUTE)));
 
-
+    }
     private void configView(){
         final Ride ride = this;
-        startHour = new TimePack();
-        endHour = new TimePack();
+        if(startHour == null)startHour = new TimePack();
+        if(endHour == null)endHour = new TimePack();
         datefield = (TextView) view.findViewById(R.id.item_begin_date);
-        datefield.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerFragment(datefield,ride).show(manager,"");
-            }
-        });
+        datefield.setOnClickListener(v -> new DatePickerFragment(datefield,ride).show(manager,""));
         fromTimefield = (TextView) view.findViewById(R.id.item_begin_time);
-        fromTimefield.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(selectedDate != null)
-                    new TimePickerFragment(fromTimefield,ride).show(manager,"StartTime");
-                else  Snackbar.make(ride.getView(), "Select date first", Snackbar.LENGTH_LONG).show();
-            }
+        fromTimefield.setOnClickListener(v -> {
+            if(selectedDate != null)
+                new TimePickerFragment(fromTimefield,ride).show(manager,"StartTime");
+            else  Snackbar.make(ride.getView(), "Select date first", Snackbar.LENGTH_LONG).show();
         });
         endTimefield = (TextView) view.findViewById(R.id.item_end_time);
-        endTimefield.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(startHour.isValid())
-                    new TimePickerFragment(endTimefield,ride).show(manager,"EndTime");
-                else  Snackbar.make(ride.getView(), "Input start time first", Snackbar.LENGTH_LONG).show();
-            }
+        endTimefield.setOnClickListener(v -> {
+            if(startHour.isValid())
+                new TimePickerFragment(endTimefield,ride).show(manager,"EndTime");
+            else  Snackbar.make(ride.getView(), "Input start time first", Snackbar.LENGTH_LONG).show();
         });
-
         ImageButton del = (ImageButton) view.findViewById(R.id.button_delete_ride);
-        del.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shift.deleteView(view,ride);
-            }
-        });
-
+        del.setOnClickListener(v -> shift.deleteView(view,ride));
     }
 
     public void invalidateEndTime(){
@@ -177,8 +128,6 @@ public class Ride{
             final Calendar cal = Calendar.getInstance();
             int hour = cal.get(Calendar.HOUR_OF_DAY);
             int minute = cal.get(Calendar.MINUTE);
-
-
             return new TimePickerDialog(getActivity(), this, hour, minute, android.text.format.DateFormat.is24HourFormat(getActivity()));
         }
 
@@ -191,10 +140,7 @@ public class Ride{
             if (minute < 10)
                 text.append("0");
             text.append(minute);
-
-
             if(getTag().contains("Start")) {
-
                 ride.startHour.hours = hourOfDay;
                 ride.startHour.minutes = minute;
                 textView.setText(text);
@@ -202,9 +148,7 @@ public class Ride{
                 Log.e("Bionic", "Ride date: " + ride.startHour.toString());
 
             }
-
             if (getTag().contains("End")){
-
                 ride.endHour.hours = hourOfDay;
                 ride.endHour.minutes = minute;
                 textView.setText(text);
@@ -213,7 +157,6 @@ public class Ride{
             }
         }
     }
-
 
     public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
 
@@ -261,20 +204,24 @@ public class Ride{
         }
     }
 
-
     public boolean validate(View view){
-
-
         if(!startHour.isValid() || !endHour.isValid()) return false;
-
         createDates();
-
         if(startTime == null || endTime == null){
             Snackbar.make(view,"Input time in rides" , Snackbar.LENGTH_LONG).show();
             return false;
         }
-
         return true;
+    }
+
+    public void createTimePacks(){
+        if(startTime == null || endTime == null)return;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(startTime);
+        selectedDate = new Date(cal.get(Calendar.YEAR) - 1900 ,cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),0,0,0);
+        startHour = new TimePack(cal.get(Calendar.HOUR_OF_DAY),cal.get(Calendar.MINUTE));
+        cal.setTime(endTime);
+        endHour = new TimePack(cal.get(Calendar.HOUR_OF_DAY),cal.get(Calendar.MINUTE));
     }
 
     private void createDates(){
@@ -285,19 +232,44 @@ public class Ride{
         if(endHour.hours < startHour.hours || (endHour.hours == startHour.hours && endHour.minutes < startHour.minutes))
             end = new Date(nextSelectedDay.getTime() + endHour.getLongFromDaystart() );
         else end = new Date(selectedDate.getTime() + endHour.getLongFromDaystart() );
-
-
         endTime = end;
-
     }
-
-
-
     public void invokeAutoCountings(){
         shift.afterTextChanged(null);
     }
-    public long getWorkTime(){
-        return endTime.getTime() - startTime.getTime();
+
+    @JsonProperty("id")
+    public Long getmId() {
+        return mId;
+    }
+
+    @JsonProperty("id")
+    public void setmId(Long id) {
+        this.mId = id;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public Shift getShift() {
+        return shift;
+    }
+
+    public void setShift(Shift shift) {
+        this.shift = shift;
     }
 
     @Override

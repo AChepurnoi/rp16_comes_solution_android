@@ -38,8 +38,8 @@ public class ShiftCursor extends AbstractCursor implements ShiftModel {
      * Can be {@code null}.
      */
     @Nullable
-    public Integer getStarttime() {
-        Integer res = getIntegerOrNull(ShiftColumns.STARTTIME);
+    public Long getStarttime() {
+        Long res = getLongOrNull(ShiftColumns.STARTTIME);
         return res;
     }
 
@@ -48,8 +48,8 @@ public class ShiftCursor extends AbstractCursor implements ShiftModel {
      * Can be {@code null}.
      */
     @Nullable
-    public Integer getEndtime() {
-        Integer res = getIntegerOrNull(ShiftColumns.ENDTIME);
+    public Long getEndtime() {
+        Long res = getLongOrNull(ShiftColumns.ENDTIME);
         return res;
     }
 
@@ -58,8 +58,8 @@ public class ShiftCursor extends AbstractCursor implements ShiftModel {
      * Can be {@code null}.
      */
     @Nullable
-    public Integer getPause() {
-        Integer res = getIntegerOrNull(ShiftColumns.PAUSE);
+    public Long getPause() {
+        Long res = getLongOrNull(ShiftColumns.PAUSE);
         return res;
     }
 

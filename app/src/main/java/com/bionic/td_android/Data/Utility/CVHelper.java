@@ -1,10 +1,16 @@
 package com.bionic.td_android.Data.Utility;
 
 import com.bionic.td_android.Data.Provider.job.JobContentValues;
+import com.bionic.td_android.Data.Provider.ride.RideContentValues;
+import com.bionic.td_android.Data.Provider.ride.RideModel;
+import com.bionic.td_android.Data.Provider.shift.ShiftContentValues;
+import com.bionic.td_android.Data.Provider.shift.ShiftModel;
 import com.bionic.td_android.Data.Provider.user.UserContentValues;
 import com.bionic.td_android.Data.Provider.user.UserModel;
 import com.bionic.td_android.Data.Provider.workschedule.WorkscheduleContentValues;
 import com.bionic.td_android.Data.Provider.workschedule.WorkscheduleModel;
+import com.bionic.td_android.Entity.Ride;
+import com.bionic.td_android.Entity.Shift;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Entity.UserRoleEnum;
 import com.bionic.td_android.Entity.WorkSchedule;
@@ -105,4 +111,48 @@ public class CVHelper {
 
     }
 
+
+    public ShiftContentValues build(long userId,Shift shift, boolean isLocal){
+        ShiftContentValues values = new ShiftContentValues();
+        values.putUserid(userId);
+        values.putStarttime(shift.getStartTime().getTime());
+        values.putEndtime(shift.getEndTime().getTime());
+        values.putPause(shift.getPause());
+        values.putSynchronize(isLocal ? 2 : 0);
+        values.putServerid(shift.getmId());
+
+        return values;
+
+    }
+
+    public RideContentValues build(long shiftId, Ride ride){
+
+        RideContentValues values = new RideContentValues();
+        values.putServerid(ride.getmId());
+        values.putShiftid(shiftId);
+        values.putStarttime(ride.getStartTime().getTime());
+        values.putEndtime(ride.getEndTime().getTime());
+
+        return values;
+
+
+    }
+
+    public Shift buildShift(ShiftModel values){
+        Shift shift = new Shift();
+        shift.setmId(values.getServerid());
+        shift.setStartTime(new Date(values.getStarttime()));
+        shift.setEndTime(new Date(values.getEndtime()));
+        shift.setPause(values.getPause());
+        return shift;
+    }
+
+    public Ride buildRide(RideModel values){
+        Ride ride = new Ride();
+        ride.setStartTime(new Date(values.getStarttime()));
+        ride.setEndTime(new Date(values.getEndtime()));
+        ride.setmId(values.getServerid());
+        return ride;
+
+    }
 }

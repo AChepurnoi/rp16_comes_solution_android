@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.bionic.td_android.Data.DbManager;
-import com.bionic.td_android.Entity.Ride;
 import com.bionic.td_android.Entity.Shift;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Networking.API;
@@ -27,8 +26,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
-
-import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.ByteArrayEntity;
@@ -41,9 +38,9 @@ import dmax.dialog.SpotsDialog;
 public class Shift_fragment extends Fragment {
     private MainActivity activity;
     private Toolbar toolbar;
-
+    private DbManager manager;
     private Shift shift;
-    private List<Ride> rides;
+
 
 
 
@@ -51,7 +48,9 @@ public class Shift_fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        shift = new Shift();
+        manager = new DbManager(getContext());
+        shift = manager.loadLocalShift();
+        if(shift == null)shift = new Shift();
         View view = shift.getShiftView(inflater,container,getActivity().getSupportFragmentManager());
 
         configurePage(view);
@@ -69,11 +68,14 @@ public class Shift_fragment extends Fragment {
 
         Button apply = (Button) view.findViewById(R.id.button_apply);
         apply.setOnClickListener(v -> {
-
+            Log.e("Bionic", shift.toString());
             if(shift.validate()){
                 Log.e("Bionic","SHIFT OK");
                 Log.e("Bionic", shift.toString());
-                Log.e("Bionic","Total breaktime minutes " + new BreakCalculator(shift).calculate());
+                Log.e("Bionic","Total breaktime seconds (Calculated)" + new BreakCalculator(shift).calculate());
+                Log.e("Bionic","Setted pause :" + shift.getPause());
+                manager.clearLocalShift();
+                manager.saveUpdateLocalShift(shift);
             }
 
         });
@@ -81,7 +83,7 @@ public class Shift_fragment extends Fragment {
 
         Button submit = (Button) view.findViewById(R.id.button_submit);
         submit.setOnClickListener(v -> {
-
+            Log.e("Bionic", shift.toString());
             if(shift.validate()){
                 Log.e("Bionic","SHIFT OK");
                 Log.e("Bionic", shift.toString());
