@@ -1,9 +1,7 @@
 package com.bionic.td_android.Data.Provider.ride;
 
-import java.util.Date;
-
-import android.content.Context;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
@@ -198,12 +196,12 @@ public class RideSelection extends AbstractSelection<RideSelection> {
         return this;
     }
 
-    public RideSelection shiftid(Integer... value) {
+    public RideSelection shiftid(Long... value) {
         addEquals(RideColumns.SHIFTID, value);
         return this;
     }
 
-    public RideSelection shiftidNot(Integer... value) {
+    public RideSelection shiftidNot(Long... value) {
         addNotEquals(RideColumns.SHIFTID, value);
         return this;
     }

@@ -157,7 +157,7 @@ public class DbManager {
 
         ShiftSelection shiftSelection = new ShiftSelection();
         ShiftCursor shifts = shiftSelection.synchronize(2).query(context);
-        RideCursor rides = new RideSelection().shiftid(0).query(context);
+        RideCursor rides = new RideSelection().shiftid(0l).query(context);
 
         if(!shifts.moveToNext())return null;
         Shift res = helper.buildShift(shifts);
@@ -195,8 +195,52 @@ public class DbManager {
         ShiftSelection shiftSelection = new ShiftSelection();
         RideSelection rideSelection = new RideSelection();
         shiftSelection.serverid(0).delete(context);
-        rideSelection.shiftid(0).delete(context);
+        rideSelection.shiftid(0l).delete(context);
     }
 
+    public void clearShifts(){
+        ShiftSelection shiftSelection = new ShiftSelection();
+        RideSelection rideSelection = new RideSelection();
+        shiftSelection.serveridNot(0).delete(context);
+        rideSelection.shiftidNot(0l).delete(context);
+    }
+
+    public void saveShifts(List<Shift> shifts){
+        clearShifts();
+        User user = loadUser();
+        for (Shift shift : shifts) {
+            ShiftContentValues shiftVal = helper.build(user.getmId(), shift, true);
+            List<RideContentValues> ridesVal = new ArrayList<>();
+            for (Ride ride : shift.getRides()) {
+                ridesVal.add(helper.build(shift.getmId(),ride));
+            }
+            shiftVal.insert(context);
+            for (RideContentValues values : ridesVal) {
+                values.insert(context);
+            }
+        }
+    }
+
+    public List<Shift> loadShifts(){
+        User user = loadUser();
+        List<Shift> result = new ArrayList<>();
+        ShiftSelection shiftSelection = new ShiftSelection();
+        ShiftCursor shifts = shiftSelection.userid(user.getmId()).query(context);
+        while (shifts.moveToNext()){
+            Shift res = helper.buildShift(shifts);
+            RideCursor rides = new RideSelection().shiftid(res.getmId()).query(context);
+            List<Ride> rideList = new ArrayList<>();
+            while (rides.moveToNext()){
+                Ride obj = helper.buildRide(rides);
+                obj.createTimePacks();
+                obj.setShift(res);
+                rideList.add(obj);
+            }
+            res.setRides(rideList);
+            result.add(res);
+        }
+
+        return result;
+    }
 
 }

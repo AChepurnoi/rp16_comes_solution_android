@@ -9,6 +9,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
+import com.annimon.stream.Stream;
 import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Login.LoginActivity;

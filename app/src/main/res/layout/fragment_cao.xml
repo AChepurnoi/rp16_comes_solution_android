@@ -9,20 +9,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:id="@+id/container_cao"
         >
 
         <include layout="@layout/toolbar_simple" />
 
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:autoLink="web"
-            android:text="@string/CAO_doc"
-            android:id="@+id/button_cao"
 
-            />
+
+
+            <WebView
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:id="@+id/webview"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="15dp"
+
+
+                >
+
+
+            </WebView>
+
+
+
 
     </LinearLayout>
 

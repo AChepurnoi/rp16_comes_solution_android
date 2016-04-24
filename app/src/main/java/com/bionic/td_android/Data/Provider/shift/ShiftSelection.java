@@ -236,12 +236,12 @@ public class ShiftSelection extends AbstractSelection<ShiftSelection> {
         return this;
     }
 
-    public ShiftSelection userid(Integer... value) {
+    public ShiftSelection userid(Long... value) {
         addEquals(ShiftColumns.USERID, value);
         return this;
     }
 
-    public ShiftSelection useridNot(Integer... value) {
+    public ShiftSelection useridNot(Long... value) {
         addNotEquals(ShiftColumns.USERID, value);
         return this;
     }
