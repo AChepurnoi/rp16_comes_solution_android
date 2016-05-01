@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.MainWindow.MainActivity;
+import com.bionic.td_android.Networking.Requests.GetPeriodData;
 import com.bionic.td_android.R;
 
 /**
@@ -30,8 +31,8 @@ public class PeriodOverview extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState != null){
-            year = savedInstanceState.getInt("year");
+        if(getArguments() != null){
+            year = getArguments().getInt("year");
         }
         activity = (MainActivity) getActivity();
     }
@@ -62,8 +63,7 @@ public class PeriodOverview extends Fragment {
         ArrayAdapter<String> periodsAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1,array);
         list.setAdapter(periodsAdapter);
         list.setOnItemClickListener((parent, view1, position, id) -> {
-
-
+            new GetPeriodData(view1,year,id + 1, (MainActivity) getActivity()).execute();
 
         });
 

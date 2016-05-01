@@ -28,9 +28,9 @@ import dmax.dialog.SpotsDialog;
  */
 public class UpdatePersonalInfo implements IRequest {
 
-    User user;
-    View view;
-    DbManager manager;
+    private User user;
+    private View view;
+    private DbManager manager;
     public UpdatePersonalInfo(User user, View view) {
         this.user = user;
         this.view = view;

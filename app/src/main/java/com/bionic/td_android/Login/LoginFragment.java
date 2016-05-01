@@ -17,12 +17,7 @@ import com.bionic.td_android.R;
  * Created by user on 17.03.2016.
  */
 public class LoginFragment extends Fragment {
-
-
-    private Button register,login;
     private EditText log,pass;
-    private View forgot_pass;
-    private Toolbar toolbar;
     private LoginActivity activity;
     @Nullable
     @Override
@@ -48,14 +43,14 @@ public class LoginFragment extends Fragment {
          });
 
 
-        register = (Button) view.findViewById(R.id.button_register);
+        Button register = (Button) view.findViewById(R.id.button_register);
         register.setOnClickListener(v -> activity.register());
 
-        forgot_pass = view.findViewById(R.id.forgot_password);
+        View forgot_pass = view.findViewById(R.id.forgot_password);
         forgot_pass.setOnClickListener(v -> activity.callFragment(new Forgotten_password()));
 
-        login = (Button) view.findViewById(R.id.button_login);
-        login.setOnClickListener(v -> activity.login(log.getText().toString(),pass.getText().toString()));
+        Button login = (Button) view.findViewById(R.id.button_login);
+        login.setOnClickListener(v -> activity.login(log.getText().toString(), pass.getText().toString()));
 
 
     }
@@ -63,7 +58,7 @@ public class LoginFragment extends Fragment {
     private void configureToolbar(View view){
 
 
-        toolbar = (Toolbar)view.findViewById(R.id.simple_toolbar);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.simple_toolbar);
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setTitle("Login");
 

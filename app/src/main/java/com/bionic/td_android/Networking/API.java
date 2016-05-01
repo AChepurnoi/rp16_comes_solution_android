@@ -8,10 +8,11 @@ public class API {
 
 
 //    private static String SERVER_ADDRESS = "http://10.0.3.2:8080/"; //Localhost
-    private static String SERVER_ADDRESS = "http://77.47.204.138:8080/"; //Sasha
+//    private static String SERVER_ADDRESS = "http://77.47.204.138:8080/"; //Sasha
+//    private static String SERVER_ADDRESS = "http://46.46.65.130:8080/";//Sasha2
 //    private static String SERVER_ADDRESS = "http://128.0.169.5:808/tda/"; //Bionic
 //    private static String SERVER_ADDRESS = "http://77.47.231.38:8080/"; //Dima
-//    private static String SERVER_ADDRESS = "http://213.163.93.170:8080/tda-0.2/"; //Peter
+    private static String SERVER_ADDRESS = "http://213.163.93.170:8080/tda-0.4.1/"; //Peter
     private static String LOG_IN = SERVER_ADDRESS + "rest/api/auth/login";
     private static String GET_USER = SERVER_ADDRESS + "rest/api/users/login";
     private static String REGISTER = SERVER_ADDRESS + "rest/api/auth";
@@ -21,6 +22,11 @@ public class API {
     private static String UPDATE_USER = SERVER_ADDRESS + "rest/api/users/";
     private static String VERIFICATION = SERVER_ADDRESS + "rest/api/users/";
     private static String USERS = SERVER_ADDRESS + "rest/api/users/";
+    private static String SUMMARY = SERVER_ADDRESS + "/rest/api/users/";
+
+    public static String GET_SUMMARY(long userId, long year, long period){
+        return USERS + userId + "/summary/" + year + "/" + period + "";
+    }
     public static String SHIFT_API(long userId){
         return USERS + userId +"/shifts";
     }

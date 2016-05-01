@@ -29,9 +29,9 @@ import dmax.dialog.SpotsDialog;
 public class AddShift implements IRequest {
 
 
-    Shift shift;
-    View view;
-    MainActivity activity;
+    private Shift shift;
+    private View view;
+    private MainActivity activity;
 
     public AddShift(Shift shift, View view, MainActivity activity) {
         this.shift = shift;
@@ -72,8 +72,8 @@ public class AddShift implements IRequest {
                     @Override
                     public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                         Log.e("Bionic", "Fail " + statusCode);
-                        Log.e("Bionic", headers.toString());
-                        Log.e("Bionic", responseString);
+                        if(responseString != null)
+                            Log.e("Bionic", responseString);
                         dialog.dismiss();
                         Snackbar.make(view, "Failed to add shift", Snackbar.LENGTH_LONG).show();
                     }
@@ -85,7 +85,7 @@ public class AddShift implements IRequest {
                         dialog.dismiss();
                         Snackbar.make(view, "Done", Snackbar.LENGTH_LONG).show();
                         manager.clearLocalShift();
-                        activity.getSupportFragmentManager().popBackStack();
+                        activity.onBackPressed();
                     }
                 });
     }

@@ -9,7 +9,6 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
-import com.annimon.stream.Stream;
 import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Login.LoginActivity;
@@ -33,9 +32,9 @@ import dmax.dialog.SpotsDialog;
 public class Login implements IRequest {
 
 
-    String login, pass;
-    View view;
-    LoginActivity activity;
+    private String login, pass;
+    private View view;
+    private  LoginActivity activity;
     public Login(String login, String pass, LoginActivity activity,View view) {
         this.login = login;
         this.pass = pass;

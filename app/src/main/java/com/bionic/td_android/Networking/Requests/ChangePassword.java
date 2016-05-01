@@ -26,10 +26,10 @@ import dmax.dialog.SpotsDialog;
 public class ChangePassword implements IRequest {
 
 
-    String temp,newPassword;
-    User user;
-    View view;
-    LoginActivity activity;
+    private String temp,newPassword;
+    private  User user;
+    private View view;
+    private LoginActivity activity;
 
     public ChangePassword(String temp, String newPassword, User user, View view, LoginActivity activity) {
         this.temp = temp;

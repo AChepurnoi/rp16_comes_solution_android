@@ -30,5 +30,13 @@ public class DateUtility {
         return text;
     }
 
+    public static String getHourMinutes(long period){
+
+        long seconds = (period / 1000) % 60;
+        long minutes = (period / (1000 * 60)) % 60;
+        long hours = period / (1000 * 60 * 60);
+        return String.format("%02d:%02d", hours,minutes);
+    }
+
 
 }

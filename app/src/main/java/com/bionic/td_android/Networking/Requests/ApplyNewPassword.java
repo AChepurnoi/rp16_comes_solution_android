@@ -23,9 +23,9 @@ import dmax.dialog.SpotsDialog;
  */
 public class ApplyNewPassword implements IRequest {
 
-    User user;
-    String tmp,newPassword;
-    View view;
+    private User user;
+    private String tmp,newPassword;
+    private View view;
 
     public ApplyNewPassword(User user, String tmp, String newPassword, View view) {
         this.user = user;

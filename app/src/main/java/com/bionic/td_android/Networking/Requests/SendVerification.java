@@ -22,9 +22,9 @@ import dmax.dialog.SpotsDialog;
 public class SendVerification implements IRequest {
 
 
-    User user;
-    View view;
-    View sendLink;
+    private User user;
+    private View view;
+    private View sendLink;
 
     public SendVerification(User user, View view, View sendLink) {
         this.user = user;

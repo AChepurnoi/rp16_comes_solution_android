@@ -24,7 +24,6 @@ public class Temporary_pass_fragment extends Fragment{
 
     private EditText tmpPass,newPass,repeatPass;
     private LoginActivity activity;
-    private Toolbar toolbar;
     private String email;
     private User user;
 
@@ -84,7 +83,7 @@ public class Temporary_pass_fragment extends Fragment{
     private void configureToolbar(View view){
 
 
-        toolbar = (Toolbar)view.findViewById(R.id.simple_toolbar);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.simple_toolbar);
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setTitle("Password Recovery");
 

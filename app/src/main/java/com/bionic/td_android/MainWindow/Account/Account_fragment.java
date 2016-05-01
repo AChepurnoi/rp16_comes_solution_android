@@ -50,7 +50,7 @@ public class Account_fragment extends Fragment {
             TextView text = new TextView(getContext());
             text.setTextSize(16f);
             text.setGravity(Gravity.CENTER);
-            text.setText(day + ": " + schedule + " ");
+            text.setText(day + ": " + (schedule == null? "0" : schedule));
             return text;
 
 

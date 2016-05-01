@@ -25,9 +25,9 @@ import dmax.dialog.SpotsDialog;
  */
 public class RegisterSecondStep implements IRequest {
 
-    User user;
-    View view;
-    RegisterActivity activity;
+    private User user;
+    private  View view;
+    private RegisterActivity activity;
 
     public RegisterSecondStep(User user, View view, RegisterActivity activity) {
         this.user = user;

@@ -23,10 +23,10 @@ import dmax.dialog.SpotsDialog;
 public class RegisterFirstStep implements IRequest {
 
 
-    String email;
-    User user;
-    View view;
-    RegisterActivity activity;
+    private String email;
+    private User user;
+    private View view;
+    private RegisterActivity activity;
 
     public RegisterFirstStep(String email, User user, View view, RegisterActivity activity) {
         this.email = email;

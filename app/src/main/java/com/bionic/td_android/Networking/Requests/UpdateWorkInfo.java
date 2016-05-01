@@ -27,9 +27,9 @@ import dmax.dialog.SpotsDialog;
  * Created by user on 15.04.2016.
  */
 public class UpdateWorkInfo implements IRequest {
-    User user;
-    View view;
-    DbManager manager;
+    private  User user;
+    private  View view;
+    private  DbManager manager;
     public UpdateWorkInfo(User user, View view) {
         this.user = user;
         this.view = view;

@@ -20,9 +20,9 @@ import dmax.dialog.SpotsDialog;
  */
 public class ResetPassword implements IRequest {
 
-    LoginActivity activity;
-    String email;
-    View view;
+    private LoginActivity activity;
+    private String email;
+    private View view;
 
 
     public ResetPassword(LoginActivity activity, String email, View view) {
