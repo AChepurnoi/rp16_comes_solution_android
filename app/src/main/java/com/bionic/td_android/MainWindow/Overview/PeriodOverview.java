@@ -63,7 +63,7 @@ public class PeriodOverview extends Fragment {
         ArrayAdapter<String> periodsAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1,array);
         list.setAdapter(periodsAdapter);
         list.setOnItemClickListener((parent, view1, position, id) -> {
-            new GetPeriodData(view1,year,id + 1, (MainActivity) getActivity()).execute();
+            new GetPeriodData(view1,year,id, (MainActivity) getActivity()).execute();
 
         });
 

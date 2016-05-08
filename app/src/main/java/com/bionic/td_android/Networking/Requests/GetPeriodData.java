@@ -87,7 +87,7 @@ public class GetPeriodData implements IRequest{
                 Fragment fragment = new SelectedPeriod();
                 Bundle bundle = new Bundle();
                 bundle.putString("json",responseString);
-                bundle.putString("period",year + " " + (user.isFourWeekPayOff()?periods[(int)period - 1] : months[(int)period - 1]));
+                bundle.putString("period",year + " " + (user.isFourWeekPayOff()?periods[(int)period] : months[(int)period]));
                 fragment.setArguments(bundle);
                 activity.callFragment(fragment);
 
