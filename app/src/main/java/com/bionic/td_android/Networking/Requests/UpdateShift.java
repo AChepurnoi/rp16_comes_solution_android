@@ -1,5 +1,6 @@
 package com.bionic.td_android.Networking.Requests;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -11,7 +12,6 @@ import android.view.View;
 import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.Shift;
 import com.bionic.td_android.Entity.User;
-import com.bionic.td_android.MainWindow.MainActivity;
 import com.bionic.td_android.Networking.API;
 import com.bionic.td_android.Networking.IRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,16 +24,15 @@ import cz.msebera.android.httpclient.entity.ByteArrayEntity;
 import dmax.dialog.SpotsDialog;
 
 /**
- * Created by user on 23.04.2016.
+ * Created by user on 13.05.2016.
  */
-public class AddShift implements IRequest {
-
+public class UpdateShift implements IRequest {
 
     private Shift shift;
     private View view;
-    private MainActivity activity;
+    private Activity activity;
 
-    public AddShift(Shift shift, View view, MainActivity activity) {
+    public UpdateShift(Shift shift, View view, Activity activity) {
         this.shift = shift;
         this.view = view;
         this.activity = activity;
@@ -46,8 +45,8 @@ public class AddShift implements IRequest {
         DbManager manager = new DbManager(view.getContext());
         User user = manager.loadUser();
         Log.e("Bionic", "Start");
-        String url = API.SHIFT_API(user.getmId());
-        final AlertDialog dialog = new SpotsDialog(view.getContext(),"Shift processing");
+        String url = API.SHIFT_API_ID(user.getmId(), shift.getmId());
+        final AlertDialog dialog = new SpotsDialog(view.getContext(),"Shift updating");
         dialog.show();
         AsyncHttpClient client = new AsyncHttpClient();
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(view.getContext());
@@ -66,32 +65,31 @@ public class AddShift implements IRequest {
         }
         Log.e("Bionic", jsonInString);
         jsonInString = jsonInString + "kk";
-        client.post(view.getContext(), url, new ByteArrayEntity(jsonInString.getBytes()),
+        client.put(view.getContext(), url, new ByteArrayEntity(jsonInString.getBytes()),
                 "application/json", new TextHttpResponseHandler() {
                     @Override
                     public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
 
-                        switch (statusCode){
+                        switch (statusCode) {
 
                             default:
                                 Log.e("Bionic", "Fail " + statusCode);
-                                if(responseString != null)
+                                if (responseString != null)
                                     Log.e("Bionic", responseString);
                                 dialog.dismiss();
                                 Snackbar.make(view, "Failed to add shift", Snackbar.LENGTH_LONG).show();
                         }
-
                     }
+
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, String responseString) {
                         Log.e("Bionic", "Success " + statusCode);
                         Log.e("Bionic", headers.toString());
                         Log.e("Bionic", responseString);
-                        dialog.dismiss();
-                        Snackbar.make(view, "Shift added successfully", Snackbar.LENGTH_LONG).show();
-                        manager.clearLocalShift();
                         activity.onBackPressed();
+
                     }
                 });
     }
+
 }

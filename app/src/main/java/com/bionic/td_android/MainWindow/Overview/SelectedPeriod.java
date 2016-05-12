@@ -1,8 +1,10 @@
 package com.bionic.td_android.MainWindow.Overview;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,9 +18,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.annimon.stream.Collectors;
+import com.annimon.stream.Exceptional;
 import com.annimon.stream.Stream;
 import com.bionic.td_android.Entity.Shift;
 import com.bionic.td_android.MainWindow.MainActivity;
+import com.bionic.td_android.MainWindow.Overview.ShiftEditing.ShiftEditActivity;
 import com.bionic.td_android.MainWindow.Overview.Utility.ShiftsAdapter;
 import com.bionic.td_android.MainWindow.Overview.Utility.WorkingWeekDTO;
 import com.bionic.td_android.R;
@@ -76,11 +80,18 @@ public class SelectedPeriod extends Fragment {
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+
     private void configureView(){
 
         parse();
         TextView textView = (TextView) view.findViewById(R.id.period_text);
-        textView.setText("Overview for: " + getArguments().getString("period"));
+        String period = getArguments().getString("period");
+        textView.setText("Overview for: " + period);
         LinearLayout listView = (LinearLayout) view.findViewById(R.id.periods_list);
         listView.addView(formView("Week", "Contract time", "Overtime"));
         Spinner spinner = (Spinner) view.findViewById(R.id.shifts_spinner);
@@ -108,8 +119,16 @@ public class SelectedPeriod extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("Bionic", "selected item " + position + "Count " + adapter.getCount() );
-
+                Log.e("Bionic", "selected item " + position + "Count " + adapter.getCount());
+                if(position == adapter.getCount())return;
+                Shift shift = adapter.getItem(position);
+                spinner.setSelection(adapter.getCount());
+                Intent intent = new Intent(getContext(),ShiftEditActivity.class);
+                Exceptional.of(() -> intent.putExtra("shift",new ObjectMapper().writeValueAsString(shift)))
+                        .ifException(value -> Log.e("Bionic", "Error writing shift to json"));
+                startActivity(intent);
+                activity.onBackPressed();
+                Snackbar.make(activity.getActive().getView(), "Please reload period: " + period, Snackbar.LENGTH_LONG).show();
             }
 
             @Override

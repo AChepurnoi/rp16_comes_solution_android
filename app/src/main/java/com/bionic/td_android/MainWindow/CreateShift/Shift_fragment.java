@@ -1,7 +1,8 @@
-package com.bionic.td_android.MainWindow;
+package com.bionic.td_android.MainWindow.CreateShift;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.Button;
 
 import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.Shift;
+import com.bionic.td_android.MainWindow.MainActivity;
 import com.bionic.td_android.Networking.Requests.AddShift;
 import com.bionic.td_android.R;
 import com.bionic.td_android.Utility.BreakCalculator;
@@ -26,6 +28,7 @@ public class Shift_fragment extends Fragment {
     private Toolbar toolbar;
     private DbManager manager;
     private Shift shift;
+    private ShiftPageBuilder pageBuilder;
 
 
 
@@ -37,7 +40,9 @@ public class Shift_fragment extends Fragment {
         manager = new DbManager(getContext());
         shift = manager.loadLocalShift();
         if(shift == null)shift = new Shift();
-        View view = shift.getShiftView(inflater,container,getActivity().getSupportFragmentManager());
+        pageBuilder = new ShiftPageBuilder(shift);
+        View view = pageBuilder.getShiftView(inflater, container, getActivity().getSupportFragmentManager());
+//        View view = shift.getShiftView(inflater,container,getActivity().getSupportFragmentManager());
 
         configurePage(view);
         return view;
@@ -55,13 +60,15 @@ public class Shift_fragment extends Fragment {
         Button apply = (Button) view.findViewById(R.id.button_apply);
         apply.setOnClickListener(v -> {
             Log.e("Bionic", shift.toString());
-            if(shift.validate()){
+            if(pageBuilder.validate()){
                 Log.e("Bionic","SHIFT OK");
                 Log.e("Bionic", shift.toString());
-                Log.e("Bionic","Total breaktime seconds (Calculated)" + new BreakCalculator(shift).calculate());
-                Log.e("Bionic","Setted pause :" + shift.getPause());
-                manager.clearLocalShift();
+                Log.e("Bionic", "Total breaktime seconds (Calculated)" + new BreakCalculator(shift).calculate());
+                Log.e("Bionic", "Setted pause :" + shift.getPause());
+//                manager.clearLocalShift();
                 manager.saveUpdateLocalShift(shift);
+                Snackbar.make(view, "Shift has been saved", Snackbar.LENGTH_LONG).show();
+                activity.onBackPressed();
             }
 
         });
@@ -70,12 +77,11 @@ public class Shift_fragment extends Fragment {
         Button submit = (Button) view.findViewById(R.id.button_submit);
         submit.setOnClickListener(v -> {
             Log.e("Bionic", shift.toString());
-            if(shift.validate()){
+            if(pageBuilder.validate()){
                 Log.e("Bionic","SHIFT OK");
                 Log.e("Bionic", shift.toString());
                 Log.e("Bionic","Total breaktime minutes " + new BreakCalculator(shift).calculate());
                 new AddShift(shift,v,activity).execute();
-
             }
         });
 

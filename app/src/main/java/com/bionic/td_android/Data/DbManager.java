@@ -164,7 +164,7 @@ public class DbManager {
         List<Ride> rideList = new ArrayList<>();
         while (rides.moveToNext()){
             Ride obj = helper.buildRide(rides);
-            obj.createTimePacks();
+//            obj.createTimePacks();
             obj.setShift(res);
             rideList.add(obj);
         }
@@ -232,7 +232,7 @@ public class DbManager {
             List<Ride> rideList = new ArrayList<>();
             while (rides.moveToNext()){
                 Ride obj = helper.buildRide(rides);
-                obj.createTimePacks();
+//                obj.createTimePacks();
                 obj.setShift(res);
                 rideList.add(obj);
             }

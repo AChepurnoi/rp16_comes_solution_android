@@ -16,13 +16,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Entity.WorkSchedule;
 import com.bionic.td_android.MainWindow.MainActivity;
-import com.bionic.td_android.Networking.Requests.UpdateWorkInfo;
 import com.bionic.td_android.R;
 
 import java.util.ArrayList;
@@ -39,10 +40,13 @@ public class WorkInformation_fragment extends Fragment implements TextWatcher {
     private MainActivity activity;
     private Toolbar toolbar;
     private CheckBox driver,operator;
+    private RadioButton mandatoryTvt,voluntarilyTvt;
+    private RadioButton paidTvt,buildUpTvt;
+    private Spinner tvtHours;
     private EditText monday,tuesday,wednesday,thursday,friday,saturday,sunday;
-    private CheckBox day_contract, zero_day_contract;
+    private RadioButton day_contract, zero_day_contract;
     private EditText contract_days;
-    private CheckBox mounthly_payments, four_week_payments;
+    private RadioButton mounthly_payments, four_week_payments;
     private View scheduleBlock;
     private View button_help;
     private TextView error;
@@ -155,15 +159,21 @@ public class WorkInformation_fragment extends Fragment implements TextWatcher {
         saturday.addTextChangedListener(this);
         sunday.addTextChangedListener(this);
 
+        mandatoryTvt = (RadioButton) view.findViewById(R.id.checkbox_mandatory);
+        voluntarilyTvt = (RadioButton) view.findViewById(R.id.checkbox_voluntarily);
+        paidTvt = (RadioButton) view.findViewById(R.id.checkbox_paid);
+        buildUpTvt = (RadioButton) view.findViewById(R.id.checkbox_buildup);
+        tvtHours = (Spinner) view.findViewById(R.id.tvt_spinner);
+        tvtHours.setEnabled(false);
 
 
-        day_contract = (CheckBox) view.findViewById(R.id.checkbox_day_contract);
-        zero_day_contract = (CheckBox) view.findViewById(R.id.checkbox_zero_contract);
+        day_contract = (RadioButton) view.findViewById(R.id.checkbox_day_contract);
+        zero_day_contract = (RadioButton) view.findViewById(R.id.checkbox_zero_contract);
         contract_days = (EditText) view.findViewById(R.id.input_contract_days);
         contract_days.addTextChangedListener(this);
 
-        mounthly_payments = (CheckBox) view.findViewById(R.id.checkbox_mounth_payments);
-        four_week_payments = (CheckBox) view.findViewById(R.id.checkbox_four_week_payments);
+        mounthly_payments = (RadioButton) view.findViewById(R.id.checkbox_mounth_payments);
+        four_week_payments = (RadioButton) view.findViewById(R.id.checkbox_four_week_payments);
         scheduleBlock = view.findViewById(R.id.block_schedule);
         error = (TextView) view.findViewById(R.id.error_hours);
         Button register = (Button)view.findViewById(R.id.button_register);
@@ -212,7 +222,9 @@ public class WorkInformation_fragment extends Fragment implements TextWatcher {
             if(four_week_payments.isChecked())user.setFourWeekPayOff(true);
             else user.setFourWeekPayOff(false);
 
-            new UpdateWorkInfo(user,getView()).execute();
+            Log.e("Bionic",user.toString());
+
+//            new UpdateWorkInfo(user,getView()).execute();
 
 
 
@@ -226,6 +238,10 @@ public class WorkInformation_fragment extends Fragment implements TextWatcher {
                 && ( (day_contract.isChecked() && !contract_days.getText().toString().isEmpty()) || zero_day_contract.isChecked())
                 && (mounthly_payments.isChecked() || four_week_payments.isChecked());
 
+        if(!checkbox){
+            Snackbar.make(layout, "Check necessary checkboxes", Snackbar.LENGTH_LONG).show();
+            return false;
+        }
 
         if(day_contract.isChecked()) {
 
@@ -250,7 +266,7 @@ public class WorkInformation_fragment extends Fragment implements TextWatcher {
             }
 
         }
-        return checkbox;
+        return true;
 
     }
 
@@ -293,30 +309,25 @@ public class WorkInformation_fragment extends Fragment implements TextWatcher {
     private void checkboxBehaviour(){
 
         day_contract.setOnClickListener(v -> {
-            if(day_contract.isChecked())contract_days.setEnabled(true);
+            if(day_contract.isChecked()) {
+                contract_days.setEnabled(true);
+                scheduleBlock.setVisibility(View.VISIBLE);
+            }
             else contract_days.setEnabled(false);
-            zero_day_contract.setChecked(false);
-            scheduleBlock.setVisibility(View.VISIBLE);
             afterTextChanged(null);
         });
 
         zero_day_contract.setOnClickListener(v -> {
-            if(zero_day_contract.isChecked()){
-                day_contract.setChecked(false);
+            if (zero_day_contract.isChecked()) {
                 contract_days.setEnabled(false);
+                scheduleBlock.setVisibility(View.GONE);
+                error.setVisibility(View.GONE);
             }
-            scheduleBlock.setVisibility(View.GONE);
-            error.setVisibility(View.GONE);
         });
 
 
-        four_week_payments.setOnClickListener(v -> {
-            if(mounthly_payments.isChecked())mounthly_payments.setChecked(false);
-        });
-
-        mounthly_payments.setOnClickListener(v -> {
-            if(four_week_payments.isChecked())four_week_payments.setChecked(false);
-        });
+        mandatoryTvt.setOnClickListener(v -> tvtHours.setEnabled(false));
+        voluntarilyTvt.setOnClickListener(v -> tvtHours.setEnabled(true));
 
     }
 

@@ -16,13 +16,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Entity.WorkSchedule;
 import com.bionic.td_android.R;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by user on 18.03.2016.
@@ -32,10 +36,13 @@ public class Second_step extends Fragment implements TextWatcher{
     private RegisterActivity activity;
     private Toolbar toolbar;
     private CheckBox driver,operator;
+    private RadioButton mandatoryTvt,voluntarilyTvt;
+    private RadioButton paidTvt,buildUpTvt;
+    private Spinner tvtHours;
     private EditText monday,tuesday,wednesday,thursday,friday,saturday,sunday;
-    private CheckBox day_contract, zero_day_contract;
+    private RadioButton day_contract, zero_day_contract;
     private EditText contract_days;
-    private CheckBox mounthly_payments, four_week_payments;
+    private RadioButton mounthly_payments, four_week_payments;
     private View scheduleBlock;
     private TextView error;
     private View button_help;
@@ -108,12 +115,21 @@ public class Second_step extends Fragment implements TextWatcher{
         saturday.addTextChangedListener(this);
         sunday.addTextChangedListener(this);
 
-        day_contract = (CheckBox) view.findViewById(R.id.checkbox_day_contract);
-        zero_day_contract = (CheckBox) view.findViewById(R.id.checkbox_zero_contract);
+        mandatoryTvt = (RadioButton) view.findViewById(R.id.checkbox_mandatory);
+        voluntarilyTvt = (RadioButton) view.findViewById(R.id.checkbox_voluntarily);
+        paidTvt = (RadioButton) view.findViewById(R.id.checkbox_paid);
+        buildUpTvt = (RadioButton) view.findViewById(R.id.checkbox_buildup);
+        tvtHours = (Spinner) view.findViewById(R.id.tvt_spinner);
+        tvtHours.setEnabled(false);
+
+
+        day_contract = (RadioButton) view.findViewById(R.id.checkbox_day_contract);
+        zero_day_contract = (RadioButton) view.findViewById(R.id.checkbox_zero_contract);
         contract_days = (EditText) view.findViewById(R.id.input_contract_days);
         contract_days.addTextChangedListener(this);
-        mounthly_payments = (CheckBox) view.findViewById(R.id.checkbox_mounth_payments);
-        four_week_payments = (CheckBox) view.findViewById(R.id.checkbox_four_week_payments);
+
+        mounthly_payments = (RadioButton) view.findViewById(R.id.checkbox_mounth_payments);
+        four_week_payments = (RadioButton) view.findViewById(R.id.checkbox_four_week_payments);
         scheduleBlock = view.findViewById(R.id.block_schedule);
         Button register = (Button)view.findViewById(R.id.button_register);
         button_help = view.findViewById(R.id.button_help);
@@ -136,6 +152,11 @@ public class Second_step extends Fragment implements TextWatcher{
         boolean checkbox = (driver.isChecked() || operator.isChecked())
                 && ( (day_contract.isChecked() && !contract_days.getText().toString().isEmpty()) || zero_day_contract.isChecked())
                 && (mounthly_payments.isChecked() || four_week_payments.isChecked());
+
+        if(!checkbox){
+            Snackbar.make(layout, "Check necessary checkboxes", Snackbar.LENGTH_LONG).show();
+            return false;
+        }
 
 
         if(day_contract.isChecked()) {
@@ -161,7 +182,7 @@ public class Second_step extends Fragment implements TextWatcher{
             }
 
         }
-        return checkbox;
+        return true;
 
     }
 
@@ -201,28 +222,14 @@ public class Second_step extends Fragment implements TextWatcher{
     }
     private User formSecondPart(){
         User user = new User();
-//        List<Job> jobs = new ArrayList<>();
-//        if(driver.isChecked()){
-//            Job tmp = new Job();
-//            tmp.setJobName("Driver");
-//            jobs.add(tmp);
-//        }
-//        if(operator.isChecked()){
-//            Job tmp = new Job();
-//            tmp.setJobName("Operator");
-//            jobs.add(tmp);
-//        }
-//        user.setJobs(jobs);
-        WorkSchedule schedule = new WorkSchedule();
-        schedule.setCreationTime(new Date());
-        schedule.setMonday(monday.getText().toString());
-        schedule.setTuesday(tuesday.getText().toString());
-        schedule.setWednesday(wednesday.getText().toString());
-        schedule.setThursday(thursday.getText().toString());
-        schedule.setFriday(friday.getText().toString());
-        schedule.setSaturday(saturday.getText().toString());
-        schedule.setSunday(sunday.getText().toString());
-        user.setWorkSchedule(schedule);
+
+        List<Integer> jobs = new ArrayList<Integer>();
+        if(driver.isChecked())jobs.add(0);
+        if(operator.isChecked())jobs.add(1);
+        user.setJobs(jobs);
+
+
+
         if(day_contract.isChecked()){
             user.setZeroHours(false);
             if(!contract_days.getText().toString().isEmpty())
@@ -231,10 +238,23 @@ public class Second_step extends Fragment implements TextWatcher{
 
         if(zero_day_contract.isChecked()){
             user.setZeroHours(true);
+            user.setWorkSchedule(null);
+        }else {
+            WorkSchedule schedule = new WorkSchedule();
+            schedule.setCreationTime(new Date());
+            schedule.setMonday(monday.getText().toString());
+            schedule.setTuesday(tuesday.getText().toString());
+            schedule.setWednesday(wednesday.getText().toString());
+            schedule.setThursday(thursday.getText().toString());
+            schedule.setFriday(friday.getText().toString());
+            schedule.setSaturday(saturday.getText().toString());
+            schedule.setSunday(sunday.getText().toString());
+            user.setWorkSchedule(schedule);
         }
 
         if(four_week_payments.isChecked())user.setFourWeekPayOff(true);
 
+        Log.e("Bionic","New user "  + user );
         return user;
 
 
@@ -243,31 +263,27 @@ public class Second_step extends Fragment implements TextWatcher{
     private void checkboxBehaviour(){
 
         day_contract.setOnClickListener(v -> {
-
-            if (day_contract.isChecked()) contract_days.setEnabled(true);
+            if(day_contract.isChecked()) {
+                contract_days.setEnabled(true);
+                scheduleBlock.setVisibility(View.VISIBLE);
+            }
             else contract_days.setEnabled(false);
-            zero_day_contract.setChecked(false);
-
-            scheduleBlock.setVisibility(View.VISIBLE);
             afterTextChanged(null);
-
         });
 
         zero_day_contract.setOnClickListener(v -> {
             if (zero_day_contract.isChecked()) {
-                day_contract.setChecked(false);
                 contract_days.setEnabled(false);
+                scheduleBlock.setVisibility(View.GONE);
+                error.setVisibility(View.GONE);
             }
-            scheduleBlock.setVisibility(View.GONE);
-            error.setVisibility(View.GONE);
         });
-        four_week_payments.setOnClickListener(v -> {
-            if (mounthly_payments.isChecked()) mounthly_payments.setChecked(false);
-        });
-        mounthly_payments.setOnClickListener(v -> {
-            if(four_week_payments.isChecked())four_week_payments.setChecked(false);
 
-        });
+
+        mandatoryTvt.setOnClickListener(v -> tvtHours.setEnabled(false));
+        voluntarilyTvt.setOnClickListener(v -> tvtHours.setEnabled(true));
+
+
 
     }
 

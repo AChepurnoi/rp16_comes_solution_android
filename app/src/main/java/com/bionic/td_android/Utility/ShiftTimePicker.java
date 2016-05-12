@@ -9,7 +9,7 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.bionic.td_android.Entity.Shift;
+import com.bionic.td_android.MainWindow.CreateShift.ShiftPageBuilder;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -23,12 +23,12 @@ import java.util.GregorianCalendar;
 public class ShiftTimePicker extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
 
     public TextView textView;
-    private Shift shift;
+    private ShiftPageBuilder shift;
 
     public ShiftTimePicker() {
 
     }
-    public ShiftTimePicker(TextView textView, Shift shift) {
+    public ShiftTimePicker(TextView textView, ShiftPageBuilder shift) {
         this.textView = textView;
         this.shift = shift;
     }
@@ -55,7 +55,7 @@ public class ShiftTimePicker extends DialogFragment implements TimePickerDialog.
 
         if(getTag().contains("Start")) {
             Calendar calendar = GregorianCalendar.getInstance();
-            Date date = shift.getStartTime();
+            Date date = shift.getShift().getStartTime();
             if(date == null){
                 Snackbar.make(shift.getView(),"Please input date first",Snackbar.LENGTH_LONG).show();
                 return;
@@ -66,14 +66,14 @@ public class ShiftTimePicker extends DialogFragment implements TimePickerDialog.
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
             textView.setText(text);
-            shift.setStartTime(calendar.getTime());
-            Log.e("Bionic", "Shift date: " + shift.getStartTime().toString());
+            shift.getShift().setStartTime(calendar.getTime());
+            Log.e("Bionic", "Shift date: " + shift.getShift().getStartTime().toString());
         }
 
         if (getTag().contains("End")){
 
             Calendar calendar = GregorianCalendar.getInstance();
-            Date date = shift.getEndTime();
+            Date date = shift.getShift().getEndTime();
             if(date == null){
                 Snackbar.make(shift.getView(),"Please input date first",Snackbar.LENGTH_LONG).show();
                 return;
@@ -84,8 +84,8 @@ public class ShiftTimePicker extends DialogFragment implements TimePickerDialog.
             calendar.set(Calendar.SECOND,0);
             calendar.set(Calendar.MILLISECOND,0);
             textView.setText(text);
-            shift.setEndTime(calendar.getTime());
-            Log.e("Bionic", "Shift end date: " + shift.getEndTime().toString());
+            shift.getShift().setEndTime(calendar.getTime());
+            Log.e("Bionic", "Shift end date: " + shift.getShift().getEndTime().toString());
         }
         shift.recountPause();
     }

@@ -17,6 +17,7 @@ import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Login.LoginActivity;
 import com.bionic.td_android.MainWindow.Account.Account_fragment;
+import com.bionic.td_android.MainWindow.CreateShift.Shift_fragment;
 import com.bionic.td_android.MainWindow.Overview.Overview_fragment;
 import com.bionic.td_android.Networking.Requests.SendVerification;
 import com.bionic.td_android.R;

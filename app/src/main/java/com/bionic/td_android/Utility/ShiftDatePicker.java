@@ -8,7 +8,7 @@ import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import com.bionic.td_android.Entity.Shift;
+import com.bionic.td_android.MainWindow.CreateShift.ShiftPageBuilder;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -21,12 +21,12 @@ import java.util.GregorianCalendar;
 public class ShiftDatePicker extends DialogFragment implements DatePickerDialog.OnDateSetListener{
 
     private TextView textView;
-    private Shift shift;
+    private ShiftPageBuilder shift;
 
     public ShiftDatePicker() {
 
     }
-    public ShiftDatePicker(TextView textView, Shift shift) {
+    public ShiftDatePicker(TextView textView, ShiftPageBuilder shift) {
         this.textView = textView;
         this.shift = shift;
     }
@@ -54,7 +54,7 @@ public class ShiftDatePicker extends DialogFragment implements DatePickerDialog.
 
         if(getTag().contains("Start")) {
             Calendar calendar = GregorianCalendar.getInstance();
-            Date date = shift.getStartTime();
+            Date date = shift.getShift().getStartTime();
             if(date != null){
                 calendar.set(year, monthOfYear, dayOfMonth, 0, 0, 0);
                 calendar.set(Calendar.MILLISECOND,0);
@@ -67,13 +67,13 @@ public class ShiftDatePicker extends DialogFragment implements DatePickerDialog.
             }
             else calendar.set(year, monthOfYear, dayOfMonth, 0, 0, 0);
             calendar.set(Calendar.MILLISECOND,0);
-            shift.setStartTime(calendar.getTime());
-            Log.e("Bionic", "Shift date: " + shift.getStartTime().toString());
+            shift.getShift().setStartTime(calendar.getTime());
+            Log.e("Bionic", "Shift date: " + shift.getShift().getStartTime().toString());
         }
         if(getTag().contains("End")){
 
             Calendar calendar = GregorianCalendar.getInstance();
-            Date date = shift.getEndTime();
+            Date date = shift.getShift().getEndTime();
             if(date != null){
                 calendar.set(year, monthOfYear, dayOfMonth, 0, 0, 0);
                 Calendar tmp = GregorianCalendar.getInstance();
@@ -83,8 +83,8 @@ public class ShiftDatePicker extends DialogFragment implements DatePickerDialog.
 
             }else calendar.set(year, monthOfYear, dayOfMonth, 0, 0, 0);
             calendar.set(Calendar.MILLISECOND,0);
-            shift.setEndTime(calendar.getTime());
-            Log.e("Bionic", "Shift date: " + shift.getEndTime().toString());
+            shift.getShift().setEndTime(calendar.getTime());
+            Log.e("Bionic", "Shift date: " + shift.getShift().getEndTime().toString());
         }
         shift.recountPause();
     }

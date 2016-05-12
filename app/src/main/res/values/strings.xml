@@ -1,10 +1,17 @@
 <resources>
-    <string name="app_name">td-android</string>
+    <string name="app_name">TD Helper</string>
 
 
     <string-array name="sex">
         <item>Male</item>
         <item>Female</item>
+    </string-array>
+
+    <string-array name="TVT">
+        <item>180</item>
+        <item>220</item>
+        <item>230</item>
+        <item>240</item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->

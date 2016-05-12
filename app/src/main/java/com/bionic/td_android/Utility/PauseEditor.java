@@ -1,18 +1,16 @@
 package com.bionic.td_android.Utility;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.bionic.td_android.Entity.Shift;
+import com.bionic.td_android.MainWindow.CreateShift.ShiftPageBuilder;
 import com.bionic.td_android.R;
 
 /**
@@ -20,9 +18,9 @@ import com.bionic.td_android.R;
  */
 public class PauseEditor extends DialogFragment {
 
-    private Shift shift;
+    private ShiftPageBuilder shift;
 
-    public PauseEditor(Shift shift) {
+    public PauseEditor(ShiftPageBuilder shift) {
         this.shift = shift;
     }
 

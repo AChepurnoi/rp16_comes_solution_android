@@ -30,6 +30,10 @@ public class API {
     public static String SHIFT_API(long userId){
         return USERS + userId +"/shifts";
     }
+
+    public static String SHIFT_API_ID(long userId,long shifdId){
+        return USERS + userId +"/shifts/" + shifdId;
+    }
     public static String GET_USER() {
         return GET_USER;
     }

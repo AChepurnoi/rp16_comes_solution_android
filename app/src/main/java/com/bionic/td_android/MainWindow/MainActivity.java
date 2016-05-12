@@ -19,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
 
     private Stack<Fragment> fragments = new Stack<>();
 
+    public Fragment getActive() {
+        return active;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

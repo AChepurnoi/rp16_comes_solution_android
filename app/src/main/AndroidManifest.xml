@@ -12,6 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Main"
+        android:icon="@mipmap/ic_launcher"
 
         >
 
@@ -26,7 +27,9 @@
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.bionic" />
 
         <activity android:name=".Login.LoginActivity"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            android:configChanges="orientation|screenSize"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,19 +38,23 @@
         </activity>
 
         <activity android:name=".Register.RegisterActivity"
-            android:windowSoftInputMode="stateHidden">
-
-
-        </activity>
+            android:windowSoftInputMode="stateHidden"
+            android:configChanges="orientation|screenSize"
+            />
 
         <activity android:name=".MainWindow.MainActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="stateHidden"
-            >
+            />
+
+        <activity android:name=".MainWindow.Overview.ShiftEditing.ShiftEditActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="stateHidden"
+            />
 
 
 
-        </activity>
+
     </application>
 
 </manifest>

@@ -31,32 +31,44 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Personal information:"
+                android:text="Work information:"
                 android:textColor="@color/text_color"
                 android:textSize="24sp"
                 android:layout_marginBottom="20dp"
                 />
 
 
-            <CheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Truck driver"
-                android:id="@+id/checkbox_driver"
-
-                />
-            <CheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Crane Operator"
-                android:id="@+id/checkbox_operator"
-                />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="10dp"
+                >
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Truck driver"
+                    android:id="@+id/checkbox_driver"
+                    android:layout_weight="1"
+                    />
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Crane Operator"
+                    android:id="@+id/checkbox_operator"
+                    android:layout_weight="1"
+                    />
+
+
+            </LinearLayout>
+
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 >
 
                 <TextView
@@ -66,7 +78,7 @@
                     android:textSize="16sp"
 
                     />
-                <CheckBox
+                <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -76,11 +88,11 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="days"
+                    android:hint="hours"
                     android:id="@+id/input_contract_days"
                     android:inputType="numberSigned"
                     />
-                <CheckBox
+                <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="0-day"
@@ -89,7 +101,89 @@
                     />
 
 
-            </LinearLayout>
+            </RadioGroup>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TVT"
+                android:textSize="16sp"
+                android:paddingBottom="10dp"
+                />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp"
+                >
+
+
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Mandatory"
+                    android:checked="true"
+                    android:id="@+id/checkbox_mandatory"
+                    android:layout_weight="1"
+                    />
+
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Voluntarily"
+                    android:id="@+id/checkbox_voluntarily"
+                    android:layout_weight="1"
+
+                    />
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/TVT"
+                    android:id="@+id/tvt_spinner"
+                    android:layout_gravity="end"
+                    android:layout_weight="1"
+                    >
+
+                </Spinner>
+
+
+
+            </RadioGroup>
+
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                >
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:hint="Paid"
+                    android:id="@+id/checkbox_paid"
+                    android:layout_weight="1"
+                    />
+
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Build up"
+                    android:id="@+id/checkbox_buildup"
+                    android:layout_weight="1"
+                    />
+
+
+
+
+            </RadioGroup>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -332,7 +426,7 @@
 
 
 
-            <LinearLayout
+            <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -345,7 +439,7 @@
                     android:textSize="16sp"
 
                     />
-                <CheckBox
+                <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -353,7 +447,7 @@
                     android:id="@+id/checkbox_mounth_payments"
                     />
 
-                <CheckBox
+                <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="4-week"
@@ -363,7 +457,7 @@
 
 
 
-            </LinearLayout>
+            </RadioGroup>
 
         </LinearLayout>
 
