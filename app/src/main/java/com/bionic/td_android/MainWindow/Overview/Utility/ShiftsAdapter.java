@@ -38,7 +38,7 @@ public class ShiftsAdapter extends ArrayAdapter<Shift> {
 
     public View getCustomvView(int position, View convertView, ViewGroup parent){
 
-        if(position == getCount()){
+        if(position == 0){
             convertView = LayoutInflater.from(getContext()).inflate(android.R.layout.simple_list_item_1, parent, false);
             TextView text = (TextView) convertView.findViewById(android.R.id.text1);
             text.setText("Select shift to edit");
@@ -57,6 +57,6 @@ public class ShiftsAdapter extends ArrayAdapter<Shift> {
     @Override
     public int getCount() {
         int count = super.getCount();
-        return count > 0 ? count - 1 : count;
+        return count ;
     }
 }

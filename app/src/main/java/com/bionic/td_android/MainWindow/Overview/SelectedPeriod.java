@@ -1,10 +1,8 @@
 package com.bionic.td_android.MainWindow.Overview;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -23,27 +21,34 @@ import com.annimon.stream.Stream;
 import com.bionic.td_android.Entity.Shift;
 import com.bionic.td_android.MainWindow.MainActivity;
 import com.bionic.td_android.MainWindow.Overview.ShiftEditing.ShiftEditActivity;
+import com.bionic.td_android.MainWindow.Overview.Utility.DateUpdater;
+import com.bionic.td_android.MainWindow.Overview.Utility.ReloadableData;
 import com.bionic.td_android.MainWindow.Overview.Utility.ShiftsAdapter;
 import com.bionic.td_android.MainWindow.Overview.Utility.WorkingWeekDTO;
+import com.bionic.td_android.Networking.Requests.ReloadPeriodData;
 import com.bionic.td_android.R;
 import com.bionic.td_android.Utility.DateUtility;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by user on 23.04.2016.
  */
-public class SelectedPeriod extends Fragment {
+public class SelectedPeriod extends Fragment implements DateUpdater, ReloadableData{
 
     private View view;
     private MainActivity activity;
     private List<WorkingWeekDTO> list;
-
+    private Spinner spinner;
+    private ShiftsAdapter adapter;
+    private LinearLayout listView;
+    private long period = 0, year = 0;
     private int paired = 0;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,14 +74,24 @@ public class SelectedPeriod extends Fragment {
 
     }
 
+    @Override
+    public void invoke() {
+        new ReloadPeriodData(view,year,period,activity,this).execute();
+    }
 
-    private void parse(){
+    @Override
+    public void updateData(String json) {
+        Exceptional.of(() -> list = new ObjectMapper().readValue(json, new TypeReference<List<WorkingWeekDTO>>(){}))
+                .ifException(value -> Log.e("Bionic", "Error parsing or no value"));
+        configureAdapterData();
+    }
+
+    private void initData(){
         String json = getArguments().getString("json");
-        try {
-            list = new ObjectMapper().readValue(json, new TypeReference<List<WorkingWeekDTO>>(){});
-        } catch (IOException e) {
-            Log.e("Bionic","Error parsing");
-        }
+        period = getArguments().getLong("periodVal");
+        year = getArguments().getLong("yearVal");
+        updateData(json);
+
     }
 
 
@@ -86,15 +101,11 @@ public class SelectedPeriod extends Fragment {
     }
 
 
-    private void configureView(){
+    private void configureAdapterData(){
 
-        parse();
-        TextView textView = (TextView) view.findViewById(R.id.period_text);
-        String period = getArguments().getString("period");
-        textView.setText("Overview for: " + period);
-        LinearLayout listView = (LinearLayout) view.findViewById(R.id.periods_list);
+        listView.removeAllViewsInLayout();
+        paired = 0;
         listView.addView(formView("Week", "Contract time", "Overtime"));
-        Spinner spinner = (Spinner) view.findViewById(R.id.shifts_spinner);
         List<Shift> shifts =  new ArrayList<>();
         Stream.of(list)
                 .peek(dto -> shifts.addAll(dto.getShiftList()))
@@ -103,32 +114,48 @@ public class SelectedPeriod extends Fragment {
                         DateUtility.getHourMinutes(value.getOverTime())})
                 .map(value1 -> formView(value1[0], value1[1], value1[2]))
                 .forEach(listView::addView);
-
-
         Shift[] arr = Stream.of(shifts)
                 .sorted((lhs, rhs) -> lhs.getStartTime().compareTo(rhs.getStartTime()))
                 .toArray(Shift[]::new);
         List<Shift> tmp = Stream.of(arr).collect(Collectors.toList());
-        tmp.add(new Shift());
+        tmp.add(0,new Shift());
         Shift[] array = Stream.of(tmp).toArray(Shift[]::new);
 
-        ShiftsAdapter adapter = new ShiftsAdapter(getContext(),array);
+        adapter = new ShiftsAdapter(getContext(), array);
         spinner.setAdapter(adapter);
-        spinner.setSelection(adapter.getCount());
+        spinner.setSelection(0);
+
+    }
+
+    private void configureView(){
+
+        TextView textView = (TextView) view.findViewById(R.id.period_text);
+        String period = getArguments().getString("period");
+        textView.setText("Overview for: " + period);
+        listView = (LinearLayout) view.findViewById(R.id.periods_list);
+
+        spinner = (Spinner) view.findViewById(R.id.shifts_spinner);
+
+        initData();
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.e("Bionic", "selected item " + position + "Count " + adapter.getCount());
-                if(position == adapter.getCount())return;
+                if(position == 0)return;
                 Shift shift = adapter.getItem(position);
-                spinner.setSelection(adapter.getCount());
-                Intent intent = new Intent(getContext(),ShiftEditActivity.class);
-                Exceptional.of(() -> intent.putExtra("shift",new ObjectMapper().writeValueAsString(shift)))
-                        .ifException(value -> Log.e("Bionic", "Error writing shift to json"));
-                startActivity(intent);
-                activity.onBackPressed();
-                Snackbar.make(activity.getActive().getView(), "Please reload period: " + period, Snackbar.LENGTH_LONG).show();
+                spinner.setSelection(0);
+                Bundle args = new Bundle();
+                try {
+                    args.putString("shift", new ObjectMapper().writeValueAsString(shift));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                    Log.e("Bionic", "Error wrapping to json arg in Selected period");
+                }
+                Fragment fragment = new ShiftEditActivity();
+                fragment.setArguments(args);
+                activity.callFragment(fragment);
+
             }
 
             @Override
@@ -136,9 +163,6 @@ public class SelectedPeriod extends Fragment {
                 Log.e("Bionic", "Nothing selected");
             }
         });
-
-
-
 
     }
 

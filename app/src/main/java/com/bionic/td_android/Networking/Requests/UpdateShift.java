@@ -1,6 +1,5 @@
 package com.bionic.td_android.Networking.Requests;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -12,6 +11,8 @@ import android.view.View;
 import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.Shift;
 import com.bionic.td_android.Entity.User;
+import com.bionic.td_android.MainWindow.MainActivity;
+import com.bionic.td_android.MainWindow.Overview.Utility.ReloadableData;
 import com.bionic.td_android.Networking.API;
 import com.bionic.td_android.Networking.IRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -30,9 +31,9 @@ public class UpdateShift implements IRequest {
 
     private Shift shift;
     private View view;
-    private Activity activity;
+    private MainActivity activity;
 
-    public UpdateShift(Shift shift, View view, Activity activity) {
+    public UpdateShift(Shift shift, View view, MainActivity activity) {
         this.shift = shift;
         this.view = view;
         this.activity = activity;
@@ -69,25 +70,27 @@ public class UpdateShift implements IRequest {
                 "application/json", new TextHttpResponseHandler() {
                     @Override
                     public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-
+                        dialog.dismiss();
                         switch (statusCode) {
 
                             default:
                                 Log.e("Bionic", "Fail " + statusCode);
                                 if (responseString != null)
                                     Log.e("Bionic", responseString);
-                                dialog.dismiss();
+
                                 Snackbar.make(view, "Failed to add shift", Snackbar.LENGTH_LONG).show();
                         }
                     }
 
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                        dialog.dismiss();
                         Log.e("Bionic", "Success " + statusCode);
                         Log.e("Bionic", headers.toString());
                         Log.e("Bionic", responseString);
                         activity.onBackPressed();
-
+                        if(activity.getActive() instanceof ReloadableData)
+                            ((ReloadableData) activity.getActive()).invoke();
                     }
                 });
     }

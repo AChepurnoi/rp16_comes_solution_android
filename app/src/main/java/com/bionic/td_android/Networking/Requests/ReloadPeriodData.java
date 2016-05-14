@@ -2,10 +2,8 @@ package com.bionic.td_android.Networking.Requests;
 
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +11,7 @@ import android.view.View;
 import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.MainWindow.MainActivity;
-import com.bionic.td_android.MainWindow.Overview.SelectedPeriod;
+import com.bionic.td_android.MainWindow.Overview.Utility.DateUpdater;
 import com.bionic.td_android.Networking.API;
 import com.bionic.td_android.Networking.IRequest;
 import com.loopj.android.http.AsyncHttpClient;
@@ -23,24 +21,22 @@ import cz.msebera.android.httpclient.Header;
 import dmax.dialog.SpotsDialog;
 
 /**
- * Created by user on 29.04.2016.
+ * Created by user on 14.05.2016.
  */
-public class GetPeriodData implements IRequest{
+public class ReloadPeriodData implements IRequest {
 
 
-    private String[] periods = {"Week: 1-4"," Week: 5-8","Week: 9-12","Week: 13-16","Week: 17-20","Week: 21-24",
-            "Week: 25-28","Week: 29-32","Week: 33-36","Week: 37-40","Week: 41-44","Week: 45-48","Week: 49-52"};
-    private String[] months = {"January","February","March","April","May","June",
-            "July","August","September","October","November","December"};
     private View view;
     private long year,period;
     private MainActivity activity;
+    private DateUpdater reloader;
 
-    public GetPeriodData(View view, long year, long period, MainActivity activity) {
+    public ReloadPeriodData(View view, long year, long period, MainActivity activity, DateUpdater reloader) {
         this.view = view;
         this.year = year;
         this.period = period;
         this.activity = activity;
+        this.reloader = reloader;
     }
 
     @Override
@@ -54,7 +50,7 @@ public class GetPeriodData implements IRequest{
         String login = sharedPref.getString("login", "");
         String pass = sharedPref.getString("password", "");
 
-        final AlertDialog dialog = new SpotsDialog(activity,"Loading period");
+        final AlertDialog dialog = new SpotsDialog(activity,"Updating period");
         dialog.show();
         String encoded = Base64.encodeToString((login + ":" + pass).getBytes(), 0);
         Log.e("Bionic", encoded);
@@ -80,22 +76,15 @@ public class GetPeriodData implements IRequest{
                         Snackbar.make(view, "Error loading period", Snackbar.LENGTH_LONG).show();
                         break;
                 }
+                activity.onBackPressed();
+
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 dialog.dismiss();
                 Log.e("Bionic", statusCode + " " + responseString);
-                Fragment fragment = new SelectedPeriod();
-                Bundle bundle = new Bundle();
-                bundle.putString("json",responseString);
-                bundle.putLong("yearVal",year);
-                bundle.putLong("periodVal",period);
-                bundle.putString("period",year + " " + (user.isFourWeekPayOff()?periods[(int)period] : months[(int)period]));
-                fragment.setArguments(bundle);
-                activity.callFragment(fragment);
+                reloader.updateData(responseString);
             }
         });
     }
-
-
 }

@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.bionic.td_android.R;
 
@@ -16,7 +17,7 @@ import java.util.Stack;
 public class MainActivity extends AppCompatActivity {
 
     private Fragment active;
-
+    private View rootView;
     private Stack<Fragment> fragments = new Stack<>();
 
     public Fragment getActive() {
@@ -27,12 +28,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        rootView = findViewById(R.id.fragment_container);
         Fragment a = active = new Dashboard_fragment();
         active.setRetainInstance(true);
         fragments.add(a);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, active).addToBackStack(null).commit();
 
+    }
+
+    public View getRootView() {
+        return rootView;
     }
 
     public void callFragment(Fragment fragment){

@@ -47,10 +47,6 @@
             android:windowSoftInputMode="stateHidden"
             />
 
-        <activity android:name=".MainWindow.Overview.ShiftEditing.ShiftEditActivity"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="stateHidden"
-            />
 
 
 
