@@ -106,7 +106,7 @@ public class SelectedPeriod extends Fragment implements DateUpdater, ReloadableD
         listView.removeAllViewsInLayout();
         paired = 0;
         listView.addView(formView("Week", "Worked Hours", "Whereof Overtime"));
-        List<Shift> shifts =  new ArrayList<>();
+        List<Shift> shifts = new ArrayList<>();
         Stream.of(list)
                 .peek(dto -> shifts.addAll(dto.getShiftList()))
                 .map(value -> new String[]{String.valueOf(value.getWeekNumber()),
@@ -116,6 +116,7 @@ public class SelectedPeriod extends Fragment implements DateUpdater, ReloadableD
                 .forEach(listView::addView);
         Shift[] arr = Stream.of(shifts)
                 .sorted((lhs, rhs) -> lhs.getStartTime().compareTo(rhs.getStartTime()))
+                .distinct()
                 .toArray(Shift[]::new);
         List<Shift> tmp = Stream.of(arr).collect(Collectors.toList());
         tmp.add(0,new Shift());

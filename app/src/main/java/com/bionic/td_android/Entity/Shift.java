@@ -81,5 +81,18 @@ public class Shift {
                 ", pause=" + pause +
                 '}';
     }
+
+    public boolean equals(Object obj){
+        if(this == obj) return true;
+
+        Shift shift = (Shift) obj;
+
+        if(this.getmId().equals(shift.getmId())) return true;
+        return false;
+    }
+
+    public int hashCode(){
+        return this.getmId().intValue();
+    }
 }
 
