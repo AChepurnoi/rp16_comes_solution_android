@@ -25,12 +25,15 @@ import com.bionic.td_android.MainWindow.Overview.Utility.DateUpdater;
 import com.bionic.td_android.MainWindow.Overview.Utility.ReloadableData;
 import com.bionic.td_android.MainWindow.Overview.Utility.ShiftsAdapter;
 import com.bionic.td_android.MainWindow.Overview.Utility.WorkingWeekDTO;
+import com.bionic.td_android.Networking.Requests.ExportReport;
 import com.bionic.td_android.Networking.Requests.ReloadPeriodData;
 import com.bionic.td_android.R;
 import com.bionic.td_android.Utility.DateUtility;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,6 +110,7 @@ public class SelectedPeriod extends Fragment implements DateUpdater, ReloadableD
         paired = 0;
         listView.addView(formView("Week", "Worked Hours", "Whereof Overtime"));
         List<Shift> shifts = new ArrayList<>();
+        if(list == null)return;
         Stream.of(list)
                 .peek(dto -> shifts.addAll(dto.getShiftList()))
                 .map(value -> new String[]{String.valueOf(value.getWeekNumber()),
@@ -134,7 +138,8 @@ public class SelectedPeriod extends Fragment implements DateUpdater, ReloadableD
         String period = getArguments().getString("period");
         textView.setText("Overview for: " + period);
         listView = (LinearLayout) view.findViewById(R.id.periods_list);
-
+        TextView export = (TextView) view.findViewById(R.id.export_button);
+        export.setOnClickListener((v) -> new ExportReport(view,year,this.period).execute());
         spinner = (Spinner) view.findViewById(R.id.shifts_spinner);
 
         initData();
@@ -171,6 +176,7 @@ public class SelectedPeriod extends Fragment implements DateUpdater, ReloadableD
 
         View convertView = LayoutInflater.from(getContext()).inflate(R.layout.view_period_table_row, null, false);
         TextView weekText = (TextView)convertView.findViewById(R.id.view_week);
+
         TextView contractText = (TextView)convertView.findViewById(R.id.view_contract_hours);
         TextView overtimeText = (TextView)convertView.findViewById(R.id.view_overtime);
         weekText.setText(week);

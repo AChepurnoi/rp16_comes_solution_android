@@ -8,4 +8,6 @@
     <style name="Main" parent="Theme.AppCompat.NoActionBar">
 
     </style>
+
+    <style name="MainLight" parent="Theme.AppCompat.Light.NoActionBar" />
 </resources>

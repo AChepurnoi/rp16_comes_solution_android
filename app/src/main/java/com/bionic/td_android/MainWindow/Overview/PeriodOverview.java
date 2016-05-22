@@ -60,7 +60,7 @@ public class PeriodOverview extends Fragment {
         String[] array ;
         if(user.isFourWeekPayOff())array = periods;
         else array = months;
-        ArrayAdapter<String> periodsAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1,array);
+        ArrayAdapter<String> periodsAdapter = new ArrayAdapter<String>(view.getContext(),R.layout.listview_period_layout,R.id.list_textview,array);
         list.setAdapter(periodsAdapter);
         list.setOnItemClickListener((parent, view1, position, id) -> {
             new GetPeriodData(view1,year,id, (MainActivity) getActivity()).execute();
