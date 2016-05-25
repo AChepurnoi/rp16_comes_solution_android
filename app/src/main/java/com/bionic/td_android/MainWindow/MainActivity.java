@@ -74,9 +74,6 @@ public class MainActivity extends AppCompatActivity {
             active = fragments.peek();
         }
 
-
-        //sssgifdfdffd
-
     }
 
 }
