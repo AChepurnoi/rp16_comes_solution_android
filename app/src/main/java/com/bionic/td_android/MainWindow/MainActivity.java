@@ -69,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if(fragments.size() > 1){
-//            getSupportFragmentManager().popBackStack();
             super.onBackPressed();
             fragments.pop();
             active = fragments.peek();
         }
+
 
     }
 
