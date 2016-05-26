@@ -1,6 +1,9 @@
 package com.bionic.td_android.Data.Provider.ride;
 
+import java.util.Date;
+
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.bionic.td_android.Data.Provider.base.AbstractCursor;

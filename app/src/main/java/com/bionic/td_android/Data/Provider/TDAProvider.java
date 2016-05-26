@@ -1,20 +1,22 @@
 package com.bionic.td_android.Data.Provider;
 
+import java.util.Arrays;
+
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.bionic.td_android.BuildConfig;
 import com.bionic.td_android.Data.Provider.base.BaseContentProvider;
 import com.bionic.td_android.Data.Provider.job.JobColumns;
 import com.bionic.td_android.Data.Provider.ride.RideColumns;
 import com.bionic.td_android.Data.Provider.shift.ShiftColumns;
 import com.bionic.td_android.Data.Provider.user.UserColumns;
 import com.bionic.td_android.Data.Provider.workschedule.WorkscheduleColumns;
-
-import java.util.Arrays;
 
 public class TDAProvider extends BaseContentProvider {
     private static final String TAG = TDAProvider.class.getSimpleName();

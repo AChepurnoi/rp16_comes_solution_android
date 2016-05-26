@@ -49,7 +49,7 @@ public class JobContentValues extends AbstractContentValues {
         return this;
     }
 
-    public JobContentValues putJobid(@Nullable Integer value) {
+    public JobContentValues putJobid(@Nullable Long value) {
         mContentValues.put(JobColumns.JOBID, value);
         return this;
     }

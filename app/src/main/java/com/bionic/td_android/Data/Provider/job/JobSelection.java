@@ -1,7 +1,9 @@
 package com.bionic.td_android.Data.Provider.job;
 
-import android.content.ContentResolver;
+import java.util.Date;
+
 import android.content.Context;
+import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 
@@ -81,27 +83,27 @@ public class JobSelection extends AbstractSelection<JobSelection> {
         return this;
     }
 
-    public JobSelection useridNot(Integer... value) {
+    public JobSelection useridNot(Long... value) {
         addNotEquals(JobColumns.USERID, value);
         return this;
     }
 
-    public JobSelection useridGt(int value) {
+    public JobSelection useridGt(long value) {
         addGreaterThan(JobColumns.USERID, value);
         return this;
     }
 
-    public JobSelection useridGtEq(int value) {
+    public JobSelection useridGtEq(long value) {
         addGreaterThanOrEquals(JobColumns.USERID, value);
         return this;
     }
 
-    public JobSelection useridLt(int value) {
+    public JobSelection useridLt(long value) {
         addLessThan(JobColumns.USERID, value);
         return this;
     }
 
-    public JobSelection useridLtEq(int value) {
+    public JobSelection useridLtEq(long value) {
         addLessThanOrEquals(JobColumns.USERID, value);
         return this;
     }
@@ -116,32 +118,32 @@ public class JobSelection extends AbstractSelection<JobSelection> {
         return this;
     }
 
-    public JobSelection jobid(Integer... value) {
+    public JobSelection jobid(Long... value) {
         addEquals(JobColumns.JOBID, value);
         return this;
     }
 
-    public JobSelection jobidNot(Integer... value) {
+    public JobSelection jobidNot(Long... value) {
         addNotEquals(JobColumns.JOBID, value);
         return this;
     }
 
-    public JobSelection jobidGt(int value) {
+    public JobSelection jobidGt(long value) {
         addGreaterThan(JobColumns.JOBID, value);
         return this;
     }
 
-    public JobSelection jobidGtEq(int value) {
+    public JobSelection jobidGtEq(long value) {
         addGreaterThanOrEquals(JobColumns.JOBID, value);
         return this;
     }
 
-    public JobSelection jobidLt(int value) {
+    public JobSelection jobidLt(long value) {
         addLessThan(JobColumns.JOBID, value);
         return this;
     }
 
-    public JobSelection jobidLtEq(int value) {
+    public JobSelection jobidLtEq(long value) {
         addLessThanOrEquals(JobColumns.JOBID, value);
         return this;
     }

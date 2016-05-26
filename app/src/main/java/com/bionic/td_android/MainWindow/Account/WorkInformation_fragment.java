@@ -42,7 +42,7 @@ public class WorkInformation_fragment extends Fragment implements TextWatcher {
     private CheckBox driver,operator;
     private RadioButton mandatoryTvt,voluntarilyTvt;
     private RadioButton paidTvt,buildUpTvt;
-    private Spinner tvtHours;
+    private EditText tvtHours;
     private EditText monday,tuesday,wednesday,thursday,friday,saturday,sunday;
     private RadioButton day_contract, zero_day_contract;
     private EditText contract_days;
@@ -115,6 +115,16 @@ public class WorkInformation_fragment extends Fragment implements TextWatcher {
         if(user.isFourWeekPayOff())four_week_payments.setChecked(true);
         else mounthly_payments.setChecked(true);
 
+        if(user.isPaidTimeForTime())paidTvt.setChecked(true);
+        else buildUpTvt.setChecked(true);
+
+        if(user.getTvt() != 220){
+            voluntarilyTvt.setChecked(true);
+            tvtHours.setText(String.valueOf(user.getTvt()));
+            tvtHours.setEnabled(true);
+        }
+
+
         if(user.isZeroHours()){
             zero_day_contract.setChecked(true);
             scheduleBlock.setVisibility(View.GONE);
@@ -163,7 +173,7 @@ public class WorkInformation_fragment extends Fragment implements TextWatcher {
         voluntarilyTvt = (RadioButton) view.findViewById(R.id.checkbox_voluntarily);
         paidTvt = (RadioButton) view.findViewById(R.id.checkbox_paid);
         buildUpTvt = (RadioButton) view.findViewById(R.id.checkbox_buildup);
-        tvtHours = (Spinner) view.findViewById(R.id.tvt_spinner);
+        tvtHours = (EditText) view.findViewById(R.id.tvt_edit_text);
         tvtHours.setEnabled(false);
 
 
@@ -203,6 +213,8 @@ public class WorkInformation_fragment extends Fragment implements TextWatcher {
                 user.setZeroHours(true);
                 user.setWorkSchedule(null);
             }
+
+
             else {
                 if(!contract_days.getText().toString().isEmpty())
                     user.setContractHours(Integer.parseInt(contract_days.getText().toString()));
@@ -221,6 +233,17 @@ public class WorkInformation_fragment extends Fragment implements TextWatcher {
             }
             if(four_week_payments.isChecked())user.setFourWeekPayOff(true);
             else user.setFourWeekPayOff(false);
+
+            if(mandatoryTvt.isChecked())user.setTvt(220);
+            else {
+                int newtvt = 0;
+                if(tvtHours.getText().toString().isEmpty())newtvt = 0;
+                else newtvt = Integer.parseInt(tvtHours.getText().toString());
+                if(newtvt > 0)user.setTvt(newtvt);
+            }
+
+            if(paidTvt.isChecked())user.setPaidTimeForTime(true);
+            else user.setPaidTimeForTime(false);
 
             Log.e("Bionic",user.toString());
 
@@ -262,6 +285,19 @@ public class WorkInformation_fragment extends Fragment implements TextWatcher {
 
             if (!(isDayValid(monday) && isDayValid(tuesday) && isDayValid(wednesday) && isDayValid(thursday) && isDayValid(friday) && isDayValid(saturday) && isDayValid(sunday))) {
                 Snackbar.make(layout,"The input value must be between 0 and 24",Snackbar.LENGTH_LONG).show();
+                return false;
+            }
+
+
+        }
+
+        if(!mandatoryTvt.isChecked()){
+            if(tvtHours.getText().toString().isEmpty()){
+                Snackbar.make(layout,"Input Custom tvt",Snackbar.LENGTH_LONG).show();
+                return false;
+            }
+            if(Integer.parseInt(tvtHours.getText().toString()) <= 0){
+                Snackbar.make(layout,"Tvt must be positive",Snackbar.LENGTH_LONG).show();
                 return false;
             }
 

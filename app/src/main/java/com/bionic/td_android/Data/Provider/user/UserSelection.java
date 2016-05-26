@@ -1,7 +1,9 @@
 package com.bionic.td_android.Data.Provider.user;
 
-import android.content.ContentResolver;
+import java.util.Date;
+
 import android.content.Context;
+import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 
@@ -356,6 +358,86 @@ public class UserSelection extends AbstractSelection<UserSelection> {
         return this;
     }
 
+    public UserSelection tvt(Integer... value) {
+        addEquals(UserColumns.TVT, value);
+        return this;
+    }
+
+    public UserSelection tvtNot(Integer... value) {
+        addNotEquals(UserColumns.TVT, value);
+        return this;
+    }
+
+    public UserSelection tvtGt(int value) {
+        addGreaterThan(UserColumns.TVT, value);
+        return this;
+    }
+
+    public UserSelection tvtGtEq(int value) {
+        addGreaterThanOrEquals(UserColumns.TVT, value);
+        return this;
+    }
+
+    public UserSelection tvtLt(int value) {
+        addLessThan(UserColumns.TVT, value);
+        return this;
+    }
+
+    public UserSelection tvtLtEq(int value) {
+        addLessThanOrEquals(UserColumns.TVT, value);
+        return this;
+    }
+
+    public UserSelection orderByTvt(boolean desc) {
+        orderBy(UserColumns.TVT, desc);
+        return this;
+    }
+
+    public UserSelection orderByTvt() {
+        orderBy(UserColumns.TVT, false);
+        return this;
+    }
+
+    public UserSelection paidtimefortime(Integer... value) {
+        addEquals(UserColumns.PAIDTIMEFORTIME, value);
+        return this;
+    }
+
+    public UserSelection paidtimefortimeNot(Integer... value) {
+        addNotEquals(UserColumns.PAIDTIMEFORTIME, value);
+        return this;
+    }
+
+    public UserSelection paidtimefortimeGt(int value) {
+        addGreaterThan(UserColumns.PAIDTIMEFORTIME, value);
+        return this;
+    }
+
+    public UserSelection paidtimefortimeGtEq(int value) {
+        addGreaterThanOrEquals(UserColumns.PAIDTIMEFORTIME, value);
+        return this;
+    }
+
+    public UserSelection paidtimefortimeLt(int value) {
+        addLessThan(UserColumns.PAIDTIMEFORTIME, value);
+        return this;
+    }
+
+    public UserSelection paidtimefortimeLtEq(int value) {
+        addLessThanOrEquals(UserColumns.PAIDTIMEFORTIME, value);
+        return this;
+    }
+
+    public UserSelection orderByPaidtimefortime(boolean desc) {
+        orderBy(UserColumns.PAIDTIMEFORTIME, desc);
+        return this;
+    }
+
+    public UserSelection orderByPaidtimefortime() {
+        orderBy(UserColumns.PAIDTIMEFORTIME, false);
+        return this;
+    }
+
     public UserSelection fourweekpayoff(Integer... value) {
         addEquals(UserColumns.FOURWEEKPAYOFF, value);
         return this;
@@ -596,32 +678,32 @@ public class UserSelection extends AbstractSelection<UserSelection> {
         return this;
     }
 
-    public UserSelection passwordexpire(Integer... value) {
+    public UserSelection passwordexpire(Long... value) {
         addEquals(UserColumns.PASSWORDEXPIRE, value);
         return this;
     }
 
-    public UserSelection passwordexpireNot(Integer... value) {
+    public UserSelection passwordexpireNot(Long... value) {
         addNotEquals(UserColumns.PASSWORDEXPIRE, value);
         return this;
     }
 
-    public UserSelection passwordexpireGt(int value) {
+    public UserSelection passwordexpireGt(long value) {
         addGreaterThan(UserColumns.PASSWORDEXPIRE, value);
         return this;
     }
 
-    public UserSelection passwordexpireGtEq(int value) {
+    public UserSelection passwordexpireGtEq(long value) {
         addGreaterThanOrEquals(UserColumns.PASSWORDEXPIRE, value);
         return this;
     }
 
-    public UserSelection passwordexpireLt(int value) {
+    public UserSelection passwordexpireLt(long value) {
         addLessThan(UserColumns.PASSWORDEXPIRE, value);
         return this;
     }
 
-    public UserSelection passwordexpireLtEq(int value) {
+    public UserSelection passwordexpireLtEq(long value) {
         addLessThanOrEquals(UserColumns.PASSWORDEXPIRE, value);
         return this;
     }
@@ -641,27 +723,27 @@ public class UserSelection extends AbstractSelection<UserSelection> {
         return this;
     }
 
-    public UserSelection workscheduleIdNot(Integer... value) {
+    public UserSelection workscheduleIdNot(Long... value) {
         addNotEquals(UserColumns.WORKSCHEDULE_ID, value);
         return this;
     }
 
-    public UserSelection workscheduleIdGt(int value) {
+    public UserSelection workscheduleIdGt(long value) {
         addGreaterThan(UserColumns.WORKSCHEDULE_ID, value);
         return this;
     }
 
-    public UserSelection workscheduleIdGtEq(int value) {
+    public UserSelection workscheduleIdGtEq(long value) {
         addGreaterThanOrEquals(UserColumns.WORKSCHEDULE_ID, value);
         return this;
     }
 
-    public UserSelection workscheduleIdLt(int value) {
+    public UserSelection workscheduleIdLt(long value) {
         addLessThan(UserColumns.WORKSCHEDULE_ID, value);
         return this;
     }
 
-    public UserSelection workscheduleIdLtEq(int value) {
+    public UserSelection workscheduleIdLtEq(long value) {
         addLessThanOrEquals(UserColumns.WORKSCHEDULE_ID, value);
         return this;
     }
@@ -676,33 +758,33 @@ public class UserSelection extends AbstractSelection<UserSelection> {
         return this;
     }
 
-    public UserSelection employerId(String... value) {
+    public UserSelection employerId(Long... value) {
         addEquals(UserColumns.EMPLOYER_ID, value);
         return this;
     }
 
-    public UserSelection employerIdNot(String... value) {
+    public UserSelection employerIdNot(Long... value) {
         addNotEquals(UserColumns.EMPLOYER_ID, value);
         return this;
     }
 
-    public UserSelection employerIdLike(String... value) {
-        addLike(UserColumns.EMPLOYER_ID, value);
+    public UserSelection employerIdGt(long value) {
+        addGreaterThan(UserColumns.EMPLOYER_ID, value);
         return this;
     }
 
-    public UserSelection employerIdContains(String... value) {
-        addContains(UserColumns.EMPLOYER_ID, value);
+    public UserSelection employerIdGtEq(long value) {
+        addGreaterThanOrEquals(UserColumns.EMPLOYER_ID, value);
         return this;
     }
 
-    public UserSelection employerIdStartsWith(String... value) {
-        addStartsWith(UserColumns.EMPLOYER_ID, value);
+    public UserSelection employerIdLt(long value) {
+        addLessThan(UserColumns.EMPLOYER_ID, value);
         return this;
     }
 
-    public UserSelection employerIdEndsWith(String... value) {
-        addEndsWith(UserColumns.EMPLOYER_ID, value);
+    public UserSelection employerIdLtEq(long value) {
+        addLessThanOrEquals(UserColumns.EMPLOYER_ID, value);
         return this;
     }
 

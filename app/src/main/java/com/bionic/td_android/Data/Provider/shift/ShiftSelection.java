@@ -1,7 +1,9 @@
 package com.bionic.td_android.Data.Provider.shift;
 
-import android.content.ContentResolver;
+import java.util.Date;
+
 import android.content.Context;
+import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 
@@ -76,32 +78,32 @@ public class ShiftSelection extends AbstractSelection<ShiftSelection> {
         return orderById(false);
     }
 
-    public ShiftSelection serverid(Integer... value) {
+    public ShiftSelection serverid(Long... value) {
         addEquals(ShiftColumns.SERVERID, value);
         return this;
     }
 
-    public ShiftSelection serveridNot(Integer... value) {
+    public ShiftSelection serveridNot(Long... value) {
         addNotEquals(ShiftColumns.SERVERID, value);
         return this;
     }
 
-    public ShiftSelection serveridGt(int value) {
+    public ShiftSelection serveridGt(long value) {
         addGreaterThan(ShiftColumns.SERVERID, value);
         return this;
     }
 
-    public ShiftSelection serveridGtEq(int value) {
+    public ShiftSelection serveridGtEq(long value) {
         addGreaterThanOrEquals(ShiftColumns.SERVERID, value);
         return this;
     }
 
-    public ShiftSelection serveridLt(int value) {
+    public ShiftSelection serveridLt(long value) {
         addLessThan(ShiftColumns.SERVERID, value);
         return this;
     }
 
-    public ShiftSelection serveridLtEq(int value) {
+    public ShiftSelection serveridLtEq(long value) {
         addLessThanOrEquals(ShiftColumns.SERVERID, value);
         return this;
     }
@@ -116,32 +118,32 @@ public class ShiftSelection extends AbstractSelection<ShiftSelection> {
         return this;
     }
 
-    public ShiftSelection starttime(Integer... value) {
+    public ShiftSelection starttime(Long... value) {
         addEquals(ShiftColumns.STARTTIME, value);
         return this;
     }
 
-    public ShiftSelection starttimeNot(Integer... value) {
+    public ShiftSelection starttimeNot(Long... value) {
         addNotEquals(ShiftColumns.STARTTIME, value);
         return this;
     }
 
-    public ShiftSelection starttimeGt(int value) {
+    public ShiftSelection starttimeGt(long value) {
         addGreaterThan(ShiftColumns.STARTTIME, value);
         return this;
     }
 
-    public ShiftSelection starttimeGtEq(int value) {
+    public ShiftSelection starttimeGtEq(long value) {
         addGreaterThanOrEquals(ShiftColumns.STARTTIME, value);
         return this;
     }
 
-    public ShiftSelection starttimeLt(int value) {
+    public ShiftSelection starttimeLt(long value) {
         addLessThan(ShiftColumns.STARTTIME, value);
         return this;
     }
 
-    public ShiftSelection starttimeLtEq(int value) {
+    public ShiftSelection starttimeLtEq(long value) {
         addLessThanOrEquals(ShiftColumns.STARTTIME, value);
         return this;
     }
@@ -156,32 +158,32 @@ public class ShiftSelection extends AbstractSelection<ShiftSelection> {
         return this;
     }
 
-    public ShiftSelection endtime(Integer... value) {
+    public ShiftSelection endtime(Long... value) {
         addEquals(ShiftColumns.ENDTIME, value);
         return this;
     }
 
-    public ShiftSelection endtimeNot(Integer... value) {
+    public ShiftSelection endtimeNot(Long... value) {
         addNotEquals(ShiftColumns.ENDTIME, value);
         return this;
     }
 
-    public ShiftSelection endtimeGt(int value) {
+    public ShiftSelection endtimeGt(long value) {
         addGreaterThan(ShiftColumns.ENDTIME, value);
         return this;
     }
 
-    public ShiftSelection endtimeGtEq(int value) {
+    public ShiftSelection endtimeGtEq(long value) {
         addGreaterThanOrEquals(ShiftColumns.ENDTIME, value);
         return this;
     }
 
-    public ShiftSelection endtimeLt(int value) {
+    public ShiftSelection endtimeLt(long value) {
         addLessThan(ShiftColumns.ENDTIME, value);
         return this;
     }
 
-    public ShiftSelection endtimeLtEq(int value) {
+    public ShiftSelection endtimeLtEq(long value) {
         addLessThanOrEquals(ShiftColumns.ENDTIME, value);
         return this;
     }
@@ -196,32 +198,32 @@ public class ShiftSelection extends AbstractSelection<ShiftSelection> {
         return this;
     }
 
-    public ShiftSelection pause(Integer... value) {
+    public ShiftSelection pause(Long... value) {
         addEquals(ShiftColumns.PAUSE, value);
         return this;
     }
 
-    public ShiftSelection pauseNot(Integer... value) {
+    public ShiftSelection pauseNot(Long... value) {
         addNotEquals(ShiftColumns.PAUSE, value);
         return this;
     }
 
-    public ShiftSelection pauseGt(int value) {
+    public ShiftSelection pauseGt(long value) {
         addGreaterThan(ShiftColumns.PAUSE, value);
         return this;
     }
 
-    public ShiftSelection pauseGtEq(int value) {
+    public ShiftSelection pauseGtEq(long value) {
         addGreaterThanOrEquals(ShiftColumns.PAUSE, value);
         return this;
     }
 
-    public ShiftSelection pauseLt(int value) {
+    public ShiftSelection pauseLt(long value) {
         addLessThan(ShiftColumns.PAUSE, value);
         return this;
     }
 
-    public ShiftSelection pauseLtEq(int value) {
+    public ShiftSelection pauseLtEq(long value) {
         addLessThanOrEquals(ShiftColumns.PAUSE, value);
         return this;
     }
@@ -246,22 +248,22 @@ public class ShiftSelection extends AbstractSelection<ShiftSelection> {
         return this;
     }
 
-    public ShiftSelection useridGt(int value) {
+    public ShiftSelection useridGt(long value) {
         addGreaterThan(ShiftColumns.USERID, value);
         return this;
     }
 
-    public ShiftSelection useridGtEq(int value) {
+    public ShiftSelection useridGtEq(long value) {
         addGreaterThanOrEquals(ShiftColumns.USERID, value);
         return this;
     }
 
-    public ShiftSelection useridLt(int value) {
+    public ShiftSelection useridLt(long value) {
         addLessThan(ShiftColumns.USERID, value);
         return this;
     }
 
-    public ShiftSelection useridLtEq(int value) {
+    public ShiftSelection useridLtEq(long value) {
         addLessThanOrEquals(ShiftColumns.USERID, value);
         return this;
     }

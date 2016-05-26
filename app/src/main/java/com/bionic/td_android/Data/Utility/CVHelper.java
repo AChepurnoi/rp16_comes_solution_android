@@ -35,6 +35,8 @@ public class CVHelper {
         values.putFourweekpayoff(user.isFourWeekPayOff() ? 1 : 0);
         values.putZerohours(user.isZeroHours() ? 1 : 0);
         values.putContracthours(user.getContractHours());
+        values.putTvt(user.getTvt());
+        values.putPaidtimefortime(user.isPaidTimeForTime() ? 1 : 0);
         values.putEnabled(user.isEnabled() ? 1 : 0);
         values.putVerified(user.isVerified() ? 1 : 0);
         values.putPostalcode(user.getPostalCode());
@@ -78,6 +80,8 @@ public class CVHelper {
         user.setContractHours(userModel.getContracthours());
         user.setEnabled(userModel.getEnabled() > 0 ? true : false);
         user.setPostalCode(userModel.getPostalcode());
+        user.setTvt(userModel.getTvt());
+        user.setPaidTimeForTime(userModel.getPaidtimefortime() > 0 ? true : false);
         user.setPasswordExpire(new Date(userModel.getPasswordexpire()));
         user.setVerified(userModel.getVerified() > 0 ? true : false);
         user.setRole(UserRoleEnum.ADMIN);
@@ -105,7 +109,7 @@ public class CVHelper {
     public JobContentValues build(Integer job, Long userId){
         JobContentValues values = new JobContentValues();
         values.putUserid(userId);
-        values.putJobid(job);
+        values.putJobid(Long.valueOf(job));
         return values;
 
 

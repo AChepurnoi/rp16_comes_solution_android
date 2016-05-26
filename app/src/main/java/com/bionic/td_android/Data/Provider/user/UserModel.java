@@ -1,8 +1,11 @@
 package com.bionic.td_android.Data.Provider.user;
 
-import android.support.annotation.Nullable;
-
 import com.bionic.td_android.Data.Provider.base.BaseModel;
+
+import java.util.Date;
+
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 /**
  * User entity
@@ -57,6 +60,20 @@ public interface UserModel extends BaseModel {
      */
     @Nullable
     String getSex();
+
+    /**
+     * Get the {@code tvt} value.
+     * Can be {@code null}.
+     */
+    @Nullable
+    Integer getTvt();
+
+    /**
+     * Get the {@code paidtimefortime} value.
+     * Can be {@code null}.
+     */
+    @Nullable
+    Integer getPaidtimefortime();
 
     /**
      * Get the {@code fourweekpayoff} value.
@@ -119,7 +136,7 @@ public interface UserModel extends BaseModel {
      * Can be {@code null}.
      */
     @Nullable
-    String getEmployerId();
+    Long getEmployerId();
 
     /**
      * Get the {@code role} value.

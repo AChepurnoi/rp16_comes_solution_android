@@ -1,7 +1,9 @@
 package com.bionic.td_android.Data.Provider.ride;
 
-import android.content.ContentResolver;
+import java.util.Date;
+
 import android.content.Context;
+import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 
@@ -76,32 +78,32 @@ public class RideSelection extends AbstractSelection<RideSelection> {
         return orderById(false);
     }
 
-    public RideSelection serverid(Integer... value) {
+    public RideSelection serverid(Long... value) {
         addEquals(RideColumns.SERVERID, value);
         return this;
     }
 
-    public RideSelection serveridNot(Integer... value) {
+    public RideSelection serveridNot(Long... value) {
         addNotEquals(RideColumns.SERVERID, value);
         return this;
     }
 
-    public RideSelection serveridGt(int value) {
+    public RideSelection serveridGt(long value) {
         addGreaterThan(RideColumns.SERVERID, value);
         return this;
     }
 
-    public RideSelection serveridGtEq(int value) {
+    public RideSelection serveridGtEq(long value) {
         addGreaterThanOrEquals(RideColumns.SERVERID, value);
         return this;
     }
 
-    public RideSelection serveridLt(int value) {
+    public RideSelection serveridLt(long value) {
         addLessThan(RideColumns.SERVERID, value);
         return this;
     }
 
-    public RideSelection serveridLtEq(int value) {
+    public RideSelection serveridLtEq(long value) {
         addLessThanOrEquals(RideColumns.SERVERID, value);
         return this;
     }
@@ -116,32 +118,32 @@ public class RideSelection extends AbstractSelection<RideSelection> {
         return this;
     }
 
-    public RideSelection starttime(Integer... value) {
+    public RideSelection starttime(Long... value) {
         addEquals(RideColumns.STARTTIME, value);
         return this;
     }
 
-    public RideSelection starttimeNot(Integer... value) {
+    public RideSelection starttimeNot(Long... value) {
         addNotEquals(RideColumns.STARTTIME, value);
         return this;
     }
 
-    public RideSelection starttimeGt(int value) {
+    public RideSelection starttimeGt(long value) {
         addGreaterThan(RideColumns.STARTTIME, value);
         return this;
     }
 
-    public RideSelection starttimeGtEq(int value) {
+    public RideSelection starttimeGtEq(long value) {
         addGreaterThanOrEquals(RideColumns.STARTTIME, value);
         return this;
     }
 
-    public RideSelection starttimeLt(int value) {
+    public RideSelection starttimeLt(long value) {
         addLessThan(RideColumns.STARTTIME, value);
         return this;
     }
 
-    public RideSelection starttimeLtEq(int value) {
+    public RideSelection starttimeLtEq(long value) {
         addLessThanOrEquals(RideColumns.STARTTIME, value);
         return this;
     }
@@ -156,32 +158,32 @@ public class RideSelection extends AbstractSelection<RideSelection> {
         return this;
     }
 
-    public RideSelection endtime(Integer... value) {
+    public RideSelection endtime(Long... value) {
         addEquals(RideColumns.ENDTIME, value);
         return this;
     }
 
-    public RideSelection endtimeNot(Integer... value) {
+    public RideSelection endtimeNot(Long... value) {
         addNotEquals(RideColumns.ENDTIME, value);
         return this;
     }
 
-    public RideSelection endtimeGt(int value) {
+    public RideSelection endtimeGt(long value) {
         addGreaterThan(RideColumns.ENDTIME, value);
         return this;
     }
 
-    public RideSelection endtimeGtEq(int value) {
+    public RideSelection endtimeGtEq(long value) {
         addGreaterThanOrEquals(RideColumns.ENDTIME, value);
         return this;
     }
 
-    public RideSelection endtimeLt(int value) {
+    public RideSelection endtimeLt(long value) {
         addLessThan(RideColumns.ENDTIME, value);
         return this;
     }
 
-    public RideSelection endtimeLtEq(int value) {
+    public RideSelection endtimeLtEq(long value) {
         addLessThanOrEquals(RideColumns.ENDTIME, value);
         return this;
     }
@@ -206,22 +208,22 @@ public class RideSelection extends AbstractSelection<RideSelection> {
         return this;
     }
 
-    public RideSelection shiftidGt(int value) {
+    public RideSelection shiftidGt(long value) {
         addGreaterThan(RideColumns.SHIFTID, value);
         return this;
     }
 
-    public RideSelection shiftidGtEq(int value) {
+    public RideSelection shiftidGtEq(long value) {
         addGreaterThanOrEquals(RideColumns.SHIFTID, value);
         return this;
     }
 
-    public RideSelection shiftidLt(int value) {
+    public RideSelection shiftidLt(long value) {
         addLessThan(RideColumns.SHIFTID, value);
         return this;
     }
 
-    public RideSelection shiftidLtEq(int value) {
+    public RideSelection shiftidLtEq(long value) {
         addLessThanOrEquals(RideColumns.SHIFTID, value);
         return this;
     }

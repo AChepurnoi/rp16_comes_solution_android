@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.util.Log;
 
+import com.bionic.td_android.BuildConfig;
 import com.bionic.td_android.Data.Provider.job.JobColumns;
 import com.bionic.td_android.Data.Provider.ride.RideColumns;
 import com.bionic.td_android.Data.Provider.shift.ShiftColumns;
@@ -18,8 +19,8 @@ import com.bionic.td_android.Data.Provider.workschedule.WorkscheduleColumns;
 public class TDASQLiteOpenHelper extends SQLiteOpenHelper {
     private static final String TAG = TDASQLiteOpenHelper.class.getSimpleName();
 
-    public static final String DATABASE_FILE_NAME = "td_app.db";
-    private static final int DATABASE_VERSION = 2;
+    public static final String DATABASE_FILE_NAME = "td_app_base.db";
+    private static final int DATABASE_VERSION = 10;
     private static TDASQLiteOpenHelper sInstance;
     private final Context mContext;
     private final TDASQLiteOpenHelperCallbacks mOpenHelperCallbacks;
@@ -62,6 +63,8 @@ public class TDASQLiteOpenHelper extends SQLiteOpenHelper {
             + UserColumns.LASTNAME + " TEXT, "
             + UserColumns.INSERTION + " TEXT, "
             + UserColumns.SEX + " TEXT, "
+            + UserColumns.TVT + " INTEGER, "
+            + UserColumns.PAIDTIMEFORTIME + " INTEGER, "
             + UserColumns.FOURWEEKPAYOFF + " INTEGER, "
             + UserColumns.ZEROHOURS + " INTEGER, "
             + UserColumns.CONTRACTHOURS + " INTEGER, "
@@ -70,7 +73,7 @@ public class TDASQLiteOpenHelper extends SQLiteOpenHelper {
             + UserColumns.POSTALCODE + " TEXT, "
             + UserColumns.PASSWORDEXPIRE + " INTEGER, "
             + UserColumns.WORKSCHEDULE_ID + " INTEGER, "
-            + UserColumns.EMPLOYER_ID + " TEXT, "
+            + UserColumns.EMPLOYER_ID + " INTEGER, "
             + UserColumns.ROLE + " INTEGER DEFAULT 1, "
             + UserColumns.SYNCHRONIZE + " INTEGER DEFAULT 0 "
             + " );";

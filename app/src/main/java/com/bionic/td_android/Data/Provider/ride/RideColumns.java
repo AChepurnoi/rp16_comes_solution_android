@@ -4,6 +4,11 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 import com.bionic.td_android.Data.Provider.TDAProvider;
+import com.bionic.td_android.Data.Provider.job.JobColumns;
+import com.bionic.td_android.Data.Provider.ride.RideColumns;
+import com.bionic.td_android.Data.Provider.shift.ShiftColumns;
+import com.bionic.td_android.Data.Provider.user.UserColumns;
+import com.bionic.td_android.Data.Provider.workschedule.WorkscheduleColumns;
 
 /**
  * Ride entity

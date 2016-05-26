@@ -139,16 +139,16 @@
 
                     />
 
-                <Spinner
+                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:entries="@array/TVT"
-                    android:id="@+id/tvt_spinner"
+                    android:id="@+id/tvt_edit_text"
+                    android:inputType="numberDecimal"
                     android:layout_gravity="end"
                     android:layout_weight="1"
                     >
 
-                </Spinner>
+                </EditText>
 
 
 

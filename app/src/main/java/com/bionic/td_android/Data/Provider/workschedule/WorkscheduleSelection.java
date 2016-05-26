@@ -1,7 +1,9 @@
 package com.bionic.td_android.Data.Provider.workschedule;
 
-import android.content.ContentResolver;
+import java.util.Date;
+
 import android.content.Context;
+import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 
@@ -86,22 +88,22 @@ public class WorkscheduleSelection extends AbstractSelection<WorkscheduleSelecti
         return this;
     }
 
-    public WorkscheduleSelection serveridGt(int value) {
+    public WorkscheduleSelection serveridGt(long value) {
         addGreaterThan(WorkscheduleColumns.SERVERID, value);
         return this;
     }
 
-    public WorkscheduleSelection serveridGtEq(int value) {
+    public WorkscheduleSelection serveridGtEq(long value) {
         addGreaterThanOrEquals(WorkscheduleColumns.SERVERID, value);
         return this;
     }
 
-    public WorkscheduleSelection serveridLt(int value) {
+    public WorkscheduleSelection serveridLt(long value) {
         addLessThan(WorkscheduleColumns.SERVERID, value);
         return this;
     }
 
-    public WorkscheduleSelection serveridLtEq(int value) {
+    public WorkscheduleSelection serveridLtEq(long value) {
         addLessThanOrEquals(WorkscheduleColumns.SERVERID, value);
         return this;
     }
@@ -116,32 +118,32 @@ public class WorkscheduleSelection extends AbstractSelection<WorkscheduleSelecti
         return this;
     }
 
-    public WorkscheduleSelection creationtime(Integer... value) {
+    public WorkscheduleSelection creationtime(Long... value) {
         addEquals(WorkscheduleColumns.CREATIONTIME, value);
         return this;
     }
 
-    public WorkscheduleSelection creationtimeNot(Integer... value) {
+    public WorkscheduleSelection creationtimeNot(Long... value) {
         addNotEquals(WorkscheduleColumns.CREATIONTIME, value);
         return this;
     }
 
-    public WorkscheduleSelection creationtimeGt(int value) {
+    public WorkscheduleSelection creationtimeGt(long value) {
         addGreaterThan(WorkscheduleColumns.CREATIONTIME, value);
         return this;
     }
 
-    public WorkscheduleSelection creationtimeGtEq(int value) {
+    public WorkscheduleSelection creationtimeGtEq(long value) {
         addGreaterThanOrEquals(WorkscheduleColumns.CREATIONTIME, value);
         return this;
     }
 
-    public WorkscheduleSelection creationtimeLt(int value) {
+    public WorkscheduleSelection creationtimeLt(long value) {
         addLessThan(WorkscheduleColumns.CREATIONTIME, value);
         return this;
     }
 
-    public WorkscheduleSelection creationtimeLtEq(int value) {
+    public WorkscheduleSelection creationtimeLtEq(long value) {
         addLessThanOrEquals(WorkscheduleColumns.CREATIONTIME, value);
         return this;
     }

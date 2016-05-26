@@ -4,6 +4,11 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 import com.bionic.td_android.Data.Provider.TDAProvider;
+import com.bionic.td_android.Data.Provider.job.JobColumns;
+import com.bionic.td_android.Data.Provider.ride.RideColumns;
+import com.bionic.td_android.Data.Provider.shift.ShiftColumns;
+import com.bionic.td_android.Data.Provider.user.UserColumns;
+import com.bionic.td_android.Data.Provider.workschedule.WorkscheduleColumns;
 
 /**
  * User entity
@@ -30,6 +35,10 @@ public class UserColumns implements BaseColumns {
     public static final String INSERTION = "insertion";
 
     public static final String SEX = "sex";
+
+    public static final String TVT = "tvt";
+
+    public static final String PAIDTIMEFORTIME = "paidTimeForTime";
 
     public static final String FOURWEEKPAYOFF = "fourWeekPayoff";
 
@@ -66,6 +75,8 @@ public class UserColumns implements BaseColumns {
             LASTNAME,
             INSERTION,
             SEX,
+            TVT,
+            PAIDTIMEFORTIME,
             FOURWEEKPAYOFF,
             ZEROHOURS,
             CONTRACTHOURS,
@@ -90,6 +101,8 @@ public class UserColumns implements BaseColumns {
             if (c.equals(LASTNAME) || c.contains("." + LASTNAME)) return true;
             if (c.equals(INSERTION) || c.contains("." + INSERTION)) return true;
             if (c.equals(SEX) || c.contains("." + SEX)) return true;
+            if (c.equals(TVT) || c.contains("." + TVT)) return true;
+            if (c.equals(PAIDTIMEFORTIME) || c.contains("." + PAIDTIMEFORTIME)) return true;
             if (c.equals(FOURWEEKPAYOFF) || c.contains("." + FOURWEEKPAYOFF)) return true;
             if (c.equals(ZEROHOURS) || c.contains("." + ZEROHOURS)) return true;
             if (c.equals(CONTRACTHOURS) || c.contains("." + CONTRACTHOURS)) return true;

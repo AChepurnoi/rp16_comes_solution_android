@@ -1,6 +1,9 @@
 package com.bionic.td_android.Data.Provider.job;
 
+import java.util.Date;
+
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.bionic.td_android.Data.Provider.base.AbstractCursor;
@@ -38,8 +41,8 @@ public class JobCursor extends AbstractCursor implements JobModel {
      * Can be {@code null}.
      */
     @Nullable
-    public Integer getJobid() {
-        Integer res = getIntegerOrNull(JobColumns.JOBID);
+    public Long getJobid() {
+        Long res = getLongOrNull(JobColumns.JOBID);
         return res;
     }
 }

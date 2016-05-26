@@ -146,7 +146,7 @@ public class DbManager {
         JobCursor jobs = new JobSelection().userid(res.getmId()).query(context);
         List<Integer> userJobs = new ArrayList<>();
         while (jobs.moveToNext()){
-            userJobs.add(jobs.getJobid());
+            userJobs.add(jobs.getJobid().intValue());
         }
         res.setJobs(userJobs);
 
@@ -194,14 +194,14 @@ public class DbManager {
 
         ShiftSelection shiftSelection = new ShiftSelection();
         RideSelection rideSelection = new RideSelection();
-        shiftSelection.serverid(0).delete(context);
+        shiftSelection.serverid(0l).delete(context);
         rideSelection.shiftid(0l).delete(context);
     }
 
     public void clearShifts(){
         ShiftSelection shiftSelection = new ShiftSelection();
         RideSelection rideSelection = new RideSelection();
-        shiftSelection.serveridNot(0).delete(context);
+        shiftSelection.serveridNot(0l).delete(context);
         rideSelection.shiftidNot(0l).delete(context);
     }
 

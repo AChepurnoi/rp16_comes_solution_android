@@ -1,8 +1,11 @@
 package com.bionic.td_android.Data.Provider.shift;
 
-import android.support.annotation.Nullable;
-
 import com.bionic.td_android.Data.Provider.base.BaseModel;
+
+import java.util.Date;
+
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 /**
  * Shift entity

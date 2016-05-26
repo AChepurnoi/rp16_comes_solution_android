@@ -5,7 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import android.util.Log;
 
-import com.bionic.td_android.Data.Provider.BuildConfig;
+import com.bionic.td_android.BuildConfig;
+
 
 /**
  * Implement your custom database creation or upgrade code here.

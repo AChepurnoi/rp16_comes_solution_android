@@ -19,12 +19,12 @@
         <provider
             android:name="com.bionic.td_android.Data.Provider.TDAProvider"
             android:authorities="com.bionic.td_android"
-            android:exported="false" />
+            android:exported="false"
 
-        <meta-data android:name="DATABASE" android:value="truck_driver_bionic.db" />
-        <meta-data android:name="VERSION" android:value="8" />
-        <meta-data android:name="QUERY_LOG" android:value="true" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.bionic" />
+
+            />
+
+
 
         <activity android:name=".Login.LoginActivity"
             android:windowSoftInputMode="stateHidden"

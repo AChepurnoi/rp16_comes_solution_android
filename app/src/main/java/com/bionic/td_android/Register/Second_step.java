@@ -38,7 +38,7 @@ public class Second_step extends Fragment implements TextWatcher{
     private CheckBox driver,operator;
     private RadioButton mandatoryTvt,voluntarilyTvt;
     private RadioButton paidTvt,buildUpTvt;
-    private Spinner tvtHours;
+    private EditText tvtHours;
     private EditText monday,tuesday,wednesday,thursday,friday,saturday,sunday;
     private RadioButton day_contract, zero_day_contract;
     private EditText contract_days;
@@ -119,7 +119,7 @@ public class Second_step extends Fragment implements TextWatcher{
         voluntarilyTvt = (RadioButton) view.findViewById(R.id.checkbox_voluntarily);
         paidTvt = (RadioButton) view.findViewById(R.id.checkbox_paid);
         buildUpTvt = (RadioButton) view.findViewById(R.id.checkbox_buildup);
-        tvtHours = (Spinner) view.findViewById(R.id.tvt_spinner);
+        tvtHours = (EditText) view.findViewById(R.id.tvt_edit_text);
         tvtHours.setEnabled(false);
 
 
@@ -181,6 +181,17 @@ public class Second_step extends Fragment implements TextWatcher{
                 return false;
             }
 
+            if(!mandatoryTvt.isChecked()){
+                if(tvtHours.getText().toString().isEmpty()){
+                    Snackbar.make(layout,"Input Custom tvt",Snackbar.LENGTH_LONG).show();
+                    return false;
+                }
+                if(Integer.parseInt(tvtHours.getText().toString()) <= 0){
+                    Snackbar.make(layout,"Tvt must be positive",Snackbar.LENGTH_LONG).show();
+                    return false;
+                }
+
+            }
         }
         return true;
 
@@ -254,6 +265,17 @@ public class Second_step extends Fragment implements TextWatcher{
 
         if(four_week_payments.isChecked())user.setFourWeekPayOff(true);
 
+        if(mandatoryTvt.isChecked())user.setTvt(220);
+        else {
+            int newtvt = 0;
+            if(tvtHours.getText().toString().isEmpty())newtvt = 0;
+            else newtvt = Integer.parseInt(tvtHours.getText().toString());
+            if(newtvt > 0)user.setTvt(newtvt);
+        }
+
+        if(paidTvt.isChecked())user.setPaidTimeForTime(true);
+        else user.setPaidTimeForTime(false);
+        
         Log.e("Bionic","New user "  + user );
         return user;
 

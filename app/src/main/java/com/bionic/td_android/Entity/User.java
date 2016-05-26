@@ -31,7 +31,9 @@ public class User{
     private boolean fourWeekPayOff;
     private boolean zeroHours;
     private int contractHours;
+    private int tvt;
 
+    private boolean paidTimeForTime;;
     private boolean enabled;
     private boolean verified;
     private String postalCode;
@@ -106,6 +108,21 @@ public class User{
         return sex;
     }
 
+    public int getTvt() {
+        return tvt;
+    }
+
+    public void setTvt(int tvt) {
+        this.tvt = tvt;
+    }
+
+    public boolean isPaidTimeForTime() {
+        return paidTimeForTime;
+    }
+
+    public void setPaidTimeForTime(boolean paidTimeForTime) {
+        this.paidTimeForTime = paidTimeForTime;
+    }
 
     public void setSex(String sex) {
         this.sex = sex;
@@ -199,26 +216,23 @@ public class User{
     @Override
     public String toString() {
         return "User{" +
-                "mId=" + mId +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", insertion='" + insertion + '\'' +
-                ", sex='" + sex + '\'' +
-                ", fourWeekPayOff=" + fourWeekPayOff +
-                ", zeroHours=" + zeroHours +
-                ", contractHours=" + contractHours +
-                ", enabled=" + enabled +
+                "workSchedule=" + workSchedule +
                 ", passwordExpire=" + passwordExpire +
-                ", workSchedule=" + workSchedule +
-                ", role=" + role +
-                ", employer=" + employer +
-                ", jobs=" + jobs +
-                ", postalCode= " + postalCode +
-                ", verified " + verified +
-                "}";
-
+                ", postalCode='" + postalCode + '\'' +
+                ", verified=" + verified +
+                ", enabled=" + enabled +
+                ", paidTimeForTime=" + paidTimeForTime +
+                ", tvt=" + tvt +
+                ", contractHours=" + contractHours +
+                ", zeroHours=" + zeroHours +
+                ", fourWeekPayOff=" + fourWeekPayOff +
+                ", sex='" + sex + '\'' +
+                ", insertion='" + insertion + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", mId=" + mId +
+                '}';
     }
-
 }

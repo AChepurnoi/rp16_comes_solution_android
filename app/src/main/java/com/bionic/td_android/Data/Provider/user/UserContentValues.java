@@ -109,6 +109,26 @@ public class UserContentValues extends AbstractContentValues {
         return this;
     }
 
+    public UserContentValues putTvt(@Nullable Integer value) {
+        mContentValues.put(UserColumns.TVT, value);
+        return this;
+    }
+
+    public UserContentValues putTvtNull() {
+        mContentValues.putNull(UserColumns.TVT);
+        return this;
+    }
+
+    public UserContentValues putPaidtimefortime(@Nullable Integer value) {
+        mContentValues.put(UserColumns.PAIDTIMEFORTIME, value);
+        return this;
+    }
+
+    public UserContentValues putPaidtimefortimeNull() {
+        mContentValues.putNull(UserColumns.PAIDTIMEFORTIME);
+        return this;
+    }
+
     public UserContentValues putFourweekpayoff(@Nullable Integer value) {
         mContentValues.put(UserColumns.FOURWEEKPAYOFF, value);
         return this;
@@ -189,7 +209,7 @@ public class UserContentValues extends AbstractContentValues {
         return this;
     }
 
-    public UserContentValues putEmployerId(@Nullable String value) {
+    public UserContentValues putEmployerId(@Nullable Long value) {
         mContentValues.put(UserColumns.EMPLOYER_ID, value);
         return this;
     }

@@ -1,6 +1,9 @@
 package com.bionic.td_android.Data.Provider.user;
 
+import java.util.Date;
+
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.bionic.td_android.Data.Provider.base.AbstractCursor;
@@ -94,6 +97,26 @@ public class UserCursor extends AbstractCursor implements UserModel {
     }
 
     /**
+     * Get the {@code tvt} value.
+     * Can be {@code null}.
+     */
+    @Nullable
+    public Integer getTvt() {
+        Integer res = getIntegerOrNull(UserColumns.TVT);
+        return res;
+    }
+
+    /**
+     * Get the {@code paidtimefortime} value.
+     * Can be {@code null}.
+     */
+    @Nullable
+    public Integer getPaidtimefortime() {
+        Integer res = getIntegerOrNull(UserColumns.PAIDTIMEFORTIME);
+        return res;
+    }
+
+    /**
      * Get the {@code fourweekpayoff} value.
      * Can be {@code null}.
      */
@@ -178,8 +201,8 @@ public class UserCursor extends AbstractCursor implements UserModel {
      * Can be {@code null}.
      */
     @Nullable
-    public String getEmployerId() {
-        String res = getStringOrNull(UserColumns.EMPLOYER_ID);
+    public Long getEmployerId() {
+        Long res = getLongOrNull(UserColumns.EMPLOYER_ID);
         return res;
     }
 
