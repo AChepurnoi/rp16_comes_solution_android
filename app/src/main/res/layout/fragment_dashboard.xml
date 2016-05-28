@@ -30,7 +30,6 @@
             android:layout_gravity="center_horizontal"
             android:text="Welcome back"
             android:textSize="24sp"
-            android:textColor="@color/text_color"
             android:textStyle="bold"
             />
 
@@ -41,7 +40,6 @@
             android:layout_gravity="center_horizontal"
             android:text="Name placeholder"
             android:textSize="24sp"
-            android:textColor="@color/text_color"
             android:id="@+id/user_name_textfield"
             />
 

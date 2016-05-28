@@ -1,8 +1,24 @@
-<android.support.v7.widget.Toolbar
+<LinearLayout android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/simple_toolbar"
-    android:background="@color/colorPrimary"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolbar"
+    >
 
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/simple_toolbar"
+        android:background="@color/colorPrimary"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:titleTextColor="@color/colorText"
+        app:titleTextColor="@color/colorText"
+    />
+
+    <View android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/shadow"/>
+
+
+</LinearLayout>
