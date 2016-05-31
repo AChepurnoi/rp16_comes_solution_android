@@ -17,13 +17,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Entity.WorkSchedule;
 import com.bionic.td_android.MainWindow.MainActivity;
+import com.bionic.td_android.Networking.Requests.UpdateWorkInfo;
 import com.bionic.td_android.R;
 
 import java.util.ArrayList;
@@ -247,7 +247,7 @@ public class WorkInformation_fragment extends Fragment implements TextWatcher {
 
             Log.e("Bionic",user.toString());
 
-//            new UpdateWorkInfo(user,getView()).execute();
+            new UpdateWorkInfo(user,getView()).execute();
 
 
 

@@ -11,7 +11,6 @@ public class WorkSchedule{
     @JsonProperty("id")
     private Long mId;
 
-
     private Date creationTime;
 
     private String sunday;
@@ -21,9 +20,6 @@ public class WorkSchedule{
     private String thursday;
     private String friday;
     private String saturday;
-
-
-
 
     public WorkSchedule() {
         mId = 0l;
