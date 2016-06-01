@@ -18,31 +18,31 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:paddingBottom="20dp"
-    android:paddingTop="5dp"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp"
 
     >
 
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
 
-        >
+        <!--&gt;-->
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/period_truck"
-            android:background="@color/colorAccent"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="right"
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/period_truck"-->
+            <!--android:background="@color/colorAccent"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_gravity="right"-->
 
-            />
+            <!--/>-->
 
 
-    </FrameLayout>
+    <!--</FrameLayout>-->
 
 
     <TextView
@@ -51,7 +51,7 @@
         android:id="@+id/list_textview"
         android:text="Period"
         android:textSize="24sp"
-        android:gravity="left"
+        android:gravity="center"
         android:layout_weight="0.8
         "
 
