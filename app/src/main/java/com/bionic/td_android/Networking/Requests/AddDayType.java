@@ -86,7 +86,6 @@ public class AddDayType implements IRequest {
                         Log.e("Bionic", responseString);
                         dialog.dismiss();
                         Snackbar.make(view, "Day type added successfully", Snackbar.LENGTH_LONG).show();
-                        activity.onBackPressed();
                     }
                 });
     }

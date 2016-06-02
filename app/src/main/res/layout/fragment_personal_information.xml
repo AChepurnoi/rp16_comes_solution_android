@@ -147,6 +147,7 @@
             android:layout_gravity="center"
             android:text="Save"
             android:id="@+id/button_save"
+            android:theme="@style/btn"
             />
 
     </LinearLayout>

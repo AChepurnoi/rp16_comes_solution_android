@@ -13,7 +13,6 @@
         android:id="@+id/fragment_overview_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
 
         >
 
@@ -40,7 +39,7 @@
             />
 
         <View android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="2dp"
             android:background="@drawable/shadow"/>
 
 

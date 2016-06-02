@@ -83,9 +83,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="Login"
-
                         android:id="@+id/button_login"
-
+                        android:theme="@style/btn"
                         />
 
                     <Button
@@ -94,6 +93,7 @@
                         android:layout_weight="1"
                         android:id="@+id/button_register"
                         android:text="Register"
+                        android:theme="@style/btn"
 
                         />
 

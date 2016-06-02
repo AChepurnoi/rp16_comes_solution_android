@@ -11,6 +11,14 @@
 
     <style name="MainLight" parent="Theme.AppCompat.Light.NoActionBar" />
 
+
+    <style name="btn" parent="@android:style/Widget.Button">
+        <!--<item name="android:background">@color/colorPrimaryDark</item>-->
+        <!--<item name="android:textColor">@android:color/white</item>-->
+        <item name="colorButtonNormal">@color/btnDefault</item>
+        <item name="android:textColor">@android:color/white</item>
+
+    </style>
     <style name="GreenTheme" parent="Theme.AppCompat.Light.NoActionBar" >
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

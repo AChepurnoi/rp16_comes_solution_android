@@ -258,7 +258,9 @@
             android:layout_marginBottom="25dp"
             android:layout_marginLeft="75dp"
             android:layout_marginRight="75dp"
-            android:text="Apply changes" />
+            android:text="Apply changes"
+            android:theme="@style/btn"
+            />
         <Button
             android:id="@+id/button_submit"
             android:layout_width="match_parent"
@@ -266,7 +268,9 @@
             android:layout_marginBottom="25dp"
             android:layout_marginLeft="75dp"
             android:layout_marginRight="75dp"
-            android:text="Submit" />
+            android:text="Submit"
+            android:theme="@style/btn"
+            />
 
 
     </LinearLayout>
