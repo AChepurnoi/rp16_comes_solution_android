@@ -31,8 +31,8 @@ public class API {
     }
 
 
-    public static String GETEXCEL(long period,long year){
-        return REPORTEXCEL + year + "/" + period + "/Period.xls";
+    public static String GETEXCEL(long userId, long period,long year){
+        return REPORTEXCEL + userId + "/" + year + "/" + period + "/Period.xls";
 
     }
     public static String GET_SUMMARY(long userId, long year, long period){

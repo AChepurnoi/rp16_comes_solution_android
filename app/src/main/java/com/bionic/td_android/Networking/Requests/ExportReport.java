@@ -41,7 +41,10 @@ public class ExportReport implements IRequest {
 
         Log.e("Bionic", "Start");
 
-        String url = API.GETEXCEL(year, period);
+        DbManager manager = new DbManager(view.getContext());
+        User user = manager.loadUser();
+
+        String url = API.GETEXCEL(user.getmId(),year, period);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(view.getContext());
         String login = sharedPref.getString("login", "");
         String pass = sharedPref.getString("password", "");
