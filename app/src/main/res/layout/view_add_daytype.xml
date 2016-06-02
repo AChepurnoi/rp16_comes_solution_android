@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:gravity="center"
-
+    android:padding="15dp"
     >
 
     <TextView
@@ -19,6 +19,7 @@ android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="From"
+        android:id="@+id/text_from"
         android:textSize="14sp"
 
         />
@@ -37,7 +38,9 @@ android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:textColor="@android:color/white"
+        android:text="To"
+        android:id="@+id/text_to"
+
 
         />
 
@@ -50,15 +53,6 @@ android:orientation="horizontal"
         android:layout_marginLeft="10dp"
         android:hint="00:00"
         android:textSize="14sp"
-
-        />
-
-    <ImageButton
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:background="#0000"
-        android:src="@android:drawable/ic_delete"
-        android:id="@+id/button_delete_ride"
 
         />
 

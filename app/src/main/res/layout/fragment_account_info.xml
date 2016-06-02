@@ -23,6 +23,7 @@
             android:layout_marginLeft="@dimen/sideMargin"
             android:layout_marginRight="@dimen/sideMargin"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="50dp"
             app:cardElevation="4dp"
             >
 

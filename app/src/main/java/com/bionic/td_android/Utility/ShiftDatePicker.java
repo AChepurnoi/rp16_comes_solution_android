@@ -8,7 +8,7 @@ import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import com.bionic.td_android.MainWindow.CreateShift.ShiftPageBuilder;
+import com.bionic.td_android.MainWindow.CreationPage.CreateShift.ShiftPageBuilder;
 
 import java.util.Calendar;
 import java.util.Date;

@@ -13,7 +13,7 @@ import android.widget.Button;
 
 import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.Shift;
-import com.bionic.td_android.MainWindow.CreateShift.ShiftPageBuilder;
+import com.bionic.td_android.MainWindow.CreationPage.CreateShift.ShiftPageBuilder;
 import com.bionic.td_android.MainWindow.MainActivity;
 import com.bionic.td_android.Networking.Requests.UpdateShift;
 import com.bionic.td_android.R;

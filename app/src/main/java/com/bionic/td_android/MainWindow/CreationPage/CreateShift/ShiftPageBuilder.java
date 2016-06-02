@@ -1,4 +1,4 @@
-package com.bionic.td_android.MainWindow.CreateShift;
+package com.bionic.td_android.MainWindow.CreationPage.CreateShift;
 
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;

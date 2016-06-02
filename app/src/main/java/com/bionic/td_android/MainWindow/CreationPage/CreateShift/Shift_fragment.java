@@ -1,4 +1,4 @@
-package com.bionic.td_android.MainWindow.CreateShift;
+package com.bionic.td_android.MainWindow.CreationPage.CreateShift;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -50,7 +50,7 @@ public class Shift_fragment extends Fragment {
 
     private void configurePage(View view) {
         activity = (MainActivity) getActivity();
-        configureToolbar(view);
+//        configureToolbar(view);
         configureViews(view);
     }
 
@@ -100,11 +100,11 @@ public class Shift_fragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                activity.onBackPressed();
-                return true;
-        }
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                activity.onBackPressed();
+//                return true;
+//        }
         return super.onOptionsItemSelected(item);
     }
 

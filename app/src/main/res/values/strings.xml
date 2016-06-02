@@ -7,6 +7,20 @@
         <item>Female</item>
     </string-array>
 
+    <string-array name="daytypes">
+        <item>Waiting day/sick day</item>
+        <item>Holiday</item>
+        <item>Atv day</item>
+        <item>Paid leave of absence day</item>
+        <item>Non paid leave of absence day</item>
+        <item>Stand time day</item>
+        <item>Consignment Fee dat</item>
+        <item>Stand over Allowance day</item>
+        <item>Time for time day</item>
+
+
+    </string-array>
+
     <string-array name="TVT">
         <item>180</item>
         <item>220</item>

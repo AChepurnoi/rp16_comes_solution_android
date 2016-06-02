@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.bionic.td_android.MainWindow.CreateShift.ShiftPageBuilder;
+import com.bionic.td_android.MainWindow.CreationPage.CreateShift.ShiftPageBuilder;
 import com.bionic.td_android.R;
 
 /**

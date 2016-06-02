@@ -17,7 +17,8 @@ import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.Login.LoginActivity;
 import com.bionic.td_android.MainWindow.Account.Account_fragment;
-import com.bionic.td_android.MainWindow.CreateShift.Shift_fragment;
+import com.bionic.td_android.MainWindow.CreationPage.CreateShift.Shift_fragment;
+import com.bionic.td_android.MainWindow.CreationPage.CreationPage;
 import com.bionic.td_android.MainWindow.Overview.Overview_fragment;
 import com.bionic.td_android.Networking.Requests.SendVerification;
 import com.bionic.td_android.R;
@@ -67,7 +68,7 @@ public class Dashboard_fragment extends Fragment {
         my_account.setOnClickListener(v -> activity.callFragment(new Account_fragment()));
 
         Button new_shift = (Button) view.findViewById(R.id.button_shift);
-        new_shift.setOnClickListener(v -> activity.callFragment(new Shift_fragment()));
+        new_shift.setOnClickListener(v -> activity.callFragment(new CreationPage()));
 
         Button overview = (Button) view.findViewById(R.id.button_overview);
         overview.setOnClickListener(v -> activity.callFragment(new Overview_fragment()));

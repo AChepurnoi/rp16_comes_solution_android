@@ -26,6 +26,10 @@ public class API {
     private static String REPORTEXCEL = SERVER_ADDRESS + "summary/";
 
 
+    public static String addDayType(long id){
+        return SERVER_ADDRESS + "/rest/api/users/" + id + "/daytypes";
+    }
+
 
     public static String GETEXCEL(long period,long year){
         return REPORTEXCEL + year + "/" + period + "/Period.xls";

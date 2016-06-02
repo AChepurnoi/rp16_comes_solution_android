@@ -1,4 +1,4 @@
-package com.bionic.td_android.Utility;
+package com.bionic.td_android.MainWindow.CreationPage.Daytypes.Utility;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -9,28 +9,28 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.bionic.td_android.MainWindow.CreationPage.CreateShift.ShiftPageBuilder;
+import com.bionic.td_android.MainWindow.CreationPage.Daytypes.DayTypesViews.IDayType;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * Created by user on 09.04.2016.
+ * Created by Granium on 02.06.16.
  */
+public class DTTimePicker extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
 
+    private TextView textView;
+    private IDayType dateSettable;
+    private boolean eightHours;
 
-public class ShiftTimePicker extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
-
-    public TextView textView;
-    private ShiftPageBuilder shift;
-
-    public ShiftTimePicker() {
+    public DTTimePicker() {
 
     }
-    public ShiftTimePicker(TextView textView, ShiftPageBuilder shift) {
+    public DTTimePicker(TextView textView, IDayType dateSettable, boolean eightHours) {
         this.textView = textView;
-        this.shift = shift;
+        this.dateSettable = dateSettable;
+        this.eightHours = eightHours;
     }
 
     @Override
@@ -45,19 +45,11 @@ public class ShiftTimePicker extends DialogFragment implements TimePickerDialog.
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        StringBuilder text = new StringBuilder();
-        if (hourOfDay < 10)
-            text.append("0");
-        text.append(hourOfDay).append(":");
-        if (minute < 10)
-            text.append("0");
-        text.append(minute);
-
         if(getTag().contains("Start")) {
             Calendar calendar = GregorianCalendar.getInstance();
-            Date date = shift.getShift().getStartTime();
+            Date date = dateSettable.getStartDate();
             if(date == null){
-                Snackbar.make(shift.getView(),"Please input date first",Snackbar.LENGTH_LONG).show();
+                Snackbar.make(textView,"Please input date first",Snackbar.LENGTH_LONG).show();
                 return;
             }
             calendar.setTime(date);
@@ -65,17 +57,20 @@ public class ShiftTimePicker extends DialogFragment implements TimePickerDialog.
             calendar.set(Calendar.MINUTE, minute);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
-            textView.setText(text);
-            shift.getShift().setStartTime(calendar.getTime());
-            Log.e("Bionic", "Shift date: " + shift.getShift().getStartTime().toString());
+            dateSettable.setStartDate(calendar.getTime());
+            Log.e("Bionic", "Daytype  date: " + dateSettable.getStartDate().toString());
+            if(eightHours){
+                Date date1 = dateSettable.getStartDate();
+                date1 = new Date(date1.getTime() + (1000 * 60 * 60 * 8));
+                dateSettable.setEndDate(date1);
+            }
         }
 
         if (getTag().contains("End")){
-
             Calendar calendar = GregorianCalendar.getInstance();
-            Date date = shift.getShift().getEndTime();
+            Date date = dateSettable.getStartDate();
             if(date == null){
-                Snackbar.make(shift.getView(),"Please input date first",Snackbar.LENGTH_LONG).show();
+                Snackbar.make(textView,"Please input date first",Snackbar.LENGTH_LONG).show();
                 return;
             }
             calendar.setTime(date);
@@ -83,10 +78,9 @@ public class ShiftTimePicker extends DialogFragment implements TimePickerDialog.
             calendar.set(Calendar.MINUTE, minute);
             calendar.set(Calendar.SECOND,0);
             calendar.set(Calendar.MILLISECOND,0);
-            textView.setText(text);
-            shift.getShift().setEndTime(calendar.getTime());
-            Log.e("Bionic", "Shift end date: " + shift.getShift().getEndTime().toString());
+            dateSettable.setEndDate(calendar.getTime());
+            Log.e("Bionic", "Daytype end date: " + dateSettable.getEndDate().toString());
         }
-        shift.recountPause();
+
     }
 }

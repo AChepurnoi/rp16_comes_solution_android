@@ -11,7 +11,7 @@
         android:orientation="vertical"
         >
 
-        <include layout="@layout/toolbar_simple" />
+        <!--<include layout="@layout/toolbar_simple" />-->
 
 
 
