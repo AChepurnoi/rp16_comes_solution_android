@@ -73,6 +73,9 @@ public class AddShift implements IRequest {
 
                         switch (statusCode){
 
+                            case 409:
+                                Snackbar.make(view, "Failed to add shift. Overlapping shifts", Snackbar.LENGTH_LONG).show();
+                                break;
                             default:
                                 Log.e("Bionic", "Fail " + statusCode);
                                 if(responseString != null)

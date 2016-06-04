@@ -34,7 +34,7 @@ public class Login implements IRequest {
 
     private String login, pass;
     private View view;
-    private  LoginActivity activity;
+    private LoginActivity activity;
     public Login(String login, String pass, LoginActivity activity,View view) {
         this.login = login;
         this.pass = pass;
