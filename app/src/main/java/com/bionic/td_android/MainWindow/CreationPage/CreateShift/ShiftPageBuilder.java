@@ -135,9 +135,9 @@ public class ShiftPageBuilder implements TextWatcher{
         rideBuilders = Stream.of(rideBuilders).filterNot( b ->(b.getRide() == ride)).collect(Collectors.toList());
     }
     @JsonIgnore
-    public View getShiftView(LayoutInflater inflater,ViewGroup parent,FragmentManager manager){
+    public View getShiftView(LayoutInflater inflater,ViewGroup parent,FragmentManager manager, int layout){
         this.manager = manager;
-        view = inflater.inflate(R.layout.fragment_shift_page,parent,false);
+        view = inflater.inflate(layout,parent,false);
         bindViews();
         if(shift.getStartTime() != null && shift.getEndTime() != null)populateView();
         attachListeners();

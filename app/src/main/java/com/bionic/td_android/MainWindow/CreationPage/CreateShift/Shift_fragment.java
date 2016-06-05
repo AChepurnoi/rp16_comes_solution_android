@@ -41,7 +41,7 @@ public class Shift_fragment extends Fragment {
         shift = manager.loadLocalShift();
         if(shift == null)shift = new Shift();
         pageBuilder = new ShiftPageBuilder(shift);
-        View view = pageBuilder.getShiftView(inflater, container, getActivity().getSupportFragmentManager());
+        View view = pageBuilder.getShiftView(inflater, container, getActivity().getSupportFragmentManager(),R.layout.fragment_shift_page);
 //        View view = shift.getShiftView(inflater,container,getActivity().getSupportFragmentManager());
 
         configurePage(view);

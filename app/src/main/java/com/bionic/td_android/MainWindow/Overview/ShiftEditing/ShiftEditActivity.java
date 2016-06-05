@@ -51,7 +51,7 @@ public class ShiftEditActivity extends Fragment {
         }
         manager = new DbManager(activity);
         pageBuilder = new ShiftPageBuilder(shift);
-        view = pageBuilder.getShiftView(inflater, container, activity.getSupportFragmentManager());
+        view = pageBuilder.getShiftView(inflater, container, activity.getSupportFragmentManager(),R.layout.fragment_shift_edit_page);
         configureToolbar();
         configureViews();
         return view;
