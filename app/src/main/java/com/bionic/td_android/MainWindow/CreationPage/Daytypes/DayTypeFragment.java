@@ -73,10 +73,27 @@ public class DayTypeFragment extends Fragment {
         Log.e("Bionic", day.toString());
         if(hasErrors()) {Snackbar.make(view,"Wrong input",Snackbar.LENGTH_LONG).show();return;}
         //sending to server;
+
+        if(day.getDayTypeName() == DayType.DayTypeEnum.CONSIGNMENT_FEE)
+            if(checkConsFeeErr()){Snackbar.make(view,"Consignment fee day can only be a maximum of 8 hours",Snackbar.LENGTH_LONG).show();return;}
+
         new AddDayType(day,view, (MainActivity) getActivity()).execute();
 
     }
 
+    private boolean checkConsFeeErr(){
+        DayType day = dayType.getDayType();
+        Calendar from = Calendar.getInstance();
+        from.setTime(day.getStartTime());
+        Calendar to = Calendar.getInstance();
+        to.setTime(day.getEndTime());
+
+        if(to.getTimeInMillis() - from.getTimeInMillis() > 1000*60*60*8)return true;
+
+        return false;
+
+        //consignment fee day can only be a maximum of 8 hours,
+    }
     private boolean hasErrors(){
         DayType day = dayType.getDayType();
         if(day.getStartTime() == null || day.getEndTime() == null)return true;
