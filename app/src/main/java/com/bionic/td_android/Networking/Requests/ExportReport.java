@@ -2,17 +2,14 @@ package com.bionic.td_android.Networking.Requests;
 
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
 import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
-import com.bionic.td_android.MainWindow.Overview.SelectedPeriod;
 import com.bionic.td_android.Networking.API;
 import com.bionic.td_android.Networking.IRequest;
 import com.loopj.android.http.AsyncHttpClient;
@@ -73,7 +70,7 @@ public class ExportReport implements IRequest {
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 dialog.dismiss();
                 Log.e("Bionic", statusCode + " " + responseString);
-                Snackbar.make(view, "Report has been send ", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, "Report has been sent ", Snackbar.LENGTH_LONG).show();
             }
         });
     }

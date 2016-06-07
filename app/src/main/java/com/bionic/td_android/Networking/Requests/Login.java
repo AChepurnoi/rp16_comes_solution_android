@@ -75,8 +75,16 @@ public class Login implements IRequest {
                         } else {
                             Snackbar.make(view, "Your login or password is incorrect", Snackbar.LENGTH_LONG).show();
                         }
+                        break;
+
                     case 404:
-                        Snackbar.make(view, "User with this email is not registered", Snackbar.LENGTH_LONG).show();
+                        Log.e("Bionic", statusCode + "code " + responseString);
+                        Snackbar.make(view, "Server does not respond. Please check your internet connection", Snackbar.LENGTH_LONG).show();
+                        break;
+
+                    case 417:
+                        Log.e("Bionic", statusCode + "code " + responseString);
+                        Snackbar.make(view, "User with this email is not registered yet", Snackbar.LENGTH_LONG).show();
                         break;
 
                     case 403:
@@ -84,6 +92,7 @@ public class Login implements IRequest {
                         activity.callFragment(new Temporary_pass_fragment());
                         Snackbar.make(view, "Password expired. Please request new temporary password", Snackbar.LENGTH_LONG).show();
                         break;
+
                     case 412:
                         try {
                             user = new ObjectMapper().readValue(responseString, User.class);
@@ -113,7 +122,7 @@ public class Login implements IRequest {
                         break;
 
                     default:
-                        Snackbar.make(view, "Error", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(view, "Server does not respond. Please check your internet connection", Snackbar.LENGTH_LONG).show();
                 }
             }
 
