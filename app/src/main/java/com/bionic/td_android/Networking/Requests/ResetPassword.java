@@ -8,6 +8,8 @@ import android.view.View;
 import com.bionic.td_android.Login.LoginActivity;
 import com.bionic.td_android.Networking.API;
 import com.bionic.td_android.Networking.IRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 
@@ -37,7 +39,15 @@ public class ResetPassword implements IRequest {
         String url = API.RESET_PASSWORD();
         final AlertDialog dialog = new SpotsDialog(activity,"Sending email");
         dialog.show();
-        client.put(activity, url, new ByteArrayEntity(email.getBytes()),
+        String jsonInString = null;
+        try {
+            jsonInString = new ObjectMapper().writeValueAsString(email);
+            Log.e("Bionic",jsonInString);
+        } catch (JsonProcessingException e) {
+            Snackbar.make(view, "Server error", Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        client.put(activity, url, new ByteArrayEntity(jsonInString.getBytes()),
                 "application/json", new TextHttpResponseHandler() {
                     @Override
                     public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
