@@ -1,9 +1,11 @@
 package com.bionic.td_android.MainWindow.Account;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,8 +16,10 @@ import android.widget.EditText;
 
 import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
+import com.bionic.td_android.Login.LoginActivity;
 import com.bionic.td_android.MainWindow.MainActivity;
 import com.bionic.td_android.Networking.Requests.ApplyNewPassword;
+import com.bionic.td_android.Networking.Requests.Login;
 import com.bionic.td_android.R;
 
 /**
@@ -26,7 +30,7 @@ public class ChangePassword_fragment extends Fragment {
 
 
     private EditText tmpPass,newPass,repeatPass;
-    private MainActivity activity;
+    private AppCompatActivity activity;
     private Toolbar toolbar;
 
 
@@ -40,7 +44,7 @@ public class ChangePassword_fragment extends Fragment {
     }
 
     private void configure(View view){
-        activity = (MainActivity) getActivity();
+        activity = (AppCompatActivity) getActivity();
         configureToolbar(view);
         configureViews(view);
 
