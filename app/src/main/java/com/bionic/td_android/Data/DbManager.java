@@ -55,7 +55,7 @@ public class DbManager {
     }
     public void loginClear(User user){
         User current = loadUser();
-        if(current.getmId().equals(user.getmId()))clearUserWorkschedule();
+        if(current != null && current.getmId().equals(user.getmId()))clearUserWorkschedule();
         else clear();
 
     }

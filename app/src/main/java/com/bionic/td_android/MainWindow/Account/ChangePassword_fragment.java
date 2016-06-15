@@ -28,11 +28,9 @@ import com.bionic.td_android.R;
 
 public class ChangePassword_fragment extends Fragment {
 
-
     private EditText tmpPass,newPass,repeatPass;
     private AppCompatActivity activity;
     private Toolbar toolbar;
-
 
     @Nullable
     @Override
@@ -55,7 +53,6 @@ public class ChangePassword_fragment extends Fragment {
 
         if(newPs.equals(repeatPs))return true;
         return false;
-
     }
 
 
@@ -83,7 +80,6 @@ public class ChangePassword_fragment extends Fragment {
 
 
     private void configureToolbar(View view){
-
 
         toolbar = (Toolbar)view.findViewById(R.id.simple_toolbar);
         activity.setSupportActionBar(toolbar);

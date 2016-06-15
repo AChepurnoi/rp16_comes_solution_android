@@ -97,7 +97,7 @@ public class Login implements IRequest {
                         try {
                             user = new ObjectMapper().readValue(responseString, User.class);
                             Intent intent = new Intent(activity, MainActivity.class);
-                            manager.clear();
+                            manager.loginClear(user);
                             manager.save(user);
                             activity.startActivity(intent);
                             Log.e("Bionic", user.toString());
@@ -110,7 +110,7 @@ public class Login implements IRequest {
                     case 409:
                         try {
                             user = new ObjectMapper().readValue(responseString, User.class);
-                            manager.clear();
+                            manager.loginClear(user);
                             manager.save(user);
                             activity.callFragment(new ChangePassword_fragment());
                             Log.e("Bionic", user.toString());
@@ -134,7 +134,7 @@ public class Login implements IRequest {
                 try {
                     user = new ObjectMapper().readValue(responseString, User.class);
                     Intent intent = new Intent(activity, MainActivity.class);
-                    manager.clear();
+                    manager.loginClear(user);
                     manager.save(user);
                     activity.startActivity(intent);
                     Log.e("Bionic", user.toString());
