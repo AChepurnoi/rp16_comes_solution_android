@@ -40,7 +40,6 @@ public class Login implements IRequest {
         this.pass = pass;
         this.activity = activity;
         this.view = view;
-
     }
     @Override
     public void execute() {
@@ -112,7 +111,7 @@ public class Login implements IRequest {
                             user = new ObjectMapper().readValue(responseString, User.class);
                             manager.loginClear(user);
                             manager.save(user);
-                            activity.callFragment(new ChangePassword_fragment());
+                            activity.callFragment( new ChangePassword_fragment());
                             Log.e("Bionic", user.toString());
                         } catch (IOException e) {
                             e.printStackTrace();

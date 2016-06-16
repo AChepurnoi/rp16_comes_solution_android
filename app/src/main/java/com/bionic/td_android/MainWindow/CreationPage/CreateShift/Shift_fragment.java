@@ -70,7 +70,6 @@ public class Shift_fragment extends Fragment {
                 Snackbar.make(view, "Shift has been saved", Snackbar.LENGTH_LONG).show();
                 activity.onBackPressed();
             }
-
         });
 
 
@@ -81,7 +80,7 @@ public class Shift_fragment extends Fragment {
                 Log.e("Bionic","SHIFT OK");
                 Log.e("Bionic", shift.toString());
                 Log.e("Bionic","Total breaktime minutes " + new BreakCalculator(shift).calculate());
-                new AddShift(shift,v,activity).execute();
+                new AddShift(shift,view,activity).execute();
             }
         });
 
