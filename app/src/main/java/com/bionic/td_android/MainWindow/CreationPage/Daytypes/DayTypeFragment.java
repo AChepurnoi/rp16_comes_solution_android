@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.annimon.stream.Exceptional;
+import com.bionic.td_android.Data.DbManager;
+import com.bionic.td_android.Entity.User;
 import com.bionic.td_android.MainWindow.CreationPage.Daytypes.DayTypesViews.AbstractDay;
 import com.bionic.td_android.MainWindow.CreationPage.Daytypes.DayTypesViews.DayType;
 import com.bionic.td_android.MainWindow.CreationPage.Daytypes.DayTypesViews.IDayType;
@@ -34,13 +36,15 @@ public class DayTypeFragment extends Fragment {
     private LinearLayout viewContainer;
     private IDayType dayType;
     private View view;
-
+    private User user;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragmnet_daytypes_input,container,false);
         viewContainer = (LinearLayout) view.findViewById(R.id.daytype_container);
+        DbManager manager = new DbManager(view.getContext());
+        user = manager.loadUser();
 
         configurePage();
 
@@ -73,6 +77,11 @@ public class DayTypeFragment extends Fragment {
         Log.e("Bionic", day.toString());
         if(hasErrors()) {Snackbar.make(view,"Wrong input",Snackbar.LENGTH_LONG).show();return;}
         //sending to server;
+
+        if(user.isZeroHours() && !(day.getDayTypeName() == DayType.DayTypeEnum.HOLIDAY || day.getDayTypeName() == DayType.DayTypeEnum.STAND_OVER_ALLOWANCE)){
+            Snackbar.make(view,"For zero hours you can only add Holiday/Stand over Allowance",Snackbar.LENGTH_LONG).show();
+            return;
+        }
 
         if(day.getDayTypeName() == DayType.DayTypeEnum.CONSIGNMENT_FEE)
             if(checkConsFeeErr()){Snackbar.make(view,"Consignment fee day can only be a maximum of 8 hours",Snackbar.LENGTH_LONG).show();return;}
