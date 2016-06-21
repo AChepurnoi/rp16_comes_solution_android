@@ -12,7 +12,7 @@ public class API {
 //    private static String SERVER_ADDRESS = "http://46.46.65.130:8080/";//Sasha2
 //    private static String SERVER_ADDRESS = "http://128.0.169.5:808/tda/"; //Bionic
 //    private static String SERVER_ADDRESS = "http://77.47.231.38:8080/"; //Dima
-    private static String SERVER_ADDRESS = "http://213.163.93.170:8080/tda-0.9.1/"; //Peter
+    private static String SERVER_ADDRESS = "http://213.163.93.170:8080/tda-1.0/"; //Peter
 //    private static String SERVER_ADDRESS = "http://192.168.10.79:8080/"; //Bionic
     private static String LOG_IN = SERVER_ADDRESS + "rest/api/auth/login";
     private static String GET_USER = SERVER_ADDRESS + "rest/api/users/login";
