@@ -22,15 +22,15 @@ public class DTTimePicker extends DialogFragment implements TimePickerDialog.OnT
 
     private TextView textView;
     private IDayType dateSettable;
-    private boolean eightHours;
+    private int hours;
 
     public DTTimePicker() {
 
     }
-    public DTTimePicker(TextView textView, IDayType dateSettable, boolean eightHours) {
+    public DTTimePicker(TextView textView, IDayType dateSettable, int eightHours) {
         this.textView = textView;
         this.dateSettable = dateSettable;
-        this.eightHours = eightHours;
+        this.hours = eightHours;
     }
 
     @Override
@@ -59,11 +59,9 @@ public class DTTimePicker extends DialogFragment implements TimePickerDialog.OnT
             calendar.set(Calendar.MILLISECOND, 0);
             dateSettable.setStartDate(calendar.getTime());
             Log.e("Bionic", "Daytype  date: " + dateSettable.getStartDate().toString());
-            if(eightHours){
-                Date date1 = dateSettable.getStartDate();
-                date1 = new Date(date1.getTime() + (1000 * 60 * 60 * 8));
-                dateSettable.setEndDate(date1);
-            }
+//            Date date1 = dateSettable.getStartDate();
+//            date1 = new Date(date1.getTime() + (1000 * 60 * 60 * hours));
+//            dateSettable.setEndDate(date1);
         }
 
         if (getTag().contains("End")){

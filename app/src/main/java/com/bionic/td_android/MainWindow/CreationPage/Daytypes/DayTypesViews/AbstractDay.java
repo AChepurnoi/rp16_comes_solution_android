@@ -39,10 +39,11 @@ public class AbstractDay implements IDayType {
         startTime = (TextView) view.findViewById(R.id.item_begin_time);
         endTime = (TextView) view.findViewById(R.id.item_end_time);
         date.setOnClickListener((v) -> new DTDatePicker(date,this,eightHours).show(activity.getSupportFragmentManager(),"Start"));
-        startTime.setOnClickListener( v-> new DTTimePicker(startTime,this,eightHours).show(activity.getSupportFragmentManager(),"Start"));
-        if(eightHours)endTime.setEnabled(false);
-        else endTime.setOnClickListener(v -> new DTTimePicker(startTime,this,eightHours).show(activity.getSupportFragmentManager(),"End"));
+        startTime.setOnClickListener( v-> new DTTimePicker(startTime,this,0).show(activity.getSupportFragmentManager(),"Start"));
 
+        if(type == DayType.DayTypeEnum.HOLIDAY) {
+            endTime.setOnClickListener(v -> new DTTimePicker(startTime, this, 0).show(activity.getSupportFragmentManager(), "End"));
+        }else endTime.setVisibility(View.INVISIBLE);
         return view;
     }
     public DayType getDayType() {

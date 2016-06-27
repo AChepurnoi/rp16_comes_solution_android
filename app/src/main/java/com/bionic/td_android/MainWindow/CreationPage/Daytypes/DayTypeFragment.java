@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import com.annimon.stream.Exceptional;
 import com.bionic.td_android.Data.DbManager;
 import com.bionic.td_android.Entity.User;
+import com.bionic.td_android.Entity.WorkSchedule;
 import com.bionic.td_android.MainWindow.CreationPage.Daytypes.DayTypesViews.AbstractDay;
 import com.bionic.td_android.MainWindow.CreationPage.Daytypes.DayTypesViews.DayType;
 import com.bionic.td_android.MainWindow.CreationPage.Daytypes.DayTypesViews.IDayType;
@@ -27,6 +28,7 @@ import com.bionic.td_android.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Granium on 02.06.16.
@@ -76,17 +78,71 @@ public class DayTypeFragment extends Fragment {
         DayType day = dayType.getDayType();
         Log.e("Bionic", day.toString());
         if(hasErrors()) {Snackbar.make(view,"Wrong input",Snackbar.LENGTH_LONG).show();return;}
-        //sending to server;
+//        sending to server;
 
         if(user.isZeroHours() && !(day.getDayTypeName() == DayType.DayTypeEnum.HOLIDAY || day.getDayTypeName() == DayType.DayTypeEnum.STAND_OVER_ALLOWANCE)){
             Snackbar.make(view,"For zero hours you can only add Holiday/Stand over Allowance",Snackbar.LENGTH_LONG).show();
             return;
         }
 
-        if(day.getDayTypeName() == DayType.DayTypeEnum.CONSIGNMENT_FEE)
-            if(checkConsFeeErr()){Snackbar.make(view,"Consignment fee day can only be a maximum of 8 hours",Snackbar.LENGTH_LONG).show();return;}
 
+//        if(day.getDayTypeName() == DayType.DayTypeEnum.CONSIGNMENT_FEE)
+//            if(checkConsFeeErr()){Snackbar.make(view,"Consignment fee day can only be a maximum of 8 hours",Snackbar.LENGTH_LONG).show();return;}
+
+
+        if(!user.isZeroHours() && day.getDayTypeName() != DayType.DayTypeEnum.HOLIDAY){
+            WorkSchedule schedule = new DbManager(getContext()).loadUser().getWorkSchedule();
+            int hrs = getHoursFromDay(schedule,day.getStartTime());
+            if(hrs == 0){
+                Snackbar.make(view,"You have 0 hours schedule for this day",Snackbar.LENGTH_LONG).show();
+                return;
+            }
+            day.setEndTime(new Date(day.getStartTime().getTime() + 1000 * 60 * 60 * hrs));
+
+        }
+
+        if(day.getDayTypeName() == DayType.DayTypeEnum.HOLIDAY){
+            if(day.getEndTime() == null || day.getStartTime().before(day.getEndTime())){
+                Snackbar.make(view,"Wrong time bounds",Snackbar.LENGTH_LONG).show();
+                return;
+            }
+        }
+        Log.e("Bionic", day.toString());
         new AddDayType(day,view, (MainActivity) getActivity()).execute();
+
+    }
+
+    private int getHoursFromDay(WorkSchedule schedule, Date date){
+        Calendar calendar  = Calendar.getInstance();
+        calendar.setTime(date);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+        switch (dayOfWeek){
+            case Calendar.MONDAY:
+                if(schedule.getMonday() == null)return 0;
+                else return Integer.parseInt(schedule.getMonday());
+            case Calendar.TUESDAY:
+                if(schedule.getTuesday() == null)return 0;
+                else return Integer.parseInt(schedule.getTuesday());
+            case Calendar.WEDNESDAY:
+                if(schedule.getWednesday() == null)return 0;
+                else return Integer.parseInt(schedule.getWednesday());
+            case Calendar.THURSDAY:
+                if(schedule.getThursday() == null)return 0;
+                else return Integer.parseInt(schedule.getThursday());
+            case Calendar.FRIDAY:
+                if(schedule.getFriday() == null)return 0;
+                else return Integer.parseInt(schedule.getFriday());
+            case Calendar.SATURDAY:
+                if(schedule.getSaturday() == null)return 0;
+                else return Integer.parseInt(schedule.getSaturday());
+            case Calendar.SUNDAY:
+                if(schedule.getSunday() == null)return 0;
+                else return Integer.parseInt(schedule.getSunday());
+
+        }
+
+        return 0;
 
     }
 
@@ -105,13 +161,7 @@ public class DayTypeFragment extends Fragment {
     }
     private boolean hasErrors(){
         DayType day = dayType.getDayType();
-        if(day.getStartTime() == null || day.getEndTime() == null)return true;
-        Calendar from = Calendar.getInstance();
-        from.setTime(day.getStartTime());
-        Calendar to = Calendar.getInstance();
-        to.setTime(day.getEndTime());
-        if(from.get(Calendar.DAY_OF_YEAR) != to.get(Calendar.DAY_OF_YEAR))return true;
-        if(to.before(from))return true;
+        if(day.getStartTime() == null)return true;
         return false;
     }
 
